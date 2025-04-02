@@ -1,6 +1,5 @@
 import { Box, Flex, HStack, Image, List, Separator, Text } from "@chakra-ui/react";
 import Logo from '@/assets/logo.svg';
-import { LuChartNoAxesColumn, LuCircleDollarSign, LuHistory, LuHouse, LuStore } from 'react-icons/lu';
 import { FaHistory } from "react-icons/fa";
 import { FaHouse, FaChartSimple, FaCashRegister, FaBoxArchive } from "react-icons/fa6";
 
