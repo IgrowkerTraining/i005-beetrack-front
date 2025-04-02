@@ -1,30 +1,26 @@
-import { Grid, GridItem} from '@chakra-ui/react'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import Sidebar from '@/components/Sidebar'
-// import PrivateRoutes from "./utils/PrivateRoutes"
-import { Outlet } from 'react-router-dom'
+import PrivateRoute from './utils/PrivateRoute'
+import DashboardLayout from './layout/DashboardLayout'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Home from './pages/Home'
 
 function App() {
-  // para utilizar el privateRoute solo tienes que ponerlo como element del route ej:
-  // <Route element={<PrivateRoutes />}>
-  //   <Route path="/" element={<Home />} />
-  // </Route>
-
+  const isAuthenticated = true // Cuando tengamos la lógica de atenticación cambiamos esto ;-)
+  
   return (
-    <Grid templateColumns={"repeat(6, 1fr)"} bg={"gray.50"} minH={{ lg: "100vh" }}>
-      <GridItem
-        as={"aside"}
-        colSpan={1}
-        bg={"#f2f0eb"}
-        minH={{ xl: "100vh" }}
-        p={{ base: "20px", lg: "30px" }}>
-        <Sidebar />
-      </GridItem>
-      <GridItem as={"main"} colSpan={5} p={"40px"}>
-        {/* <Navbar /> */}
-        <Outlet />
-      </GridItem>
-    </Grid>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+        <Route element={<DashboardLayout />}>
+          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
+        </Route>
+      </Route>
+    </Routes>
   )
 }
 
