@@ -1,6 +1,8 @@
 import { Box, Flex, HStack, Image, List, Separator, Text } from "@chakra-ui/react";
 import Logo from '@/assets/logo.svg';
 import { LuChartNoAxesColumn, LuCircleDollarSign, LuHistory, LuHouse, LuStore } from 'react-icons/lu';
+import { FaHistory } from "react-icons/fa";
+import { FaHouse, FaChartSimple, FaCashRegister, FaBoxArchive } from "react-icons/fa6";
 
 const Sidebar = () => {
 	return (
@@ -17,31 +19,31 @@ const Sidebar = () => {
 			<List.Root listStyle={"none"} gap={4} alignItems={"start"} w={"full"}>
 				<List.Item>
 					<List.Indicator>
-						<LuHouse />
+						<FaHouse />
 					</List.Indicator>
-					Dashboard
+					Inicio
 				</List.Item>
 				<List.Item>
 					<List.Indicator>
-						<LuStore />
+						<FaBoxArchive />
 					</List.Indicator>
 					Inventario
 				</List.Item>
 				<List.Item>
 					<List.Indicator>
-						<LuCircleDollarSign />
+						<FaCashRegister />
 					</List.Indicator>
 					Ventas
 				</List.Item>
 				<List.Item>
 					<List.Indicator>
-						<LuChartNoAxesColumn />
+						<FaChartSimple />
 					</List.Indicator>
 					Estadísticas
 				</List.Item>
 				<List.Item>
 					<List.Indicator>
-						<LuHistory />
+						<FaHistory />
 					</List.Indicator>
 					Historial
 				</List.Item>
@@ -49,5 +51,4 @@ const Sidebar = () => {
 		</Flex>
 	)
 }
-
 export default Sidebar;
