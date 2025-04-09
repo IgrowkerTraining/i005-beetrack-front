@@ -13,7 +13,7 @@ export const useFetchProducts = () => {
   const query = useQuery<Product[], Error>({
     queryKey: [url], 
     queryFn: () => productService.getProducts(queryParams),
-    staleTime: 5 * 60 * 1000
+    staleTime: 5 * 60 * 1000,
   });
 
   query.data && fetchProducts(query.data);
