@@ -1,12 +1,11 @@
 import { HStack, IconButton, Image, Text } from "@chakra-ui/react";
 import { MdMenu } from "react-icons/md";
 import Logo from '@/assets/logo.svg';
+import useSidenavbarStore from "@/store/useSidenavbarStore";
 
-type MobileTopBarProps = {
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
+const MobileTopBar = () => {
 
-const MobileTopBar = ({ setIsOpen } : MobileTopBarProps) => {
+    const { setIsOpen } = useSidenavbarStore();
 
     return (
         <HStack display={{ base: "flex", md: "none" }} gap={4}>

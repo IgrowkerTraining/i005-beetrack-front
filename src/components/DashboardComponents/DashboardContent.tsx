@@ -6,78 +6,56 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import { Card } from "@/components/DashboardComponents/Card";
-import { FaMoneyBills } from "react-icons/fa6";
-import { IoWallet } from "react-icons/io5";
-import { MdPayment } from "react-icons/md";
-import { FaCashRegister } from "react-icons/fa";
-import { InventoryList } from "../DashboardComponents/InventoryList";
+import { useColorModeValue } from "@/components/ui/color-mode";
+import QuickAccess from "@/components/DashboardComponents/QuickAccess";
+import BalanceCard from "@/components/DashboardComponents/BalanceCard";
+import ResumeCard from "@/components/DashboardComponents/ResumeCard";
+import ProductList from "@/components/DashboardComponents/ProductList";
+import TransactionsList from "@/components/DashboardComponents/TransactionsList";
 
 export const DashboardContent = () => {
-  const colSpan = useBreakpointValue({ base: 12, md: 6, lg: 3 });
-
-  const cards = [
-    {
-      label: "Efectivo",
-      amount: "$60.000,45",
-      icon: <FaMoneyBills size={20} />,
-    },
-    {
-      label: "Billetera digital",
-      amount: "$60.000,45",
-      icon: <IoWallet size={20} />,
-    },
-    {
-      label: "Otros Medios",
-      amount: "$60.000,45",
-      icon: <MdPayment size={20} />,
-    },
-    {
-      label: "Saldo Total",
-      amount: "53.382,01",
-      icon: <FaCashRegister size={20} />,
-    },
-  ];
-
+  const color = useColorModeValue("blue.400", "white");
   return (
     <Flex direction="column" overflow="hidden" margin="0" padding="0">
-      <Box p={6} bg={"background.25"}>
+      <Box p={6}>
         <SimpleGrid columns={12} gap={6}>
-          {cards.map((card, i) => (
-            <GridItem key={i} colSpan={colSpan}>
-              <Card label={card.label} amount={card.amount} icon={card.icon} />
-            </GridItem>
-          ))}
-
-          <GridItem colSpan={{ base: 12, lg: 6 }}>
-            <Text fontWeight="bold" fontSize="lg" mb={4} color="blue.500">
-              Stock del inventario
-            </Text>
-            <Box bg="white" p={4} borderRadius="3xl" boxShadow="soft" h="100%">
-              <InventoryList />
-            </Box>
-          </GridItem>
-
-          <GridItem colSpan={{ base: 12, lg: 6 }}>
-          <Text fontWeight="bold" fontSize="lg" mb={4} color="blue.500">
-              Estadísticas
-            </Text>
-            <Box bg="white" p={4} borderRadius="3xl" boxShadow="soft" h="100%">
-              <Text fontWeight="bold" color="blue.400" mb={4}>
-                {/* Component */}
-              </Text>
-            </Box>
-          </GridItem>
-
           <GridItem colSpan={12}>
-          <Text fontWeight="bold" fontSize="lg" mb={4} color="blue.500">
-              Pedidos de compra
+            <QuickAccess />
+          </GridItem>
+          <GridItem colSpan={{ base: 12, lg: 6 }}>
+            <Text fontWeight="bold" fontSize="lg" mt={2} color={color} mb={2}>
+              Saldo total en caja
             </Text>
-            <Box bg="white" p={4} borderRadius="3xl" boxShadow="soft">
-              <Text fontWeight="bold" color="blue.400" mb={4}>
-                {/* Component */}
+            <BalanceCard />
+          </GridItem>
+          <GridItem colSpan={{ base: 12, lg: 6 }}>
+            <Flex justify="space-between" align="center" mt={2} mb={2}>
+              <Text fontWeight="bold" fontSize="lg" color={color}>
+                Resumen de hoy
               </Text>
-            </Box>
+              <Text fontSize="sm" color="gray.500" cursor="pointer" fontWeight={"bold"}>
+                Ver más &gt;
+              </Text>
+            </Flex>
+            <ResumeCard />
+          </GridItem>
+
+          <GridItem colSpan={{ base: 12, lg: 6 }}>
+            <Text fontWeight="bold" fontSize="lg" mt={2} mb={2} color={color}>
+              Productos más vendidos este mes
+            </Text>
+            <ProductList />
+          </GridItem>
+          <GridItem colSpan={{ base: 12, lg: 6 }}>
+            <Flex justify="space-between" align="center" mt={2} mb={2}>
+              <Text fontWeight="bold" fontSize="lg" color={color}>
+                Historial reciente
+              </Text>
+              <Text fontSize="sm" color="gray.500" cursor="pointer" fontWeight={"bold"}>
+                Ver más &gt;
+              </Text>
+            </Flex>
+            <TransactionsList />
           </GridItem>
         </SimpleGrid>
       </Box>

@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Badge, Icon } from '@chakra-ui/react'
-import { ChevronRight } from 'lucide-react'
+// import { ChevronRight } from 'lucide-react'
 
 interface InventoryItemProps {
   name: string
@@ -44,7 +44,7 @@ export const InventoryItem = ({ name, price, quantity }: InventoryItemProps) => 
         >
           {quantity} Unidades
         </Badge>
-        <Icon as={ChevronRight} color="gray.400" />
+        {/* <Icon as={ChevronRight} color="gray.400" /> */}
       </Flex>
     </Flex>
   )

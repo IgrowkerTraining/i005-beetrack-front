@@ -1,13 +1,14 @@
 import React from 'react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 
 const SalesPage: React.FC = () => {
   return (
-    <div className="sales-page">
-      <h1>Sales Dashboard</h1>
-      <div className="sales-content">
-        <p>Welcome to the sales dashboard</p>
-      </div>
-    </div>
+    <Box p={4}>
+      <Heading mb={4}>Sales Dashboard</Heading>
+      <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
+        <Text>Welcome to the sales dashboard</Text>
+      </Box>
+    </Box>
   );
 };
 

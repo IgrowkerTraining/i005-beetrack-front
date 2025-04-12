@@ -1,13 +1,14 @@
 import React from 'react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 
 const HistoryPage: React.FC = () => {
   return (
-    <div className="history-page">
-      <h1>History Page</h1>
-      <div className="history-content">
-        <p>This is a basic history page component</p>
-      </div>
-    </div>
+    <Box p={4}>
+      <Heading mb={4}>History Page</Heading>
+      <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
+        <Text>This is a basic history page component</Text>
+      </Box>
+    </Box>
   );
 };
 

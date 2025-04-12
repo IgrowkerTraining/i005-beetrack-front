@@ -13,7 +13,7 @@ export const Card = ({ label, amount, icon, bgIcon = 'green.500' }: CardProps) =
     <Flex
       bg="white"
       borderRadius="xl"
-      boxShadow="soft"
+      boxShadow="md"
       p={4}
       align="center"
       justify="space-between"

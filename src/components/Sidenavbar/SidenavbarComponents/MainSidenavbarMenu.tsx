@@ -1,69 +1,41 @@
-import { Box, HStack, IconButton, Image, Separator, SystemStyleObject, Text, VStack } from "@chakra-ui/react"
-import { MdBarChart, MdClose, MdHistory, MdHomeFilled, MdInventory, MdPointOfSale } from "react-icons/md"
+import { Box, Flex, HStack, IconButton, Image, Text, useBreakpointValue, VStack } from '@chakra-ui/react';
+import { MdBarChart, MdHomeFilled, MdInventory, MdMenu, MdPerson, MdPointOfSale } from 'react-icons/md';
+import NavItem from './NavItem';
+import useSidenavbarStore from '@/store/useSidenavbarStore';
 import Logo from '@/assets/logo.svg';
-import { NavLink } from "react-router-dom";
 
-type MainSidenavbarMenu = {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const MainSidenavbarMenu = () => {
 
-const MainSidenavbarMenu = ({ isOpen, setIsOpen }: MainSidenavbarMenu) => {
-
-    const sidenavabarStyles: SystemStyleObject = {
-        "& > a": { w: "full", p: 2, display: "flex", alignItems: "center", gap: 3, fontWeight: "bold", fontSize: "14px", borderRadius: "md" },
-        "& > a:hover": {
-            bg: { base: "#57a182", _dark: "sidenavbar.light" },
-            color: { base: "sidenavbar.light", _dark: "sidenavbar.dark" },
-        },
-    }
+    const { setIsOpen, setToggle, isToggle } = useSidenavbarStore();
+    const isMobile = useBreakpointValue({ base: true, md: false });
 
     return (
-        <Box
-            display={{ base: isOpen ? "block" : "none", md: "block" }}
-            h={{ base: "100vh", md: "auto" }}
-            p={{ base: "20px", md: "0" }}
-            bg={{ base: "sidenavbar.light", _dark: "sidenavbar.dark" }}
-            position={{ base: "absolute", md: "relative" }}
-            shadow={{ base: "lg", md: "none" }}
-            top={0} left={0}>
-            <HStack gap={4}>
-                <Image
-                    src={Logo} alt="Logo Beetrack" maxWidth={"50px"} />
-                <Box>
-                    <Text as={"p"} fontWeight={"bold"}>BEETRACK</Text>
-                    <Text as={"p"} fontSize={"2xs"}>SALES & MINORY MANAGER</Text>
-                </Box>
-                <IconButton variant={"plain"} onClick={() => setIsOpen(false)} display={{ base: "block", md: "none" }}>
-                    <MdClose />
+        <VStack id="main-menu-item" h={"full"} gap={"24px"} zIndex={10}>
+            <Flex gap={4} alignItems={"center"}>
+                <IconButton
+                    variant={"ghost"}
+                    onClick={() => isMobile ? setIsOpen(false) : setToggle()}>
+                    <MdMenu />
                 </IconButton>
-            </HStack>
-            <Separator my={"10px"} />
-            <Box>
-                <VStack gap={4} alignItems={"start"} w={"full"} css={sidenavabarStyles}>
-                    <NavLink to={"/"}>
-                        <MdHomeFilled />
-                        Inicio
-                    </NavLink>
-                    <NavLink to={"/inventario"}>
-                        <MdInventory />
-                        Inventario
-                    </NavLink>
-                    <NavLink to={"/ventas"}>
-                        <MdPointOfSale />
-                        Ventas
-                    </NavLink>
-                    <NavLink to={"/estadisticas"}>
-                        <MdBarChart />
-                        Estadísticas
-                    </NavLink>
-                    <NavLink to={"/historial"}>
-                        <MdHistory />
-                        Historial
-                    </NavLink>
-                </VStack>
-            </Box>
-        </Box>
+                <HStack display={{ base: "flex", md: isToggle ? "none" : "" }}>
+                    <Image
+                        src={Logo} alt="Logo Beetrack" maxWidth={"50px"} />
+                    <Box>
+                        <Text as={"p"} fontWeight={"bold"}>BEETRACK</Text>
+                        <Text as={"p"} fontSize={"2xs"}>SALES & MINORY MANAGER</Text>
+                    </Box>
+                </HStack>
+            </Flex>
+            <VStack w={"full"} h={"full"}>
+                <NavItem to="/" icon={<MdHomeFilled />} text="Home" />
+                <NavItem to="/inventario" icon={<MdInventory />} text="Inventario" />
+                <NavItem to="/ventas" icon={<MdPointOfSale />} text="Ventas" />
+                <NavItem to="/estadisticas" icon={<MdBarChart />} text="Estadísticas" />
+                <Box asChild marginTop={"auto"}>
+                    <NavItem to="/perfil" icon={<MdPerson />} text="Perfil" />
+                </Box>
+            </VStack>
+        </VStack>
     )
 }
 

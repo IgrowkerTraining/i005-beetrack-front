@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 
 interface StatsPageProps {
   title?: string;
@@ -6,12 +7,12 @@ interface StatsPageProps {
 
 const StatsPage: React.FC<StatsPageProps> = ({ title = 'Statistics' }) => {
   return (
-    <div className="stats-page">
-      <h1>{title}</h1>
-      <div className="stats-content">
-        <p>Welcome to the statistics page</p>
-      </div>
-    </div>
+    <Box p={4}>
+      <Heading mb={4}>{title}</Heading>
+      <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
+        <Text>Welcome to the statistics page</Text>
+      </Box>
+    </Box>
   );
 };
 

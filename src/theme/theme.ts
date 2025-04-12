@@ -1,7 +1,10 @@
 import { createSystem, defaultConfig } from '@chakra-ui/react';
 
-export const customStyles = createSystem(defaultConfig, {
+const customStyles = createSystem(defaultConfig, {
 	theme: {
+		breakpoints: {
+			xs: "280px",
+		},
 		tokens: {
 			fonts: {
 				body: { value: `'Montserrat', sans-serif` },
@@ -17,6 +20,7 @@ export const customStyles = createSystem(defaultConfig, {
 					dark: { value: "#363636" }
 				},
 				yellow: {
+					"amarillo": { value: "#ffd701" },
 					50: { value: '#fff9e6' },
 					200: { value: '#ffe28d' },
 					300: { value: '#ffd559' },
@@ -60,7 +64,11 @@ export const customStyles = createSystem(defaultConfig, {
 					100: { value: '#b6bac0' },
 					200: { value: '#9298A1' },
 					300: { value: '#606976' },
-				}
+				},
+				chart: {
+					bg: { value: '#0f2027' },
+					gradient: { value: 'linear(to-br, #0f2027, #203a43, #2c5364)' }
+				  }
 			},
 			shadows: {
 				soft: { value: '0 2px 4px rgba(0, 0, 0, 0.05)' },
@@ -70,3 +78,5 @@ export const customStyles = createSystem(defaultConfig, {
 		},
 	}
 })
+
+export default customStyles;
