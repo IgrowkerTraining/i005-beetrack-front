@@ -27,24 +27,17 @@ const useSaleStore = create<SaleState>()(
 
     addItem: (item: SaleItem) =>
       set((state: SaleState) => {
-        const existingItem = state.currentSale.items.find(
-          (i) => i.id === item.id
-        );
 
-        let updatedItems;
-        if (existingItem) {
-          updatedItems = state.currentSale.items.map((i) =>
-            i.id === item.id
-              ? {
-                  ...i,
-                  quantity: i.quantity + item.quantity,
-                  totalPrice: (i.quantity + item.quantity) * i.unitPrice,
-                }
-              : i
-          );
-        } else {
-          updatedItems = [...state.currentSale.items, item];
-        }
+        const updatedItems = state.currentSale.items.map((i) =>
+          i.id === item.id
+            ? {
+                ...i,
+                quantity: i.quantity + 1,
+                totalPrice: (i.quantity + 1) * i.unitPrice,
+              }
+            : i
+        );
+        
 
         const subTotal = updatedItems.reduce((acc, item) => acc + item.totalPrice, 0);
 
@@ -109,6 +102,7 @@ const useSaleStore = create<SaleState>()(
       }),
 
     finalizeSale: () =>
+      //Todo: Definir la lógica de finalización de la venta
       set((state) => ({
         currentSale: {
           ...state.currentSale,

@@ -17,7 +17,7 @@ interface ProductState {
 
 const useProductStore = create<ProductState>()(
   devtools(
-    (set) => ({
+    (set, get) => ({ 
       products: [],
       queryParams: {
         page: 1,
@@ -44,6 +44,9 @@ const useProductStore = create<ProductState>()(
           return { products: updatedProducts };
         });
         
+      },
+      getProductByBarcode: (barcode: String) => {
+        const product = get().products.find((product) => product.barcode === barcode);
       },
     })
   )

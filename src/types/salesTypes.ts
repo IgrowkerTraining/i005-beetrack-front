@@ -1,3 +1,4 @@
+import { PaymentMethod } from "@/enums/paymentMethod.enum";
 import { SaleStatus } from "@/enums/saleStatus.enum";
 
 export interface SaleItem {
@@ -15,9 +16,8 @@ export interface Sale {
     id?: number;
     status?: SaleStatus;
     createdAt?: string;
-    sellerId?: number;
-    paymentMethodId?: number;
-    discountId?: number;
+    paymentMethod?: PaymentMethod;
+    discount?: number;
     items: SaleItem[];
     subTotal: number;
     total: number;    
