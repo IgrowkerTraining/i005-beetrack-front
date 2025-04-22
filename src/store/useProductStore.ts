@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { Product, NewProduct } from '../types/productType';
+import { devtools, persist } from 'zustand/middleware';
+import { Product } from '../types/productType';
 
 interface ProductState {
   products: Product[];
@@ -9,43 +9,46 @@ interface ProductState {
     limit: number;
     filter: string;
   };
-  fetchProducts: (products: Product[]) => Promise<void>;
-  addProduct: (product: NewProduct) => Promise<void>;
-  updateProduct: (id: number, updatedData: Partial<Product>) => Promise<void>;
-  removeProduct: (id: number) => Promise<void>;
+  fetchProducts: (products: Product[]) => void;
+  addProduct: (product: Product) => void;
+  updateProduct: (id: string, updatedData: Partial<Product>) => void;
+  removeProduct: (id: string) => void;
 }
 
 const useProductStore = create<ProductState>()(
   devtools(
-    (set) => ({
-      products: [],
-      queryParams: {
-        page: 1,
-        limit: 10, 
-        filter: '',
-      },
-      fetchProducts: (products: Product[]) => set({ products }),        
-      addProduct: (product: Product) => {        
-        set((state: ProductState) => ({
-          products: [...state.products, product]
-        }));
-      },
-      updateProduct: (id, updatedData) =>  {
-        set((state: ProductState) => {
-          const updatedProducts = state.products.map((product) =>
-            product.id === id ? { ...product, ...updatedData } : product
-          );
-          return { products: updatedProducts };
-        })        
-      },
-      removeProduct:  (id) => {
-        set((state: ProductState) => {
-          const updatedProducts = state.products.filter((product) => product.id !== id);
-          return { products: updatedProducts };
-        });
-        
-      },
-    })
+    persist(
+      (set) => ({
+        products: [],
+        queryParams: {
+          page: 1,
+          limit: 10,
+          filter: '',
+        },
+        fetchProducts: (products: Product[]) => set({ products }),
+        addProduct: (product) =>
+          set((state) => ({
+            products: [...state.products, product],
+          })),
+        updateProduct: (id, updatedData) => {
+          set((state) => {
+            const updatedProducts = (state.products || []).map((product) =>
+              product.id === id ? { ...product, ...updatedData } : product
+            );
+            return { products: updatedProducts };
+          });
+        },
+        removeProduct: (id) => {
+          set((state) => ({
+            products: (state.products || []).filter((product) => product.id !== id),
+          }));
+        },
+      }),
+      {
+        name: 'product-storage', // clave en localStorage
+      }
+    ),
+    { name: 'ProductStore' }
   )
 );
 

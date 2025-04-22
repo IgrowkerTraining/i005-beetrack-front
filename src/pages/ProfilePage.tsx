@@ -1,34 +1,20 @@
-import { useFetchProfile } from '@/hooks/useProfile';
+import StoreEditForm from '@/components/ProfileComponents/StoreEditForm';
+import StoreProfileCard from '@/components/ProfileComponents/StoreProfileCard';
+import UserEditForm from '@/components/ProfileComponents/UserEditForm';
+import UserProfileCard from '@/components/ProfileComponents/UserProfileCard';
+import { useFetchProfile, useUpdateStore, useUpdateUser } from '@/hooks/useProfile';
 import useProfileStore from '@/store/useProfileStore';
-import { dateFormatter } from '@/utils/dateFormatter';
-import { Box, Button, Center, DataList, GridItem, SimpleGrid, Spinner, Text, VStack } from '@chakra-ui/react';
-import { MdOutlineEdit } from 'react-icons/md';
-
-export interface UserData {
-  id: string;
-  name: string;
-  last_name: string;
-  birthdate: Date;
-  email: string;
-
-  status: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  store: {
-    id: string;
-    name: string;
-    address: string;
-    tel: string;
-    status: 'ACTIVE' | 'BLOCKED';
-    createdAt: Date;
-    updatedAt: Date;
-  }
-}
+import { Box, Center, GridItem, SimpleGrid, Spinner, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
 
 const ProfilePage = () => {
-
+  const [isEditingStore, setIsEditingStore] = useState<boolean>(false);
+  const [isEditingUser, setIsEditingUser] = useState<boolean>(false);
   const { isLoading, isError, error } = useFetchProfile()
   const { profile } = useProfileStore();
+  const { mutate: mutateStore, isPending: isPendingStore } = useUpdateStore();
+  const { mutate: mutateUser, isPending: isPendingUser } = useUpdateUser();
+
 
   if (isLoading) return (
     <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"}>
@@ -65,31 +51,13 @@ const ProfilePage = () => {
           flexGrow={1}
           borderRadius="3xl"
           boxShadow="md">
-          <DataList.Root size="lg">
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Nombre</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.store.name}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Dirección</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.store.address}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Teléfono</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.store.tel}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Fecha de creación</DataList.ItemLabel>
-              <DataList.ItemValue>{dateFormatter(profile.store.createdAt)}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Última actualización de la tienda</DataList.ItemLabel>
-              <DataList.ItemValue>{dateFormatter(profile.store.updatedAt)}</DataList.ItemValue>
-            </DataList.Item>
-          </DataList.Root>
-          <Button colorPalette="yellow" variant="solid" mt={"auto"} rounded={"16px"}>
-            <MdOutlineEdit /> Editar
-          </Button>
+          {!isEditingStore
+            ? (
+              <StoreProfileCard setIsEditingStore={setIsEditingStore} isPending={isPendingStore} />
+            ) : (
+              <StoreEditForm setIsEditingStore={setIsEditingStore} mutateStore={mutateStore} />
+            )
+          }
         </Box>
       </GridItem>
 
@@ -106,37 +74,13 @@ const ProfilePage = () => {
           flexGrow={1}
           borderRadius="3xl"
           boxShadow="md">
-
-          <DataList.Root size="lg">
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Nombre</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.name}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Apellidos</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.last_name}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Fecha de nacimiento</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.birthdate}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Email</DataList.ItemLabel>
-              <DataList.ItemValue>{profile.email}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Fecha de creación</DataList.ItemLabel>
-              <DataList.ItemValue>{dateFormatter(profile.createdAt)}</DataList.ItemValue>
-            </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel fontWeight={"bold"}>Última actualización del usuario</DataList.ItemLabel>
-              <DataList.ItemValue>{dateFormatter(profile.updatedAt)}</DataList.ItemValue>
-            </DataList.Item>
-          </DataList.Root>
-          <Button colorPalette="yellow" variant="solid" mt={"auto"} rounded={"16px"}>
-            <MdOutlineEdit /> Editar
-          </Button>
-
+          {!isEditingUser
+            ? (
+              <UserProfileCard setIsEditingUser={setIsEditingUser} isPending={isPendingUser} />
+            ) : (
+              <UserEditForm setIsEditingUser={setIsEditingUser} mutateUser={mutateUser} />
+            )
+          }
         </Box>
       </GridItem>
     </SimpleGrid>

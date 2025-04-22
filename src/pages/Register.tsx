@@ -3,15 +3,16 @@ import {
   Box,
   Text,
   Stack,
-  Container,
-  Separator,
+  Heading,
+  Image,
   Button,
   Link,
   Flex,
-  VStack,
+  HStack,
 } from "@chakra-ui/react";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { IoLogoFacebook } from "react-icons/io";
+import HexagonPattern from "@/assets/HexagonPattern.svg";
 import { useState } from "react";
 import { useCheckEmailExists, useRegister } from "@/hooks/useAuth";
 import { useEmailCheck } from "@/hooks/useEmailCheck";
@@ -19,10 +20,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   registerSchema,
-  emailSchema,
-  passwordSchema,
-  personalInfoSchema,
-  storeInfoSchema,
   RegisterFormData,
 } from "@/components/login-registerComponents/registerSchema";
 import { EmailStep } from "@/components/login-registerComponents/EmailStep";
@@ -32,7 +29,7 @@ import { StoreInfoStep } from "@/components/login-registerComponents/StoreInfoSt
 import { StepProgress } from "@/components/login-registerComponents/StepProgress";
 import { StepNavigation } from "@/components/login-registerComponents/StepNavigation";
 import { useNavigate } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
+import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -68,11 +65,6 @@ const Register = () => {
       storeAddress: "",
     },
   });
-  // useEffect(() => {
-  //   if (Object.keys(errors).length > 0) {
-  //     console.log("Form errors:", errors);
-  //   }
-  // }, [errors]);
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
@@ -148,47 +140,27 @@ const Register = () => {
     switch (step) {
       case 1:
         return (
-          <Stack gap={0}>
-            <Text>Registrate para</Text>
-            <Text>empezar a</Text>
-            <Text>gestionar tu negocio</Text>
-          </Stack>
+          <Text fontSize="xs" color="gray.500">
+            Elige cómo registrarte
+          </Text>
         );
       case 2:
         return (
-          <VStack w="100%" align="left">
-            <Text w="50%" fontSize="sm" color="gray.500">
-              Paso 1 de 3
-            </Text>
-            <Flex align={'center'}>
-              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
-              <Text ml={5}>Crear contraseña</Text>
-            </Flex>
-          </VStack>
+          <Text fontSize="xs" color="gray.500">
+            Crear contraseña
+          </Text>
         );
       case 3:
         return (
-          <VStack w="100%" align="left">
-            <Text w="50%" fontSize="sm" color="gray.500">
-              Paso 2 de 3
-            </Text>
-            <Flex align={'center'}>
-              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
-              <Text ml={5}>Datos personales</Text>
-            </Flex>
-          </VStack>
+          <Text fontSize="xs" color="gray.500">
+            Datos personales
+          </Text>
         );
       case 4:
         return (
-          <VStack w="100%" align="left">
-            <Text w="50%" fontSize="sm" color="gray.500">
-              Paso 3 de 3
-            </Text>
-            <Flex align={'center'}>
-              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
-              <Text ml={5}>Datos del comercio</Text>
-            </Flex>
-          </VStack>
+          <Text fontSize="xs" color="gray.500">
+            Datos del comercio
+          </Text>
         );
       default:
         return "Registro";
@@ -198,98 +170,188 @@ const Register = () => {
   const isLoading = isCheckingEmail || isRegistering || isSubmitting;
 
   return (
-    <Stack
+    <Flex
       minH="100vh"
+      maxW="100vw"
       w="100%"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
+      direction={{ base: "column", md: "row" }}
       bg="gray.50"
-      p={4}
+      align="stretch"
+      position="relative"
+      overflow="hidden"
     >
-      <Card.Root
-        minH={{ base: "80vh", md: "60vh" }}
-        maxW={{ base: "100%", md: "380px" }}
-        variant={"subtle"}
-        bg={"gray.50"}
-        as="form"
-        w="full"
-        onSubmit={handleNextStep}
+      {/* Left Panel: only visible on desktop */}
+      <Flex
+        flex={1}
+        display={{ base: "none", md: "flex" }}
+        direction="column"
+        align="center"
+        justify="center"
+        bg="gray.50"
+        px={12}
+        py={8}
+        position="relative"
       >
-        <Card.Header>
-          <StepProgress step={step} title={getStepTitle()} />
-        </Card.Header>
-        <Card.Body>
-          {step === 1 && <EmailStep register={register} errors={errors} />}
-
-          {step === 2 && <PasswordStep register={register} errors={errors} />}
-
-          {step === 3 && (
-            <PersonalInfoStep register={register} errors={errors} />
-          )}
-
-          {step === 4 && <StoreInfoStep register={register} errors={errors} />}
-        </Card.Body>
-        <Card.Footer flexWrap={{ base: "wrap" }} gap={2}>
-          <StepNavigation
-            step={step}
-            isLoading={isLoading}
-            isCheckingEmail={isCheckingEmail}
-            isRegistering={isRegistering}
-            // handlePrevStep={handlePrevStep}
+        <Box
+          position="absolute"
+          top="-70px"
+          left="-50px"
+          zIndex="0"
+          pointerEvents="none"
+        >
+          <Image
+            src={HexagonPattern}
+            alt="Decorative pattern"
+            width="250px"
+            height="183px"
           />
-          {step === 1 && (
-            <Stack
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              w={"full"}
-            >
-              {/* la linea separadora pero tengo que buscar como hacerla mejor que con una caja */}
-              <Box
-                as="span"
-                w="100%"
-                h="1px"
-                bg="gray.500"
-                my="25px"
-                position="relative"
-              />
-              <Button
-                border={"1px solid"}
-                variant="outline"
-                mb={4}
-                w="full"
-                fontWeight={"bold"}
-                borderRadius="xl"
-                size={"lg"}
+        </Box>
+        <Box mb={8} w="full" zIndex={1}>
+          <Heading fontSize="2xl" fontWeight="bold" mb={2}>
+            TODO TU NEGOCIO, EN UNA SOLA APP
+          </Heading>
+          <Text fontSize={'sm'} color="gray.600" mb={6}>
+            Pensado para emprendedores y comercios que quieren simplificar su día a día.
+          </Text>
+          <Stack gap={4}>
+            <HStack>
+              <Box bg="#FFD701" p={2} borderRadius="md">
+                <MdInventory size="24px" />
+              </Box>
+              <Text fontWeight="bold">Controlá tu inventario</Text>
+            </HStack>
+            <HStack>
+              <Box bg="#FFD701" p={2} borderRadius="md">
+                <MdShoppingCart size="24px" />
+              </Box>
+              <Text fontWeight="bold">Registrá ventas</Text>
+            </HStack>
+            <HStack>
+              <Box bg="#FFD701" p={2} borderRadius="md">
+                <MdPointOfSale size="24px" />
+              </Box>
+              <Text fontWeight="bold">Gestioná tu caja de forma fácil y rápida.</Text>
+            </HStack>
+          </Stack>
+        </Box>
+        <Box display="flex" alignItems={'flex-end'}>
+          <Image
+            src="/src/assets/imgLogin.svg"
+            maxW="100%"
+            maxH="430px"
+            objectFit="contain"
+            w="100%"
+            h="auto" />
+        </Box>
+      </Flex>
+
+      {/* Right Panel: Register Form */}
+      <Flex
+        flex={1}
+        align="center"
+        justify="center"
+        position="relative"
+        bg="white"
+        shadow={'lg'}
+        py={{ base: 8, md: 0 }}
+      >
+        <Box
+          position="absolute"
+          bottom="-70px"
+          right="-50px"
+          zIndex="0"
+          pointerEvents="none"
+        >
+          <Image
+            src={HexagonPattern}
+            alt="Decorative pattern"
+            width="250px"
+            height="183px"
+          />
+        </Box>
+        <Card.Root
+          minH={{ base: "90vh", md: "60vh" }}
+          maxW={{ base: "100%", md: "380px" }}
+          variant={"subtle"}
+          bg={"transparent"}
+          as="form"
+          w="full"
+          onSubmit={handleNextStep}
+        >
+          <Card.Header>
+            <StepProgress step={step} title={getStepTitle()} />
+          </Card.Header>
+          <Card.Body>
+            {step === 1 && (
+              <Stack
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                w={"full"}
               >
-                <AiFillGoogleCircle /> Registrate con Google
-              </Button>
-              <Button
-                border={"1px solid"}
-                variant="outline"
-                w="full"
-                fontWeight={"bold"}
-                borderRadius="xl"
-                size={"lg"}
-              >
-                <IoLogoFacebook /> Registrate con Facebook
-              </Button>
-              <Text mt={10} textStyle={"xs"}>
+                <Button
+                  border={"1px solid"}
+                  variant="outline"
+                  mb={4}
+                  w="full"
+                  fontWeight={"bold"}
+                  borderRadius="xl"
+                  size={"lg"}
+                >
+                  <AiFillGoogleCircle /> Registrate con Google
+                </Button>
+                <Button
+                  border={"1px solid"}
+                  variant="outline"
+                  w="full"
+                  fontWeight={"bold"}
+                  borderRadius="xl"
+                  size={"lg"}
+                >
+                  <IoLogoFacebook /> Registrate con Facebook
+                </Button>
+                <Flex align="center" width="100%" my={4}>
+                  <Box flex="1" height="1px" bg="gray.300" />
+                  <Text mx={4} fontWeight="bold" color="gray.600" fontSize="md">
+                    0
+                  </Text>
+                  <Box flex="1" height="1px" bg="gray.300" />
+                </Flex>
+              </Stack>
+            )}
+            {step === 1 && <EmailStep register={register} errors={errors} />}
+
+            {step === 2 && <PasswordStep register={register} errors={errors} />}
+
+            {step === 3 && (
+              <PersonalInfoStep register={register} errors={errors} />
+            )}
+            {step === 4 && <StoreInfoStep register={register} errors={errors} />}
+          </Card.Body>
+          <Card.Footer flexWrap={{ base: "wrap" }}>
+            <StepNavigation
+              step={step}
+              isLoading={isLoading}
+              isCheckingEmail={isCheckingEmail}
+              isRegistering={isRegistering}
+              handlePrevStep={handlePrevStep}
+            />
+            {step === 1 && (
+              <Text mt={1} textStyle={"xs"}>
                 ¿Ya tienes una cuenta?{" "}
                 <Link
                   textDecoration="underline"
                   fontWeight={"bold"}
                   href="/login"
                 >
-                  Inicia sesión aquí
+                  Iniciar sesión
                 </Link>
               </Text>
-            </Stack>
-          )}
-        </Card.Footer>
-      </Card.Root>
-    </Stack>
+            )}
+          </Card.Footer>
+        </Card.Root>
+      </Flex>
+    </Flex>
   );
 };
 

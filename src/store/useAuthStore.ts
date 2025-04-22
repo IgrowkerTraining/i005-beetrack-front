@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { User } from "@/types/authType";
-import { Query } from "@tanstack/react-query";
 import { QueryParams } from "@/types/utilsAppTypes";
+
 interface AppError {
   message: string;
   code?: string | number;
@@ -13,7 +13,7 @@ interface AuthState {
   loading: boolean;
   isAuthenticated: boolean;
   error: AppError | null;
-  queryParams: QueryParams
+  queryParams: QueryParams;
 
   setLoading: (isLoading: boolean) => void;
   setUser: (user: User | null) => void;
@@ -32,20 +32,29 @@ const initialState = {
 
 const useAuthStore = create<AuthState>()(
   devtools(
-    (set) => ({
-      ...initialState,
+    persist(
+      (set) => ({
+        ...initialState,
 
-      setLoading: (isLoading: boolean) => set({ loading: isLoading }),
+        setLoading: (isLoading: boolean) => set({ loading: isLoading }),
 
-      setUser: (user: User | null) => set({ user }),
+        setUser: (user: User | null) => set({ user }),
 
-      setIsAuthenticated: (isAuthenticated: boolean) =>
-        set({ isAuthenticated }),
+        setIsAuthenticated: (isAuthenticated: boolean) =>
+          set({ isAuthenticated }),
 
-      setError: (error: AppError | null) => set({ error }),
+        setError: (error: AppError | null) => set({ error }),
 
-      resetState: () => set(initialState),
-    }),
+        resetState: () => set(initialState),
+      }),
+      {
+        name: "auth",
+        partialize: (state) => ({
+          user: state.user,
+          isAuthenticated: state.isAuthenticated,
+        }),
+      }
+    ),
     { name: "AuthStore" }
   )
 );

@@ -5,11 +5,14 @@ import {
   Text,
   VStack,
   HStack,
+  useBreakpointValue,
+  Button,
 } from '@chakra-ui/react'
 import { MdArrowBack, MdLightbulb } from 'react-icons/md'
 import { CiBarcode } from 'react-icons/ci'
 import ProductScanner from '@/components/InventoryComponents/ProductScanner'
 import { ProductNotFoundModal } from '@/components/InventoryComponents/ProductNotFoundModal'
+import { AddBarcodeModal } from '@/components/InventoryComponents/AddBarcodeModal'
 
 const products = [
   {
@@ -22,9 +25,11 @@ const products = [
 ]
 
 function ProductScannerPage() {
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const [barCode, setBarCode] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [scannerKey, setScannerKey] = useState(0)
+  const [isAddBarcodeOpen, setIsAddBarcodeOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -40,14 +45,16 @@ function ProductScannerPage() {
   }, [barCode, navigate])
 
   return (
-    <Box p={4} maxW="500px" mx="auto">
-      <HStack mb={4} align="center">
-        <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
-        <Text fontSize="lg" fontWeight="bold">
-          Código de barras
-        </Text>
-      </HStack>
 
+    <Box p={4} maxW="500px" mx="auto">
+      {isMobile && (
+        <HStack mb={4} align="center">
+          <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
+          <Text fontSize="lg" fontWeight="bold">
+            Código de barras
+          </Text>
+        </HStack>
+      )}
       <Box
         mb={4}
         display="flex"
@@ -80,6 +87,21 @@ function ProductScannerPage() {
         </VStack>
       </Box>
 
+       <VStack mx="auto" display="flex">
+        <Text>¿Tienes problemas para escanear el producto?</Text>
+        <Button
+          onClick={() => setIsAddBarcodeOpen(true)}
+          w="full"
+          bg="yellow.amarillo"
+          rounded="2xl"
+          variant="plain"
+          mb={4}
+        >
+          Cargar código manualmente
+        </Button>
+      </VStack>
+
+      {/* Modales */}
       <ProductNotFoundModal
         isOpen={showModal}
         barCode={barCode}
@@ -90,7 +112,15 @@ function ProductScannerPage() {
         }}
         onAdd={(barCode) => {
           setShowModal(false)
-          navigate(`/addproduct/${barCode}`)
+          navigate(`/products/barcode/${barCode}`)
+        }}
+      />
+
+      <AddBarcodeModal
+        isOpen={isAddBarcodeOpen}
+        onClose={() => setIsAddBarcodeOpen(false)}
+        onConfirm={(code) => {
+          setBarCode(code)
         }}
       />
     </Box>

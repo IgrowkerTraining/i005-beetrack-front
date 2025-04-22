@@ -5,6 +5,7 @@ const getRoutesMetadata = (storeName: string = "Welcome"): Record<string, { titl
 	"/sales": { title: "Ventas" },
 	"/stadistics": { title: "Estadísticas" },
 	"/profile": { title: "Perfil" },
+	"/notifications": { title: "Notificaciones" },
 	"/404": { title: "Página no encontrada" },
 	// "/login": { title: "Iniciar sesión" },
 	// "/register": { title: "Registro" },

@@ -1,7 +1,6 @@
 import {
   SimpleGrid,
   GridItem,
-  useBreakpointValue,
   Box,
   Text,
   Flex,

@@ -6,14 +6,12 @@ import { Outlet } from 'react-router-dom';
 type PrivateLayoutProps = {
     children?: ReactNode;
     showTopbar?: boolean;
-    showSidebar?: boolean;
     contentPadding?: string | object;
 };
 
 const MainContainer = ({
     children,
     showTopbar = true,
-    showSidebar = true,
     contentPadding = "0"
 }: PrivateLayoutProps) => {
     const isMobile = useBreakpointValue({ base: true, md: false });

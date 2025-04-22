@@ -5,6 +5,7 @@ import OverlayToLayout from '@/components/ui/OverlayToLayout';
 import { useToolbarTittle } from '@/hooks/useToolbarTitle';
 import MainContainer from '@/components/PrivateLayoutComponents/MainContainer';
 import { useFetchProfile } from '@/hooks/useProfile';
+import { useFetchProducts } from '@/hooks/useProduct';
 // import { ColorModeButton } from '@/components/ui/color-mode';
 
 const PrivateLayout = () => {
@@ -13,6 +14,7 @@ const PrivateLayout = () => {
   useAutocloseSidenavbar();
   useToolbarTittle();
   useFetchProfile()
+  useFetchProducts()
 
   return (
     <Box

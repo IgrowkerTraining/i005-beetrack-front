@@ -30,7 +30,7 @@ export default function QuickAccess() {
       label: "Agregar producto",
       icon: MdInventory2,
       onClick: () => {
-        navigate('/addproduct');
+        navigate('/products');
       },
     },
     {

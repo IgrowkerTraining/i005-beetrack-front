@@ -8,7 +8,7 @@ const useAutocloseSidenavbar = () => {
     
     useEffect(() => {
         if(!isMobile && isOpen) setIsOpen(false);
-    }, [isMobile]);
+    }, [isMobile, isOpen, setIsOpen]);
 }
 
 export default useAutocloseSidenavbar;

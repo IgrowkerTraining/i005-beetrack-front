@@ -24,7 +24,7 @@ export function ProductNotFoundModal({ isOpen, onClose, onAdd, barCode }: Props)
         minHeight="100vh"
         zIndex="modal"
       >
-        <Dialog.Content borderRadius="2xl" maxW="sm" w="90%" bg="white">
+        <Dialog.Content py={0} borderRadius="2xl" maxW="sm" w="90%" bg="white">
           <Dialog.Header display="flex" justifyContent="center">
             <Dialog.Title fontSize="lg" fontWeight="bold" textAlign="center">
               Producto no encontrado
@@ -33,7 +33,7 @@ export function ProductNotFoundModal({ isOpen, onClose, onAdd, barCode }: Props)
 
           <Dialog.Body p={4}>
             <Text fontSize="sm" color="gray.600" textAlign="center">
-              El producto escaneado no se encuentra registrado en el inventario.{' '}
+              El producto no se encuentra registrado en el inventario.{' '}
               <Text as="span" fontWeight="medium" color="black">
                 ¿Te gustaría agregarlo?
               </Text>
@@ -44,7 +44,7 @@ export function ProductNotFoundModal({ isOpen, onClose, onAdd, barCode }: Props)
             <VStack w="100%" mt={4}>
               <Button
                 w="100%"
-                bg="amarillo"
+                bg="yellow.amarillo"
                 color="black"
                 borderRadius="lg"
                 onClick={() => barCode && onAdd(barCode)}
