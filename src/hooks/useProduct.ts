@@ -6,25 +6,28 @@ import { FetchProduct, FetchProductById, NewProduct, Product, UpdateProductRespo
 import { buildUrl } from '@/utils/buildUrl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ✅ Obtener todos los productos y guardarlos en la store
 export const useFetchProducts = () => {
-  const { queryParams, fetchProducts } = useProductStore();
+  const { queryParams, fetchProducts, products } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
 
-  const query = useQuery<FetchProduct, Error>({
+  const { data, isPending } = useQuery<{ status: string, data: Product[] }, Error>({
     queryKey: [url],
     queryFn: () => productService.getProducts(queryParams),
     staleTime: 5 * 60 * 1000,
   });
 
-  useEffect(() => {
-  if (query.data?.data?.length) {
-    fetchProducts(query.data.data);
-  }
-}, [query.data, fetchProducts]);
+  // console.log(data)
 
-  return query;
+  useEffect(() => {
+  if (data && data.data.length !== products.length) {
+    fetchProducts(data.data);
+  }
+}, [fetchProducts, products, data]);
+
+  return { data, isPending };
 };
 
 // ✅ Obtener producto por ID
@@ -39,23 +42,45 @@ export const useFetchProduct = (id: string) => {
 
 // ✅ Añadir nuevo producto
 export const useAddProduct = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { addProduct, queryParams } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
 
-  return useMutation<Product, Error, NewProduct & { file: File }>({
+  return useMutation<FetchProductById, Error, NewProduct & { file: File }>({
     mutationFn: productService.addProduct,
     onSuccess: (data) => {
-      addProduct(data);
-      queryClient.setQueryData<Product[]>([url], (old) =>
-        Array.isArray(old) ? [...old, data] : [data]
-      );
+      addProduct(data.data);
+      
+      toaster.create({
+        type: 'success',
+        description: 'Producto añadido correctamente'
+      })
+
+      queryClient.setQueryData<FetchProduct>([url], (old) => ({
+        ...old,
+        data: {
+          ...old?.data,
+          items: [...(old?.data?.items ?? []), data.data],
+          total: (old?.data?.total ?? 0) + 1
+        }
+      }));
+
+      navigate('/');
     },
+    onError: (error) => {
+      console.log(error)
+      toaster.create({
+        type: 'error',
+        description: error.message
+      })
+    }
   });
 };
 
 // ✅ Actualizar producto
 export const useUpdateProduct = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { updateProduct, queryParams } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
@@ -69,11 +94,20 @@ export const useUpdateProduct = () => {
         type: 'success',
         description: 'Producto actualizado',
       });
-      queryClient.setQueryData<Product[]>([url], (old) =>
-        Array.isArray(old)
-          ? old.map((product) => (product.id === id ? data.data : product))
-          : [data.data]
-      );
+
+      // queryClient.invalidateQueries({
+      //   queryKey: [url]
+      // })
+
+      queryClient.setQueryData<FetchProduct>([url], (old) => ({
+        ...old,
+        data: {
+          ...old?.data,
+          items: old?.data?.items.map(p => p.id === id ? data.data : p)
+        }
+      }));
+
+      navigate('/inventory');
     },
   });
 };

@@ -19,7 +19,8 @@ import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
 import HexagonPattern from "@/assets/HexagonPattern.svg";
 // import useAuthStore from "@/store/useAuthStore"; BORRAR?
 import { useLogin } from "@/hooks/useAuth";
-import { useState } from "react";
+import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -27,26 +28,12 @@ import {
   LoginFormData,
 } from "@/components/login-registerComponents/loginSchema";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Credentials } from "@/types/authType";
+import { NavLink } from "react-router-dom";
+import { toaster } from "@/components/ui/toaster";
 
 const Login = () => {
-  //TODO: arreglar esto
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const { isPending, mutate } = useLogin()
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-    mode: "onChange",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const { isPending, error, mutate } = useLogin()
 
   const {
     register,
@@ -61,24 +48,22 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      setIsLoggingIn(true);
-
-      // Simulate API call
-      // await new Promise((resolve) => setTimeout(resolve, 1500));
-      mutate(data);
-
-      console.log("Login successful!");
-      setIsLoggingIn(false);
-    } catch (error) {
-      setErrorMessage("Login failed. Please check your credentials.");
-      console.error("Login error:", error);
-      setIsLoggingIn(false);
-    }
+  const onSubmit = async (data: Credentials) => {
+    // Simulate API call
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
+    mutate(data);
   };
 
-  // const isLoading = isLoggingIn || isSubmitting;
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        toaster.create({
+          type: "error",
+          description: "Credenciales inválidas",
+        });
+      }, 0);
+    }
+  }, [error])
 
   return (
     <Flex
@@ -220,12 +205,10 @@ const Login = () => {
               </Heading>
               <Text my={2} textStyle={"xs"}>
                 ¿Eres nuevo?{" "}
-                <Link
-                  textDecoration="underline"
-                  fontWeight={"bold"}
-                  href="/register"
-                >
-                  Crear una cuenta
+                <Link asChild textDecoration="underline" fontWeight={"bold"}>
+                  <NavLink to="/register">
+                    Crear una cuenta
+                  </NavLink>
                 </Link>
               </Text>
             </Box>

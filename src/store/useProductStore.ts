@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { Product } from '../types/productType';
 
 interface ProductState {
@@ -17,19 +17,20 @@ interface ProductState {
 
 const useProductStore = create<ProductState>()(
   devtools(
-    persist(
+    // persist(
       (set) => ({
         products: [],
         queryParams: {
           page: 1,
-          limit: 10,
+          limit: 20,
           filter: '',
         },
         fetchProducts: (products: Product[]) => set({ products }),
-        addProduct: (product) =>
-          set((state) => ({
-            products: [...state.products, product],
-          })),
+        addProduct: (product: Product) => {
+          set((state: ProductState) => ({
+            products: [...state.products, product]
+          }));
+        },
         updateProduct: (id, updatedData) => {
           set((state) => {
             const updatedProducts = (state.products || []).map((product) =>
@@ -48,8 +49,8 @@ const useProductStore = create<ProductState>()(
         name: 'product-storage', // clave en localStorage
       }
     ),
-    { name: 'ProductStore' }
-  )
+    // { name: 'ProductStore' }
+  // )
 );
 
 export default useProductStore;

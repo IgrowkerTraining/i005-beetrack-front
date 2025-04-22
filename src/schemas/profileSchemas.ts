@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const phoneNumberSchema = z
+export const phoneNumberSchema = z
     .string()
     .nonempty({ message: 'El teléfono es obligatorio' })
     .min(6, { message: 'El teléfono debe contener entre 6-14 dígitos' })

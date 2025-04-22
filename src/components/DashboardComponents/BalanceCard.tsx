@@ -1,34 +1,7 @@
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react'
 import {MdOutlinePointOfSale} from 'react-icons/md'
-import { useEffect, useState } from 'react'
-import { apiRequest } from '@/utils/apiRequest'
-
-interface TotalSales {
-  totalSales: number;
-}
 
 export default function BalanceCard() {
-  const [sales, setSales] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchSales = async () => {
-      try {
-        const data = await apiRequest<TotalSales>('/api/dashboard?view=sales');
-        console.log('API Response:', data);
-        if (data.totalSales === undefined) {
-          console.warn('totalProfit is undefined in response');
-          return;
-        }
-        setSales(Number(data.totalSales));
-      } catch (error) {
-        console.error('Error fetching profit:', error);
-        setSales(null);
-      }
-    };
-
-    fetchSales();
-  }, []);
-
   return (
     <Box bg="white" p={{ base: 3 }} borderRadius="xl" boxShadow="sm" w="100%">
       <Flex
@@ -49,7 +22,7 @@ export default function BalanceCard() {
         <VStack align="start" gap={0}>
           <Text fontWeight="bold">Total</Text>
           <Text color="green.500" fontSize="xl" fontWeight="semibold">
-            {sales !== null ? `$${sales.toLocaleString()}` : "Cargando..."}
+            $233.382,01
           </Text>
         </VStack>
       </Flex>

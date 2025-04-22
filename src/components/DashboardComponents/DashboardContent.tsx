@@ -11,8 +11,12 @@ import BalanceCard from "@/components/DashboardComponents/BalanceCard";
 import IncomeCard from "@/components/DashboardComponents/IncomeCard";
 import ProductList from "@/components/DashboardComponents/ProductList";
 import TransactionsList from "@/components/DashboardComponents/TransactionsList";
+import { useTopBestSellings } from "@/hooks/useReport";
 
 export const DashboardContent = () => {
+  useTopBestSellings();  
+  // console.log(topBestSellingsReport);
+
   const color = useColorModeValue("blue.400", "white");
   return (
     <Flex direction="column" overflow="hidden" margin="0" padding="0">

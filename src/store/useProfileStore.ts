@@ -1,6 +1,6 @@
 import { Profile } from '@/types/profileTypes';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 
 interface ProfileState {
     profile: Profile | null;
@@ -10,16 +10,17 @@ interface ProfileState {
 
 const useProfileStore = create<ProfileState>()(
     devtools(
-        persist(
+        // persist(
             (set) => ({
                 profile: null,
                 fetchProfile: (profile: Profile) => set({ profile }),
                 editProfile: (profile: Profile) => set({ profile })
             }),
-            { name: "profile", partialize: ({ profile }) => ({
-                profile,
-            }) }
-        ), { name: 'ProfileStore' }
+            // { name: "profile", partialize: ({ profile }) => ({
+            //     profile,
+            // }) }
+        // ), 
+        { name: 'ProfileStore' }
     )
 )
 

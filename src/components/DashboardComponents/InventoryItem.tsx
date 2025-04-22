@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Badge, Icon } from '@chakra-ui/react'
+import { Box, Flex, Text, Badge } from '@chakra-ui/react'
 // import { ChevronRight } from 'lucide-react'
 
 interface InventoryItemProps {

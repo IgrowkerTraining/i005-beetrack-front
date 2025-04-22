@@ -1,5 +1,5 @@
 import useSidenavbarStore from '@/store/useSidenavbarStore';
-import { Button, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 import { SystemStyleObject } from '@chakra-ui/system';
 import { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';

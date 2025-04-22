@@ -17,7 +17,7 @@ const ProfilePage = () => {
 
 
   if (isLoading) return (
-    <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"}>
+    <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"} flexGrow={1} w={"full"}>
       <Spinner color="colorPalette.600" />
       <Text color="colorPalette.600">Loading...</Text>
     </VStack>

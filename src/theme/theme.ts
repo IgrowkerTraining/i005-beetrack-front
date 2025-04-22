@@ -53,9 +53,9 @@ const customStyles = createSystem(defaultConfig, {
 					normalActive: { value: '#000000' }
 				},
 				stock: {
-					low: { value: '#f23030' },
-					medium: { value: '#f86b40' },
-					good: { value: '#2ce281' },
+					ltStockMin: { value: '#f23232' },
+					ltStockOptimus: { value: '#FFA251' },
+					good: { value: '#2CE281' },
 				},
 				background:{
 					white: { value: '#ffffff' },

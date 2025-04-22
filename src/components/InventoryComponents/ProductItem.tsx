@@ -1,40 +1,30 @@
+import { Product } from '@/types/productType'
 import {
   Box,
   Flex,
   Image,
-  Text,
-  Stack,
+  Text, Stack
 } from '@chakra-ui/react'
-import StockLabel from './StockLabel'
 import { useNavigate } from 'react-router-dom'
+import StockLabel from './StockLabel'
 
 export type ProductItemProps = {
-  id: string
-  imagePath: string
+  image: string
   name: string
-  salesPrice: string
+  price: string
   stock: number
   view: 'grid' | 'list'
-  stock_min: number
-  stock_optimus: number
+  stockMin?: number
+  stockOpt?: number
 }
 
-const ProductItem = ({
-  id,
-  imagePath,
-  name,
-  salesPrice,
-  stock,
-  view,
-  stock_min,
-  stock_optimus,
-}: ProductItemProps) => {
+const ProductItem = ({ product, view }: { product: Product, view: string }) => {
 const navigate = useNavigate()
 
   if (view === 'list') {
     return (
       <Flex
-        onClick={() => navigate(`/products/id/${id}`) }
+        onClick={() => navigate(`/products/id/${product.id}`)}
         w="100%"
         mx="auto"
         bg="white"
@@ -47,29 +37,29 @@ const navigate = useNavigate()
         position="relative"
         cursor="pointer"
       >
-        <Flex align="center" gap={4}>
-          <Image
-            src={imagePath}
-            alt={name}
-            boxSize="50px"
-            objectFit="cover"
-            borderRadius="md"
-            flexShrink={0}
-          />
+        <Image
+          src={product.imagePath}
+          alt={product.name}
+          boxSize="50px"
+          objectFit="cover"
+          borderRadius="md"
+        />
+
+        <Flex justify="space-between" align="center" flex="1">
           <Stack gap={0}>
-            <Text fontSize="sm" fontWeight="medium">{name}</Text>
-            <Text fontSize="sm" color="gray.600">{salesPrice}</Text>
+            <Text fontWeight="medium" fontSize="sm">{product.name}</Text>
+            <Text fontSize="sm" color="gray.600">{product.salesPrice}</Text>
           </Stack>
         </Flex>
 
-        <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} isList />
+        <StockLabel stock={product.stock} stockMin={product.stock_min} stockOpt={product.stock_optimus} isList />
       </Flex>
     )
   }
 
   return (
     <Box
-      onClick={() => navigate(`/products/id/${id}`) }
+      onClick={() => navigate(`/products/id/${product.id}`)}
       w={170}
       borderRadius="xl"
       overflow="hidden"
@@ -78,11 +68,11 @@ const navigate = useNavigate()
       borderWidth="1px"
       borderColor="gray.300"
     >
-      <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} />
+      <StockLabel stock={product.stock} stockMin={product.stock_min} stockOpt={product.stock_optimus} />
 
       <Image
-        src={imagePath}
-        alt={name}
+        src={product.imagePath}
+        alt={product.name}
         w="80%"
         h="130px"
         objectFit="cover"
@@ -92,10 +82,10 @@ const navigate = useNavigate()
 
       <Stack p={3} gap={0}>
         <Text fontSize="sm" color="black" fontWeight="medium">
-          {name}
+          {product.name}
         </Text>
         <Text fontSize="sm" color="gray.700">
-          {salesPrice}
+          {product.salesPrice}
         </Text>
       </Stack>
     </Box>

@@ -1,16 +1,21 @@
 
 export interface Product {
     id: string;
-    description: string;
     barcode: string;
     name: string;
-    costPrice: string;
-    salesPrice:string;
     stock: number;
+    description: string;
+    storeId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    costPrice: string;
+    imagePath: string;
+    salesPrice: string;
+    status: string;
     stock_min: number;
     stock_optimus: number;
-    imagePath: string;
-    alerts: boolean;
+    cloudinary_id: string;
+    alerts: boolean
 }
 
 export interface NewProduct {
@@ -28,7 +33,10 @@ export interface NewProduct {
 
 export interface FetchProduct {
     status: string;
-    data: Product[];
+    data: {
+        items: Product[],
+        total: number
+    };
 }
 
 export interface FetchProductById {

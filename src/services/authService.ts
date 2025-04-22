@@ -21,11 +21,14 @@ export const authService = {
     });
   },
   async checkEmailExists(email: string): Promise<boolean> {
-    const url = buildUrl(AUTH_ENDPOINT, { resource: "check-email", email });
-    const response = await apiRequest<{ exists: boolean }>(url, {
-      method: "GET",
+    const url = buildUrl(AUTH_ENDPOINT, { resource: "register/check-email" });
+    const { data } = await apiRequest<{ data: { isEmailRegistered: boolean }, status: string }>(url, {
+      method: "POST",
+      body: JSON.stringify({ email })
     });
-    return response.exists;
+
+    console.log(data)
+    return data.isEmailRegistered;
   },
 
   async checkAuthStatus(): Promise<User> {

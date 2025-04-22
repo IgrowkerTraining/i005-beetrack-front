@@ -24,24 +24,29 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
       </Route>
 
-      {/* rutas privadas con layout en big screen y no layout on mobile */}
+      {/* Rutas privadas sin layout */}
       <Route element={<AccessRoutes isPrivate={true} />}>
+        <Route path="/products" element={<ProductPage />} />
+        <Route path="/products/id/:id" element={<ProductPage />} />
+        <Route path="/products/barcode/:barcode" element={<ProductPage />} />
+        <Route path="productscanner" element={<ProductScannerPage />} />
+        <Route path="notifications" element={<Notifications />} />
+      </Route>
+
+      {/* rutas privadas con layout en big screen y no layout on mobile */}
+      {/* <Route element={<AccessRoutes isPrivate={true} />}>
         {isMobile ? (
           <Route>
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="productscanner" element={<ProductScannerPage />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/products/barcode/:barcode" element={<ProductPage />} />
-            <Route path="/products/id/:id" element={<ProductPage />} />
+            // TODO: revisar el tema de las props
           </Route>
         ) : (
           <Route element={<PrivateLayout />}>
-            <Route path="productscanner" element={<ProductScannerPage />} />
+            // TODO: revisar el tema de las props
             <Route path="notifications" element={<Notifications />} />
           </Route>
         )}
+      </Route> */}
 
-      </Route>
       {/* Rutas protegidas con layout */}
       <Route element={<AccessRoutes isPrivate={true} />}>
         <Route element={<PrivateLayout />}>

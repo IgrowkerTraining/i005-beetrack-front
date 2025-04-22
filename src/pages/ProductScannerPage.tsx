@@ -47,14 +47,14 @@ function ProductScannerPage() {
   return (
 
     <Box p={4} maxW="500px" mx="auto">
-      {isMobile && (
+      {/* {isMobile && ( */}
         <HStack mb={4} align="center">
           <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
           <Text fontSize="lg" fontWeight="bold">
             Código de barras
           </Text>
         </HStack>
-      )}
+      {/* )} */}
       <Box
         mb={4}
         display="flex"

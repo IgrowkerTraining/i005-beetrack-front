@@ -3,44 +3,70 @@ import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ProductCard } from '@/components/DashboardComponents/ProductCard'
-import { useEffect, useState } from 'react'
-import { apiRequest } from '@/utils/apiRequest'
+import useReportStore from '@/store/useReportStore';
 
-interface Product {
-  name: string;
-  price: string;
-  stock: number;
-  sold: number;
-  earnings: string;
-  imageUrl: string;
-}
-
-interface ProductsResponse {
-  bestSellingProducts: Product[];
-}
+// const products = [
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+//   {
+//     name: 'Pepsi 2 Lts.',
+//     price: '$3.200',
+//     stock: 10,
+//     sold: 120,
+//     earnings: '$140.000',
+//     imageUrl: '/product-placeholder.webp',
+//   },
+// ]
 
 export default function ProductList() {
   const isMobile = useBreakpointValue({ base: true, sm: true ,md: false })
-  const [products, setProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    const fetchBestSellingProducts = async () => {
-      try {
-        const data = await apiRequest<ProductsResponse>('/api/dashboard?view=best-selling');
-        console.log('API Response:', data);
-        if (data.bestSellingProducts) {
-          setProducts(data.bestSellingProducts);
-        }
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setProducts([]);
-      }
-    };
+  const { topBestSellingsReport } = useReportStore();
+  const topProducts = topBestSellingsReport
+    ? topBestSellingsReport.topProducts
+    : null;
 
-    fetchBestSellingProducts();
-  }, []);
-
-  const limitedProducts = products.slice(0, 4);
+  const limitedProducts = topProducts
+    ? topProducts.slice(0, 4)
+    : null
 
   const settings = {
     dots: true,
@@ -69,7 +95,8 @@ export default function ProductList() {
     </Box>
   ) : (
     <SimpleGrid columns={2} gap={4} width="100%" templateColumns="repeat(2, 1fr)">
-      {limitedProducts.map((product, idx) => (
+      {limitedProducts &&
+      limitedProducts.map((product, idx) => (
         <ProductCard key={idx} {...product} />
       ))}
     </SimpleGrid>
@@ -83,9 +110,6 @@ export default function ProductList() {
         </Box>
       ) : (
         <Box bg="white" p={6} borderRadius="2xl" boxShadow="sm" width="100%">
-          <Text fontWeight="bold" fontSize="lg" mb={4}>
-            Productos más vendidos este mes
-          </Text>
           <Flex overflowX="auto" width="100%">
             {content}
           </Flex>

@@ -13,8 +13,8 @@ const PrivateLayout = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   useAutocloseSidenavbar();
   useToolbarTittle();
-  useFetchProfile()
-  useFetchProducts()
+  useFetchProfile();
+  useFetchProducts();
 
   return (
     <Box
