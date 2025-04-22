@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import { Flex, Text, InputGroup, Input, Box, IconButton, Button, useBreakpointValue, Skeleton } from '@chakra-ui/react';
-import { FaSearch, FaBell } from 'react-icons/fa';
-import { useColorModeValue } from '@/components/ui/color-mode';
-import { MdMenu } from 'react-icons/md';
-import useSidenavbarStore from '@/store/useSidenavbarStore';
-import { useFetchProfile } from '@/hooks/useProfile';
-=======
 import {
   Flex,
   Link,
@@ -23,7 +15,6 @@ import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdMenu } from "react-icons/md";
 import useSidenavbarStore from "@/store/useSidenavbarStore";
 import { useFetchProfile } from "@/hooks/useProfile";
->>>>>>> origin
 
 const Topbar = () => {
   const { isLoading } = useFetchProfile();
@@ -47,23 +38,12 @@ const Topbar = () => {
       boxShadow="soft"
     >
       <Flex align={"center"} gap={2}>
-<<<<<<< HEAD
-        {isMobile &&
-=======
         {isMobile && (
->>>>>>> origin
           <Button
             h={"auto"}
             p={"10px"}
             mr={"4px"}
             variant={"ghost"}
-<<<<<<< HEAD
-            onClick={() => setIsOpen(true)}>
-            <MdMenu />
-          </Button>
-        }
-        <Skeleton as={Text} loading={isLoading} fontSize="lg" fontWeight="bold" color={color}>
-=======
             onClick={() => setIsOpen(true)}
           >
             <MdMenu />
@@ -76,7 +56,6 @@ const Topbar = () => {
           fontWeight="bold"
           color={color}
         >
->>>>>>> origin
           {titleToTopBar}
         </Skeleton>
       </Flex>
@@ -94,13 +73,6 @@ const Topbar = () => {
         </InputGroup>
 
         <Box position="relative">
-<<<<<<< HEAD
-          <IconButton
-            aria-label="Notificaciones"
-            variant="plain"
-            color={color}
-          > <FaBell /> </IconButton>
-=======
           <Link href="/notifications">
             <IconButton
               aria-label="Notificaciones"
@@ -111,7 +83,6 @@ const Topbar = () => {
               <FaBell />{" "}
             </IconButton>
           </Link>
->>>>>>> origin
           {/* <Box
             position="absolute"
             top="0"
