@@ -10,7 +10,7 @@ type PersonalInfoStepProps = {
 export const PersonalInfoStep = ({ register, errors }: PersonalInfoStepProps) => {
   console.log("Personal info errors:", errors.name, errors.lastName, errors.dateOfBirth); 
   return (
-    <Stack gap="4" w="full">
+    <Stack gap="8" w="full">
       <Field.Root invalid={!!errors.name}>
         <Field.Label>Nombre</Field.Label>
         <Input

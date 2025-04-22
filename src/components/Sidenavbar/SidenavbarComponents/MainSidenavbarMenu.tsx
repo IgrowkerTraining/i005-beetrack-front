@@ -1,8 +1,9 @@
 import { Box, Flex, HStack, IconButton, Image, Text, useBreakpointValue, VStack } from '@chakra-ui/react';
-import { MdBarChart, MdHomeFilled, MdInventory, MdMenu, MdPerson, MdPointOfSale } from 'react-icons/md';
+import { MdBarChart, MdHomeFilled, MdInventory, MdMenu, MdPointOfSale } from 'react-icons/md';
 import NavItem from './NavItem';
 import useSidenavbarStore from '@/store/useSidenavbarStore';
 import Logo from '@/assets/logo.svg';
+import ProfileDropDownMenu from './ProfileDropDownMenu';
 
 const MainSidenavbarMenu = () => {
 
@@ -28,12 +29,10 @@ const MainSidenavbarMenu = () => {
             </Flex>
             <VStack w={"full"} h={"full"}>
                 <NavItem to="/" icon={<MdHomeFilled />} text="Home" />
-                <NavItem to="/inventario" icon={<MdInventory />} text="Inventario" />
-                <NavItem to="/ventas" icon={<MdPointOfSale />} text="Ventas" />
-                <NavItem to="/estadisticas" icon={<MdBarChart />} text="Estadísticas" />
-                <Box asChild marginTop={"auto"}>
-                    <NavItem to="/perfil" icon={<MdPerson />} text="Perfil" />
-                </Box>
+                <NavItem to="/inventory" icon={<MdInventory />} text="Inventario" />
+                <NavItem to="/sales" icon={<MdPointOfSale />} text="Ventas" />
+                <NavItem to="/stadistics" icon={<MdBarChart />} text="Estadísticas" />
+                <ProfileDropDownMenu />
             </VStack>
         </VStack>
     )

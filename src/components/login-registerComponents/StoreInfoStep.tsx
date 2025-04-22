@@ -11,7 +11,7 @@ export const StoreInfoStep = ({ register, errors }: StoreInfoStepProps) => {
   console.log("Store info errors:", errors.storeName, errors.storePhone, errors.storeAddress); // Add debugging
   
   return (
-    <Stack gap="4" w="full">
+    <Stack gap="8" w="full">
       <Field.Root invalid={!!errors.storeName}>
         <Field.Label>Nombre del establecimiento</Field.Label>
         <Input

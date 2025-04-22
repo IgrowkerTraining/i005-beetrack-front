@@ -1,9 +1,36 @@
 import { Box, Flex, Icon, Text, Button } from '@chakra-ui/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { apiRequest } from '@/utils/apiRequest'
+
+interface ProfitResponse {
+  totalProfit: number;
+}
 
 export default function IncomeCard() {
   const navigate = useNavigate();
+  const [profit, setProfit] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchProfit = async () => {
+      try {
+        const data = await apiRequest<ProfitResponse>('/api/dashboard?view=profit');
+        console.log('API Response:', data);
+        if (data.totalProfit === undefined) {
+          console.warn('totalProfit is undefined in response');
+          return;
+        }
+        setProfit(Number(data.totalProfit));
+      } catch (error) {
+        console.error('Error fetching profit:', error);
+        setProfit(null);
+      }
+    };
+
+    fetchProfit();
+  }, []);
+
   return (
     <Box bg="white" p={{ base: 3 }} borderRadius="xl" boxShadow="sm" w="100%">
     <Flex
@@ -29,7 +56,7 @@ export default function IncomeCard() {
             Ingresos
           </Text>
           <Text fontSize="xl" fontWeight="bold" color="green.500">
-            $233.382,<Text as="span" fontSize="sm">01</Text>
+            {profit !== null ? `$${profit.toLocaleString()}` : "Cargando..."}
           </Text>
         </Box>
       </Flex>

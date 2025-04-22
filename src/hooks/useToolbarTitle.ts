@@ -1,17 +1,19 @@
-import ROUTES_METADATA from '@/routes/routesMetadata';
+import getRoutesMetadata from '@/routes/routesMetadata';
+import useProfileStore from '@/store/useProfileStore';
 import useSidenavbarStore from '@/store/useSidenavbarStore';
 import { useEffect } from 'react';
-import { matchPath, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 export const useToolbarTittle = () => {
-	const location = useLocation();
+	const  { profile } = useProfileStore();
 	const  { setTitleToTopBar } = useSidenavbarStore();
+	const location = useLocation();
 
 	useEffect(() => {
-		const pathname = location.pathname;
-		const matched = Object.entries(ROUTES_METADATA).find(([ path ]) => matchPath(path, pathname));
+		const metadata = getRoutesMetadata(profile?.store.name)
+		const pathname: string = location.pathname;
 
-		const title = matched?.[1].title ?? "No title";
-		setTitleToTopBar(title);
+		const routeTitle = metadata[pathname]?.title ?? "";
+		setTitleToTopBar(routeTitle)
 	}, [location.pathname])
 }

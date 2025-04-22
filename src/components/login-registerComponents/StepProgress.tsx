@@ -1,5 +1,6 @@
-import { Box, Flex, HStack, Image, Progress, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack, Image, Progress, Text } from "@chakra-ui/react";
 import Logo from "@/assets/logo.svg";
+
 
 type StepProgressProps = {
   step: number;
@@ -31,8 +32,8 @@ export const StepProgress = ({ step, title }: StepProgressProps) => {
 
       {/* TODo: modificar esto para la navegacion */}
       {step > 1 && (
-      <HStack gap={2} justifyContent="center" marginBottom={2}>
-        {[2, 3, 4].map((s) => (
+      <Stack gap={2} justifyContent="center" marginBottom={2}>
+        {/* {[2, 3, 4].map((s) => (
           <Box
             key={s}
             w="8px"
@@ -40,8 +41,12 @@ export const StepProgress = ({ step, title }: StepProgressProps) => {
             borderRadius="full"
             bg={s <= step ? "blue.500" : "gray.200"}
           />
-        ))}
-      </HStack>
+        ))} */}
+
+
+
+ 
+      </Stack>
 
       )}
     </>

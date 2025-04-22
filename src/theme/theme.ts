@@ -76,6 +76,19 @@ const customStyles = createSystem(defaultConfig, {
 				ultraSoft: { value: '0 8px 24px rgba(0, 0, 0, 0.03)' },
 			  },
 		},
+		semanticTokens: {
+			colors: {
+				navItem: {
+					solid: { value: "{colors.yellow.amarillo}" },
+					contrast: { value: "{colors.yellow.100}" },
+          			fg: { value: "{colors.black.normal}" },
+					muted: { value: "{colors.yellow.100}" },
+					subtle: { value: "{colors.yellow.400}" },
+					emphasized: { value: "{colors.yellow.300}" },
+					focusRing: { value: "{colors.yellow.500}" },
+				}
+			}
+		},
 	}
 })
 

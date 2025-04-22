@@ -7,6 +7,8 @@ import {
   Separator,
   Button,
   Link,
+  Flex,
+  VStack,
 } from "@chakra-ui/react";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { IoLogoFacebook } from "react-icons/io";
@@ -30,6 +32,7 @@ import { StoreInfoStep } from "@/components/login-registerComponents/StoreInfoSt
 import { StepProgress } from "@/components/login-registerComponents/StepProgress";
 import { StepNavigation } from "@/components/login-registerComponents/StepNavigation";
 import { useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -141,7 +144,7 @@ const Register = () => {
     }
   };
 
-  const getStepTitle = ():any => {
+  const getStepTitle = (): any => {
     switch (step) {
       case 1:
         return (
@@ -152,11 +155,41 @@ const Register = () => {
           </Stack>
         );
       case 2:
-        return "Crear contraseña";
+        return (
+          <VStack w="100%" align="left">
+            <Text w="50%" fontSize="sm" color="gray.500">
+              Paso 1 de 3
+            </Text>
+            <Flex align={'center'}>
+              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
+              <Text ml={5}>Crear contraseña</Text>
+            </Flex>
+          </VStack>
+        );
       case 3:
-        return "Información personal";
+        return (
+          <VStack w="100%" align="left">
+            <Text w="50%" fontSize="sm" color="gray.500">
+              Paso 2 de 3
+            </Text>
+            <Flex align={'center'}>
+              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
+              <Text ml={5}>Datos personales</Text>
+            </Flex>
+          </VStack>
+        );
       case 4:
-        return "Detalles del establecimiento";
+        return (
+          <VStack w="100%" align="left">
+            <Text w="50%" fontSize="sm" color="gray.500">
+              Paso 3 de 3
+            </Text>
+            <Flex align={'center'}>
+              <IoIosArrowBack onClick={handlePrevStep} cursor={'pointer'} />
+              <Text ml={5}>Datos del comercio</Text>
+            </Flex>
+          </VStack>
+        );
       default:
         return "Registro";
     }

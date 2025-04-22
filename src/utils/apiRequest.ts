@@ -19,6 +19,7 @@ export async function apiRequest<T>(
     method: options.method ?? 'GET',
     headers: { ...defaultHeaders, ...options.headers },
     body: options.body,
+    credentials: "include" // Incluir la cookie en las peticiones
   });
 
   if (!response.ok) {

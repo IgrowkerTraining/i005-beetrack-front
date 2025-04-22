@@ -1,13 +1,13 @@
-const ROUTES_METADATA: Record<string, { title: string }> = {
-	"/": { title: "Nombre tienda" }, // Cambiar por contenido del authStore
+const getRoutesMetadata = (storeName: string = "Welcome"): Record<string, { title: string }> => ({
+	"/": { title: storeName },
 	"/home": { title: "Dashboard" },
-	"/inventario": { title: "Inventario" },
-	"/ventas": { title: "Ventas" },
-	"/estadisticas": { title: "Estadísticas" },
-	"/perfil": { title: "Perfil" },
+	"/inventory": { title: "Inventario" },
+	"/sales": { title: "Ventas" },
+	"/stadistics": { title: "Estadísticas" },
+	"/profile": { title: "Perfil" },
 	"/404": { title: "Página no encontrada" },
 	// "/login": { title: "Iniciar sesión" },
 	// "/register": { title: "Registro" },
-}
+})
 
-export default ROUTES_METADATA
+export default getRoutesMetadata

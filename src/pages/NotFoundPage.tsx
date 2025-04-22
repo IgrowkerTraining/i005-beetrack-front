@@ -23,9 +23,10 @@ const NotFoundPage = () => {
             </Text>
             <Button
                 asChild
-                colorPalette={"yellow"}
-                bg={{ base: "colorPalette.500", _hover: "colorPalette.400" }}
-                borderRadius={"16px"} >
+                colorPalette={"navItem"}
+                color={"colorPalette.fg"}
+                borderRadius={"16px"}
+                variant={"solid"}>
                 <NavLink to={"/"}>Volver a inicio</NavLink>
             </Button>
         </Flex>

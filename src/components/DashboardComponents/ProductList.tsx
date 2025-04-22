@@ -3,62 +3,44 @@ import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ProductCard } from '@/components/DashboardComponents/ProductCard'
+import { useEffect, useState } from 'react'
+import { apiRequest } from '@/utils/apiRequest'
 
-const products = [
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-  {
-    name: 'Pepsi 2 Lts.',
-    price: '$3.200',
-    stock: 10,
-    sold: 120,
-    earnings: '$140.000',
-    imageUrl: '/product-placeholder.webp',
-  },
-]
+interface Product {
+  name: string;
+  price: string;
+  stock: number;
+  sold: number;
+  earnings: string;
+  imageUrl: string;
+}
+
+interface ProductsResponse {
+  bestSellingProducts: Product[];
+}
 
 export default function ProductList() {
   const isMobile = useBreakpointValue({ base: true, sm: true ,md: false })
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const limitedProducts = products.slice(0, 4)
+  useEffect(() => {
+    const fetchBestSellingProducts = async () => {
+      try {
+        const data = await apiRequest<ProductsResponse>('/api/dashboard?view=best-selling');
+        console.log('API Response:', data);
+        if (data.bestSellingProducts) {
+          setProducts(data.bestSellingProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setProducts([]);
+      }
+    };
+
+    fetchBestSellingProducts();
+  }, []);
+
+  const limitedProducts = products.slice(0, 4);
 
   const settings = {
     dots: true,
