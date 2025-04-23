@@ -18,25 +18,37 @@
   - [ ] Implementar el componente de la pantalla de dashboard. `(German)`
   - [ ] Crear la barra lateral de navegación. `(Javi)`
 
-- Según flujos de trabajo internos:
+- Según flujos de trabajo internos (a nivel de interfaz gráfica, y lógica interna del front):
   - [ ] Dashboard. `(German)`
   - [ ] Login/Register. `(Jason)`
   - [ ] Inventario. `(Jonathan)`
   - [ ] Ventas. `(Andrés)`
   - [ ] Perfil. `(Javi)`
   - [ ] Alertas.
+  - [ ] Estadísticas.
+  - [ ] Egresos/Devoluciones.
 
 ## SPRINT 3 👟
 
 - Según el Kanban:
-  - [ ] Agregar responsive design al dashboard.
-  - [ ] Implementar el componente de la pantalla perfil.
-  - [ ] Permitir edición del perfil.
-  - [ ] Implementar el componente de lista.
-  - [ ] Agregar paginación a la lista.
-  - [ ] Añadir funcionalidad de búsqueda.
-  - [ ] Implementar el componente detalle.
-  - [ ] Configurar navegación desde la lista a detalle.
+  - [ ] Agregar responsive design al dashboard `(Javi)`.
+  - [ ] Implementar el componente de la pantalla perfil `(Javi)`.
+  - [ ] Permitir edición del perfil `(Javi)`.
+  - [ ] Implementar el componente de lista. `¿Qué lista? ¿Iventario? --> (Jonathan)`
+  - [ ] Agregar paginación a la lista. `Si es inventario --> (Jonathan)`
+  - [ ] Añadir funcionalidad de búsqueda. `Si es en el inventario --> (Jonathan)`
+  - [ ] Implementar el componente detalle. `Si es del producto --> (Jonathan)`
+  - [ ] Configurar navegación desde la lista a detalle. `Si todo lo anterior se refiere al inventario --> (Jonathan)`
+
+- Según flujos de trabajo internos (conexión con la lógica):
+  - [ ] Dashboard. `(German)`
+  - [ ] Login/Register. `(Jason)`
+  - [ ] Inventario. `(Jonathan)`
+  - [ ] Ventas. `(Andrés)`
+  - [ ] Perfil. `(Javi)`
+  - [ ] Alertas.
+  - [ ] Estadísticas.
+  - [ ] Egresos/Devoluciones.
 
 ## SPRINT 4 👟
 

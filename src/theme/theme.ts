@@ -53,9 +53,9 @@ const customStyles = createSystem(defaultConfig, {
 					normalActive: { value: '#000000' }
 				},
 				stock: {
-					low: { value: '#f23030' },
-					medium: { value: '#f86b40' },
-					good: { value: '#2ce281' },
+					ltStockMin: { value: '#f23232' },
+					ltStockOptimus: { value: '#FFA251' },
+					good: { value: '#2CE281' },
 				},
 				background:{
 					white: { value: '#ffffff' },
@@ -75,6 +75,19 @@ const customStyles = createSystem(defaultConfig, {
 				softer: { value: '0 4px 8px rgba(0, 0, 0, 0.04)' },
 				ultraSoft: { value: '0 8px 24px rgba(0, 0, 0, 0.03)' },
 			  },
+		},
+		semanticTokens: {
+			colors: {
+				navItem: {
+					solid: { value: "{colors.yellow.amarillo}" },
+					contrast: { value: "{colors.yellow.100}" },
+          			fg: { value: "{colors.black.normal}" },
+					muted: { value: "{colors.yellow.100}" },
+					subtle: { value: "{colors.yellow.400}" },
+					emphasized: { value: "{colors.yellow.300}" },
+					focusRing: { value: "{colors.yellow.500}" },
+				}
+			}
 		},
 	}
 })

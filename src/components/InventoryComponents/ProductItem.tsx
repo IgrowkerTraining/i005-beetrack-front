@@ -3,102 +3,73 @@ import {
   Flex,
   Image,
   Text,
-  Badge,
   Stack,
 } from '@chakra-ui/react'
+import StockLabel from './StockLabel'
+import { useNavigate } from 'react-router-dom'
 
 export type ProductItemProps = {
-  image: string
+  id: string
+  imagePath: string
   name: string
-  price: string
+  salesPrice: string
   stock: number
   view: 'grid' | 'list'
-  stockMin?: number
-  stockOpt?: number
+  stock_min: number
+  stock_optimus: number
 }
 
 const ProductItem = ({
-  image,
+  id,
+  imagePath,
   name,
-  price,
+  salesPrice,
   stock,
   view,
-  stockMin = 10, //El usuario configura este valor de Stock Mínimo
-  stockOpt = 30, //El usuario configura este valor de Stock Óptimo
+  stock_min,
+  stock_optimus,
 }: ProductItemProps) => {
-  let stockColor = 'gray.400'
-
-  switch (true) {
-    case stock <= stockMin:
-      stockColor = 'red.500'
-      break
-    case stock > stockOpt:
-      stockColor = 'green.500'
-      break
-    default:
-      stockColor = 'yellow.500'
-  }
-
-  let stockLabel = ''
-  switch (true) {
-    case stock === 0:
-      stockLabel = 'Sin stock'
-      break
-    case stock === 1:
-      stockLabel = '1 Unidad'
-      break
-    case stock > 1:
-      stockLabel = `${stock} Unidades`
-      break
-  }
+const navigate = useNavigate()
 
   if (view === 'list') {
     return (
       <Flex
+        onClick={() => navigate(`/products/id/${id}`) }
         w="100%"
         mx="auto"
         bg="white"
-        py={2}
-        px={2}
+        py={3}
+        px={4}
         borderBottom="1px solid"
         borderColor="gray.200"
         align="center"
-        gap={4}
+        justify="space-between"
+        position="relative"
+        cursor="pointer"
       >
-        <Image
-          src={image}
-          alt={name}
-          boxSize="50px"
-          objectFit="cover"
-          borderRadius="md"
-        />
-
-        <Flex justify="space-between" align="center" flex="1">
+        <Flex align="center" gap={4}>
+          <Image
+            src={imagePath}
+            alt={name}
+            boxSize="50px"
+            objectFit="cover"
+            borderRadius="md"
+            flexShrink={0}
+          />
           <Stack gap={0}>
-            <Text fontWeight="medium" fontSize="sm">{name}</Text>
-            <Text fontSize="sm" color="gray.600">{price}</Text>
+            <Text fontSize="sm" fontWeight="medium">{name}</Text>
+            <Text fontSize="sm" color="gray.600">{salesPrice}</Text>
           </Stack>
-
-          <Badge
-            display="flex"
-            alignItems="center"
-            gap={2}
-            bg="gray.50"
-            borderRadius="full"
-            fontSize="xs"
-            px={2}
-            py={1}
-          >
-            <Box w="8px" h="8px" bg={stockColor} borderRadius="full" />
-            {stockLabel}
-          </Badge>
         </Flex>
+
+        <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} isList />
       </Flex>
     )
   }
 
   return (
     <Box
+      onClick={() => navigate(`/products/id/${id}`) }
       w={170}
       borderRadius="xl"
       overflow="hidden"
@@ -107,28 +78,10 @@ const ProductItem = ({
       borderWidth="1px"
       borderColor="gray.300"
     >
-      <Badge
-        position="absolute"
-        top="2"
-        right="2"
-        bg="white"
-        color="black"
-        borderRadius="full"
-        px={2}
-        py={1}
-        fontSize="xs"
-        display="flex"
-        alignItems="center"
-        gap={1}
-        borderWidth="1px"
-        borderColor="gray.400"
-      >
-        <Box w="10px" h="10px" borderRadius="full" bg={stockColor} />
-        {stockLabel}
-      </Badge>
+      <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} />
 
       <Image
-        src={image}
+        src={imagePath}
         alt={name}
         w="80%"
         h="130px"
@@ -142,7 +95,7 @@ const ProductItem = ({
           {name}
         </Text>
         <Text fontSize="sm" color="gray.700">
-          {price}
+          {salesPrice}
         </Text>
       </Stack>
     </Box>

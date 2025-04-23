@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { Product, NewProduct } from '../types/productType';
+import { devtools, persist } from 'zustand/middleware';
+import { Product } from '../types/productType';
 
 interface ProductState {
   products: Product[];
@@ -9,16 +9,15 @@ interface ProductState {
     limit: number;
     filter: string;
   };
-  fetchProducts: (products: Product[]) => Promise<void>;
-  addProduct: (product: NewProduct) => Promise<void>;
-  updateProduct: (id: number, updatedData: Partial<Product>) => Promise<void>;
-  removeProduct: (id: number) => Promise<void>;
-  getProductByBarcode: (barcode: string) => Product | false;
+  fetchProducts: (products: Product[]) => void;
+  addProduct: (product: Product) => void;
+  updateProduct: (id: string, updatedData: Partial<Product>) => void;
+  removeProduct: (id: string) => void;
 }
 
 const useProductStore = create<ProductState>()(
   devtools(
-    (set, get) => ({ 
+    (set) => ({
       products: [],
       queryParams: {
         page: 1,
@@ -26,8 +25,7 @@ const useProductStore = create<ProductState>()(
         filter: '',
       },
       fetchProducts: (products: Product[]) => set({ products }),        
-      addProduct: (product: Product) => {  
-              
+      addProduct: (product: Product) => {        
         set((state: ProductState) => ({
           products: [...state.products, product]
         }));
@@ -46,9 +44,6 @@ const useProductStore = create<ProductState>()(
           return { products: updatedProducts };
         });
         
-      },
-      getProductByBarcode: (barcode: string) => {
-        return  get().products.find((product) => product.barcode === barcode);
       },
     })
   )

@@ -12,34 +12,35 @@ import {
 import { FaShoppingCart, FaBarcode } from "react-icons/fa";
 import { MdInventory2 } from "react-icons/md";
 import { useColorModeValue } from "@/components/ui/color-mode";
-
-const actions = [
-  {
-    label: "Registrar venta",
-    icon: FaShoppingCart,
-    onClick: () => {
-      console.log("Registrar venta");
-    },
-  },
-  {
-    label: "Agregar producto",
-    icon: MdInventory2,
-    onClick: () => {
-      console.log("Agregar producto");
-    },
-  },
-  {
-    label: "Escanea para editar producto",
-    icon: FaBarcode,
-    onClick: () => {
-      console.log("Escanear para editar producto");
-    },
-  },
-];
+import { useNavigate } from 'react-router-dom';
 
 export default function QuickAccess() {
   const color = useColorModeValue("blue.400", "white");
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const navigate = useNavigate();
+  const actions = [
+    {
+      label: "Registrar venta",
+      icon: FaShoppingCart,
+      onClick: () => {
+        navigate('/sales/new');
+      },
+    },
+    {
+      label: "Agregar producto",
+      icon: MdInventory2,
+      onClick: () => {
+        navigate('/products');
+      },
+    },
+    {
+      label: "Escanea para editar producto",
+      icon: FaBarcode,
+      onClick: () => {
+        navigate('productscanner');
+      },
+    },
+  ];
   
   return (
     <Box>

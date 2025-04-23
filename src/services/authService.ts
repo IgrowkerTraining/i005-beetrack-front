@@ -6,24 +6,28 @@ import { buildUrl } from "@/utils/buildUrl";
 export const authService = {
   async loginUser(credentials: Credentials): Promise<User> {
     const url = buildUrl(AUTH_ENDPOINT, { resource: "login" });
-    return apiRequest<User>(url, {
+    // sino funciona la url poner esto: `${AUTH_ENDPOINT}/login`, pero deberia funcionar...
+    const res = await apiRequest<User>(url, {
       method: "POST",
       body: JSON.stringify(credentials),
     });
+    return res;
   },
   async registerUser(userData: NewUserData): Promise<User> {
     const url = buildUrl(AUTH_ENDPOINT, { resource: "register" });
-    return apiRequest<User>(url, {
+    return await apiRequest<User>(url, {
       method: "POST",
       body: JSON.stringify(userData),
     });
   },
   async checkEmailExists(email: string): Promise<boolean> {
-    const url = buildUrl(AUTH_ENDPOINT, { resource: "check-email", email });
-    const response = await apiRequest<{ exists: boolean }>(url, {
-      method: "GET",
+    const url = buildUrl(AUTH_ENDPOINT, { resource: "register/check-email" });
+    const { data } = await apiRequest<{ data: { isEmailRegistered: boolean }, status: string }>(url, {
+      method: "POST",
+      body: JSON.stringify({ email })
     });
-    return response.exists;
+
+    return data.isEmailRegistered;
   },
 
   async checkAuthStatus(): Promise<User> {
@@ -33,6 +37,7 @@ export const authService = {
   },
   async logoutUser(): Promise<void> {
     const url = buildUrl(AUTH_ENDPOINT, { resource: "logout" });
+    // lo mismo con el logout: `${AUTH_ENDPOINT}/logout`,
     return apiRequest<void>(url, { method: "POST" });
   },
 };

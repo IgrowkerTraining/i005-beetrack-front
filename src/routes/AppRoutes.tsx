@@ -6,42 +6,55 @@ import InventoryPage from '@/pages/InventoryPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import AccessRoutes from './AccessRoutes'
 import ProductScannerPage from '@/pages/ProductScannerPage'
-import AddProductPage from '@/pages/AddProductPage'
 import ProfilePage from '@/pages/ProfilePage'
 import PrivateLayout from '@/layout/PrivateLayout'
 import SalesPage from '@/pages/SalesPage'
-import CardRegisterPage from '@/pages/CashRegisterPage'
-import CashRegisterPage from '@/pages/CashRegisterPage'
-import SalesSummaryPage from '@/pages/SalesSummaryPage'
-import VoucherPage from '@/pages/VoucherPage'
+import StatsPage from '@/pages/StatsPage'
+'
+import { useBreakpointValue } from '@chakra-ui/react'
+import ProductPage from '@/pages/ProductPage'
+import Notifications from '@/pages/NotificationPage'
 
 const AppRoutes = () => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
   return (
-     <Routes>
+    <Routes>
       {/* Rutas públicas */}
       <Route element={<AccessRoutes isPrivate={false} />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
 
-      {/* Rutas privadas sin layout */}
+      {/* rutas privadas con layout en big screen y no layout on mobile */}
       <Route element={<AccessRoutes isPrivate={true} />}>
-        <Route path="productscanner" element={<ProductScannerPage />} />
-        <Route path="cash" element={<CashRegisterPage />} />
-        <Route path="/sale-summary" element={<SalesSummaryPage />} />
-        <Route path="/addproduct" element={<AddProductPage />} />
-        <Route path="/addproduct/:barcode" element={<AddProductPage />} />
-        <Route path="voucher" element={<VoucherPage />} />
-      </Route>
+        {isMobile ? (
+          <Route>
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="productscanner" element={<ProductScannerPage />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/products/barcode/:barcode" element={<ProductPage />} />
+            <Route path="/products/id/:id" element={<ProductPage />} />
+          </Route>
+        ) : (
+          <Route element={<PrivateLayout />}>
+            <Route path="productscanner" element={<ProductScannerPage />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/products/barcode/:barcode" element={<ProductPage />} />
+            <Route path="/products/id/:id" element={<ProductPage />} />
+          </Route>
+        )}
 
-      {/* Rutas protegidas */}
+      </Route>
+      {/* Rutas protegidas con layout */}
       <Route element={<AccessRoutes isPrivate={true} />}>
-        <Route element={<PrivateLayout contentPadding="0" />}>
+        <Route element={<PrivateLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="home" element={<DashboardPage />} />
           <Route path="inventory" element={<InventoryPage />} />
-          <Route path="perfil" element={<ProfilePage />} />
-          <Route path="sales" element={<SalesPage />} />          
+          <Route path="sales" element={<SalesPage />} />
+          <Route path="stats" element={<StatsPage />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
 

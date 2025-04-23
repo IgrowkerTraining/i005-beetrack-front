@@ -15,10 +15,10 @@ const useSidenavbarStore = create<SidenavbarState>()(
         (set) => ({
             isOpen: false,
             isToggle: false,
-            titleToTopBar: "Nombre de la tienda",
+            titleToTopBar: '',
             setIsOpen: (status) => {
                 set((state) => ({
-                    isOpen: status ? status : !state.isOpen
+                    isOpen: status !== null ? status : !state.isOpen
                 }))
             },
             setToggle: (status) => {

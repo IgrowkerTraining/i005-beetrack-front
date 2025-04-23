@@ -21,7 +21,7 @@ export default function BalanceCard() {
         </Flex>
         <VStack align="start" gap={0}>
           <Text fontWeight="bold">Total</Text>
-          <Text color="green.600" fontSize="xl" fontWeight="semibold">
+          <Text color="green.500" fontSize="xl" fontWeight="semibold">
             $233.382,01
           </Text>
         </VStack>
