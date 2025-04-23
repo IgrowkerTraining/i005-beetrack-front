@@ -39,20 +39,5 @@ export interface StockAlert {
     message: string;
 }
 
-
-export interface SaleItem {
-    id: string;
-    barcode: string;
-    name: string;
-    price: number;
-}
-
-
-export interface Sale {
-    id: string;
-    items: SaleItem[];
-    total: number;
-    date: string;
-}
-
-export type NewProduct = Omit<Product, 'id' | 'imagePath'>;
+ 
+export type NewProduct = Omit<Product, 'id'>;
