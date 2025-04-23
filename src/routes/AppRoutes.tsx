@@ -25,7 +25,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
       </Route>
 
-      {/* rutas privadas con layout en big screen y no layout on mobile */}
+      {/* rutas privadas con layout en big screen y no layout on mobile  */}
       <Route element={<AccessRoutes isPrivate={true} />}>
         {isMobile ? (
           <Route>

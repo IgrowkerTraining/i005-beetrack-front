@@ -32,26 +32,26 @@ export const StepNavigation = ({
           Atrás
         </Button>
       )}
-    <Button
-      type="submit"
-      variant="solid"
-      bg={"#ffd701"}
-      color={"gray.900"}
-      fontWeight={"bold"}
-      loading={isLoading}
-      loadingText={
-        isCheckingEmail
-          ? "Checking Email"
-          : isRegistering
-          ? "Registering"
-          : "Processing"
-      }
-      borderRadius="xl"
-      py={6}
-      w={step > 1 ? "50%" : "full"}
-    >
-      {step < 4 ? "Continuar" : "Registrar"}
-    </Button>
+      <Button
+        type="submit"
+        variant="solid"
+        bg={"#ffd701"}
+        color={"gray.900"}
+        fontWeight={"bold"}
+        loading={isLoading}
+        loadingText={
+          isCheckingEmail
+            ? "Checking Email"
+            : isRegistering
+              ? "Registering"
+              : "Processing"
+        }
+        borderRadius="xl"
+        py={6}
+        w={step > 1 ? "50%" : "full"}
+      >
+        {step < 4 ? "Continuar" : "Registrar"}
+      </Button>
     </Flex>
   );
 };

@@ -26,15 +26,14 @@ import { EmailStep } from "@/components/login-registerComponents/EmailStep";
 import { PasswordStep } from "@/components/login-registerComponents/PasswordStep";
 import { PersonalInfoStep } from "@/components/login-registerComponents/PersonalInfoStep";
 import { StoreInfoStep } from "@/components/login-registerComponents/StoreInfoStep";
-import { StepProgress } from "@/components/login-registerComponents/StepProgress";
+import { StepTitle } from "@/components/login-registerComponents/StepTitle";
 import { StepNavigation } from "@/components/login-registerComponents/StepNavigation";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
 
 const Register = () => {
   const [step, setStep] = useState(1);
   const [isRegistering, setIsRegistering] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const registerMutation = useRegister();
@@ -69,24 +68,20 @@ const Register = () => {
   const onSubmit = async (data: RegisterFormData) => {
     try {
       setIsRegistering(true);
-
       const formattedData = {
-        ...data,
-        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : undefined,
-        storePhone: data.storePhone ? Number(data.storePhone) : undefined,
-      };
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      //TODO: DESCOMENTAR UNA VEZ TENGAMOS EL BACKEND
-      // await registerMutation.mutateAsync(formattedData);
-
-      console.log("Registration successful!", formattedData);
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        last_name: data.lastName,
+        birthdate: data.dateOfBirth,
+        storeName: data.storeName, 
+        storePhone: data.storePhone, 
+        storeAddress: data.storeAddress || "", 
+      }
+      await registerMutation.mutateAsync(formattedData as any);
       setIsRegistering(false);
       navigate("/login");
     } catch (error) {
-      setErrorMessage("Registration failed. Please try again.");
       console.error("Registration error:", error);
       setIsRegistering(false);
     }
@@ -125,7 +120,7 @@ const Register = () => {
       if (step < 4) {
         setStep(step + 1);
       } else {
-        handleSubmit(onSubmit)();
+        handleSubmit(onSubmit)(); //keep an eye on this
       }
     }
   };
@@ -279,7 +274,7 @@ const Register = () => {
           onSubmit={handleNextStep}
         >
           <Card.Header>
-            <StepProgress step={step} title={getStepTitle()} />
+            <StepTitle step={step} title={getStepTitle()} />
           </Card.Header>
           <Card.Body>
             {step === 1 && (
@@ -340,9 +335,10 @@ const Register = () => {
               <Text mt={1} textStyle={"xs"}>
                 ¿Ya tienes una cuenta?{" "}
                 <Link
+                  as={NavLink}
+                  to="/login"
                   textDecoration="underline"
                   fontWeight={"bold"}
-                  href="/login"
                 >
                   Iniciar sesión
                 </Link>

@@ -1,12 +1,12 @@
 import { Heading, Flex, Image, Text, HStack, Box } from "@chakra-ui/react";
 import Logo from "@/assets/logo.svg";
 
-type StepProgressProps = {
+type StepTitleProps = {
   step: number;
   title: string;
 };
 
-export const StepProgress = ({ title }: StepProgressProps) => {
+export const StepTitle = ({ title }: StepTitleProps) => {
   return (
     <>
       <Flex direction={"column"} align="flex-start" mb={8}>
