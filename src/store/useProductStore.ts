@@ -17,35 +17,38 @@ interface ProductState {
 
 const useProductStore = create<ProductState>()(
   devtools(
-    (set) => ({
-      products: [],
-      queryParams: {
-        page: 1,
-        limit: 10, 
-        filter: '',
-      },
-      fetchProducts: (products: Product[]) => set({ products }),        
-      addProduct: (product: Product) => {        
-        set((state: ProductState) => ({
-          products: [...state.products, product]
-        }));
-      },
-      updateProduct: (id, updatedData) =>  {
-        set((state: ProductState) => {
-          const updatedProducts = state.products.map((product) =>
-            product.id === id ? { ...product, ...updatedData } : product
-          );
-          return { products: updatedProducts };
-        })        
-      },
-      removeProduct:  (id) => {
-        set((state: ProductState) => {
-          const updatedProducts = state.products.filter((product) => product.id !== id);
-          return { products: updatedProducts };
-        });
-        
-      },
-    })
+    persist(
+      (set) => ({
+        products: [],
+        queryParams: {
+          page: 1,
+          limit: 10,
+          filter: '',
+        },
+        fetchProducts: (products: Product[]) => set({ products }),
+        addProduct: (product) =>
+          set((state) => ({
+            products: [...state.products, product],
+          })),
+        updateProduct: (id, updatedData) => {
+          set((state) => {
+            const updatedProducts = (state.products || []).map((product) =>
+              product.id === id ? { ...product, ...updatedData } : product
+            );
+            return { products: updatedProducts };
+          });
+        },
+        removeProduct: (id) => {
+          set((state) => ({
+            products: (state.products || []).filter((product) => product.id !== id),
+          }));
+        },
+      }),
+      {
+        name: 'product-storage', // clave en localStorage
+      }
+    ),
+    { name: 'ProductStore' }
   )
 );
 
