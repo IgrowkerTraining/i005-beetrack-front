@@ -1,13 +1,30 @@
 import React from 'react';
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, Flex, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { color } from '@chakra-ui/system';
+import ActionsButton from '@/components/SalesComponents/ActionsButton';
+import SalesList from '@/components/SalesComponents/SalesList';
 
 const SalesPage: React.FC = () => {
   return (
     <Box p={4}>
-      <Heading mb={4}>Sales Dashboard</Heading>
-      <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
-        <Text>Welcome to the sales dashboard</Text>
-      </Box>
+      <Flex direction="column" overflow="hidden" margin="0" padding="0">
+            <Box p={6}>
+              <SimpleGrid columns={12} gap={6}>
+                <GridItem colSpan={12}>
+                  <ActionsButton title="Caja"/>
+                </GridItem>
+
+                <GridItem colSpan={{ base: 12, lg: 12 }}>
+                  <Flex justify="space-between" align="center" mt={2} mb={2}>
+                    <Text fontWeight="bold" fontSize="lg" color={color}>
+                      Historial de ventas
+                    </Text>
+                  </Flex>
+                  <SalesList />
+                </GridItem>
+              </SimpleGrid>
+            </Box>
+          </Flex>
     </Box>
   );
 };

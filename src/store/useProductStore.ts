@@ -13,6 +13,7 @@ interface ProductState {
   addProduct: (product: NewProduct) => Promise<void>;
   updateProduct: (id: number, updatedData: Partial<Product>) => Promise<void>;
   removeProduct: (id: number) => Promise<void>;
+  getProductByBarcode: (barcode: string) => Product | false;
 }
 
 const useProductStore = create<ProductState>()(
@@ -25,7 +26,8 @@ const useProductStore = create<ProductState>()(
         filter: '',
       },
       fetchProducts: (products: Product[]) => set({ products }),        
-      addProduct: (product: Product) => {        
+      addProduct: (product: Product) => {  
+              
         set((state: ProductState) => ({
           products: [...state.products, product]
         }));
@@ -45,8 +47,8 @@ const useProductStore = create<ProductState>()(
         });
         
       },
-      getProductByBarcode: (barcode: String) => {
-        const product = get().products.find((product) => product.barcode === barcode);
+      getProductByBarcode: (barcode: string) => {
+        return  get().products.find((product) => product.barcode === barcode);
       },
     })
   )

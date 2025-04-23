@@ -29,7 +29,7 @@ const MainSidenavbarMenu = () => {
             <VStack w={"full"} h={"full"}>
                 <NavItem to="/" icon={<MdHomeFilled />} text="Home" />
                 <NavItem to="/inventario" icon={<MdInventory />} text="Inventario" />
-                <NavItem to="/ventas" icon={<MdPointOfSale />} text="Ventas" />
+                <NavItem to="/sales" icon={<MdPointOfSale />} text="Ventas" />
                 <NavItem to="/estadisticas" icon={<MdBarChart />} text="Estadísticas" />
                 <Box asChild marginTop={"auto"}>
                     <NavItem to="/perfil" icon={<MdPerson />} text="Perfil" />

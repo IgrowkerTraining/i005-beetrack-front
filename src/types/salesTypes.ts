@@ -13,12 +13,12 @@ export interface SaleItem {
 
 
 export interface Sale {
-    id?: number;
+    id?: string;
     status?: SaleStatus;
-    createdAt?: string;
+    date?: string;
     paymentMethod?: PaymentMethod;
     discount?: number;
-    items: SaleItem[];
-    subTotal: number;
-    total: number;    
+    items?: SaleItem[];
+    subTotal?: number;
+    total?: number;    
 }

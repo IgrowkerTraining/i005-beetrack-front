@@ -27,7 +27,7 @@ function ProductScannerPage() {
   const [scannerKey, setScannerKey] = useState(0)
   const navigate = useNavigate()
 
-  useEffect(() => {
+  useEffect(() => {    
     if (!barCode) return
 
     const product = products.find((p) => p.id.toString() === barCode)

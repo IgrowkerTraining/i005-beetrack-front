@@ -9,6 +9,11 @@ import ProductScannerPage from '@/pages/ProductScannerPage'
 import AddProductPage from '@/pages/AddProductPage'
 import ProfilePage from '@/pages/ProfilePage'
 import PrivateLayout from '@/layout/PrivateLayout'
+import SalesPage from '@/pages/SalesPage'
+import CardRegisterPage from '@/pages/CashRegisterPage'
+import CashRegisterPage from '@/pages/CashRegisterPage'
+import SalesSummaryPage from '@/pages/SalesSummaryPage'
+import VoucherPage from '@/pages/VoucherPage'
 
 const AppRoutes = () => {
   return (
@@ -22,8 +27,11 @@ const AppRoutes = () => {
       {/* Rutas privadas sin layout */}
       <Route element={<AccessRoutes isPrivate={true} />}>
         <Route path="productscanner" element={<ProductScannerPage />} />
+        <Route path="cash" element={<CashRegisterPage />} />
+        <Route path="/sale-summary" element={<SalesSummaryPage />} />
         <Route path="/addproduct" element={<AddProductPage />} />
         <Route path="/addproduct/:barcode" element={<AddProductPage />} />
+        <Route path="voucher" element={<VoucherPage />} />
       </Route>
 
       {/* Rutas protegidas */}
@@ -33,6 +41,7 @@ const AppRoutes = () => {
           <Route path="home" element={<DashboardPage />} />
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="perfil" element={<ProfilePage />} />
+          <Route path="sales" element={<SalesPage />} />          
         </Route>
       </Route>
 

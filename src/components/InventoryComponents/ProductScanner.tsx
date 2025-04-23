@@ -20,7 +20,7 @@ const ProductScanner = ({  onScanSuccess }: Props) => {
         { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0, disableFlip: false },
         (decodedText) => {
           if (isRunningRef.current) {
-            isRunningRef.current = false;
+            isRunningRef.current = false;                        
             onScanSuccess(decodedText);
 
             scanner

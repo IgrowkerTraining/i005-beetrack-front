@@ -4,6 +4,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+import { FaPlus } from 'react-icons/fa'
 
 type Props = {
   isOpen: boolean
@@ -44,17 +45,26 @@ export function ProductNotFoundModal({ isOpen, onClose, onAdd, barCode }: Props)
             <VStack w="100%" mt={4}>
               <Button
                 w="100%"
-                bg="amarillo"
+                bg="yellow.400"
                 color="black"
                 borderRadius="lg"
+                fontWeight="bold"
                 onClick={() => barCode && onAdd(barCode)}
-                _hover={{ bg: 'yellow.400' }}
+                _hover={{ bg: 'yellow.500' }}
               >
-                Agregar nuevo producto
+                <FaPlus /> Agregar nuevo producto
               </Button>
 
-              <Button variant="plain" w="80px" onClick={onClose}>
-                Cancelar
+              <Button 
+                variant="plain" 
+                w="100%" 
+                borderRadius="lg"
+                fontWeight="bold" 
+                bg="gray.100" 
+                onClick={onClose}
+                _hover={{ bg: 'gray.200' }}
+              >
+                  Cancelar
               </Button>
             </VStack>
           </Dialog.Footer>
