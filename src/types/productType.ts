@@ -1,45 +1,32 @@
-
 export interface Product {
     id: string;
+    description: string;
     barcode: string;
     name: string;
-    stock: number;
-    description: string;
-    storeId: string;
-    createdAt: Date;
-    updatedAt: Date;
     costPrice: string;
+    salesPrice:string;
+    stock: number;
+    stock_min: number;
+    stock_optimus: number;
     imagePath: string;
-    salesPrice: string;
-    status: string;
-    stock_min: number;
-    stock_optimus: number;
-    cloudinary_id: string;
-    alerts: boolean
-}
-
-export interface NewProduct {
-    barcode: string;
-    name: string;
-    salesPrice: string;
-    costPrice: string;
-    stock: number;
-    stock_min: number;
-    stock_optimus: number;
     alerts: boolean;
-    description: string;
     file: File;
 }
 
 export interface FetchProduct {
     status: string;
     data: {
-        items: Product[],
-        total: number
-    };
+        items: Product[];
+        total: number;
+    }
 }
 
 export interface FetchProductById {
+    status: string;
+    data: Product;
+}
+
+export interface AddProductResponse {
     status: string;
     data: Product;
 }
@@ -69,3 +56,5 @@ export interface Sale {
     total: number;
     date: string;
 }
+
+export type NewProduct = Omit<Product, 'id' | 'imagePath'>;

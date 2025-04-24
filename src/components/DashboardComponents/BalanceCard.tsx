@@ -1,9 +1,9 @@
 import { Box, Flex, Icon, Text, VStack, Spinner } from "@chakra-ui/react";
 import { MdOutlinePointOfSale } from "react-icons/md";
-import { useDashboardNow } from "@/hooks/useDashboardNow";
+import { useTodayResume } from "@/hooks/useReport";
 
 export default function BalanceCard() {
-  const { data, isLoading, error } = useDashboardNow();
+  const { data, isLoading, error } = useTodayResume();
 
   return (
     <Box bg="white" p={{ base: 3 }} borderRadius="xl" boxShadow="sm" w="100%">

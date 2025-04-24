@@ -2,32 +2,29 @@ import { toaster } from '@/components/ui/toaster';
 import { PRODUCTS_ENDPOINT } from '@/const/api';
 import { productService } from '@/services/productService';
 import useProductStore from '@/store/useProductStore';
-import { FetchProduct, FetchProductById, NewProduct, Product, UpdateProductResponse } from '@/types/productType';
+import { AddProductResponse, FetchProduct, FetchProductById, NewProduct, Product, UpdateProductResponse } from '@/types/productType';
 import { buildUrl } from '@/utils/buildUrl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // ✅ Obtener todos los productos y guardarlos en la store
 export const useFetchProducts = () => {
-  const { queryParams, fetchProducts, products } = useProductStore();
+  const { queryParams, fetchProducts } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
 
-  const { data, isPending } = useQuery<{ status: string, data: Product[] }, Error>({
+  const query = useQuery<FetchProduct, Error>({
     queryKey: [url],
     queryFn: () => productService.getProducts(queryParams),
     staleTime: 5 * 60 * 1000,
   });
 
-  // console.log(data)
-
   useEffect(() => {
-  if (data && data.data.length !== products.length) {
-    fetchProducts(data.data);
+  if (query.data?.data?.items.length) {
+    fetchProducts(query.data.data.items);
   }
-}, [fetchProducts, products, data]);
+}, [query.data, fetchProducts]);
 
-  return { data, isPending };
+  return query;
 };
 
 // ✅ Obtener producto por ID
@@ -42,45 +39,27 @@ export const useFetchProduct = (id: string) => {
 
 // ✅ Añadir nuevo producto
 export const useAddProduct = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { addProduct, queryParams } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
 
-  return useMutation<FetchProductById, Error, NewProduct & { file: File }>({
-    mutationFn: productService.addProduct,
+  return useMutation<AddProductResponse, Error, NewProduct & { file: File }>({
+    mutationFn: (product) => productService.addProduct(product),
     onSuccess: (data) => {
       addProduct(data.data);
-      
       toaster.create({
         type: 'success',
-        description: 'Producto añadido correctamente'
-      })
-
-      queryClient.setQueryData<FetchProduct>([url], (old) => ({
-        ...old,
-        data: {
-          ...old?.data,
-          items: [...(old?.data?.items ?? []), data.data],
-          total: (old?.data?.total ?? 0) + 1
-        }
-      }));
-
-      navigate('/');
+        description: 'Producto añadido',
+      });
+      queryClient.setQueryData<Product[]>([url], (old) =>
+        Array.isArray(old) ? [...old, data.data] : [data.data]
+      );
     },
-    onError: (error) => {
-      console.log(error)
-      toaster.create({
-        type: 'error',
-        description: error.message
-      })
-    }
   });
 };
 
 // ✅ Actualizar producto
 export const useUpdateProduct = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { updateProduct, queryParams } = useProductStore();
   const url = buildUrl(PRODUCTS_ENDPOINT, queryParams);
@@ -94,20 +73,12 @@ export const useUpdateProduct = () => {
         type: 'success',
         description: 'Producto actualizado',
       });
-
-      // queryClient.invalidateQueries({
-      //   queryKey: [url]
-      // })
-
-      queryClient.setQueryData<FetchProduct>([url], (old) => ({
-        ...old,
-        data: {
-          ...old?.data,
-          items: old?.data?.items.map(p => p.id === id ? data.data : p)
-        }
-      }));
-
-      navigate('/inventory');
+      queryClient.setQueryData<Product[]>([url], (old) =>
+        Array.isArray(old)
+          ? old.map((product) => (product.id === id ? data.data : product))
+          : [data.data]
+      );
+      queryClient.invalidateQueries({ queryKey: ['product', id] });
     },
   });
 };

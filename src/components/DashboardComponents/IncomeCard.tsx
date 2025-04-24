@@ -1,11 +1,11 @@
 import { Box, Flex, Icon, Text, Button, Spinner } from '@chakra-ui/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useDashboardNow } from "@/hooks/useDashboardNow";
+import { useTodayResume } from "@/hooks/useReport";
 
 export default function IncomeCard() {
   const navigate = useNavigate();
-  const { data, isLoading, error } = useDashboardNow();
+  const { data, isLoading, error } = useTodayResume();
 
   return (
     <Box bg="white" p={{ base: 3 }} borderRadius="xl" boxShadow="sm" w="100%">

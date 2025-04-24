@@ -53,3 +53,22 @@ export interface DashboardNowReport {
       digital: number;
     }
   }
+  export interface Order {
+    id: string;
+    status: string;
+    subTotalAmount: string;
+    totalAmount: string;
+    payment: {
+      id: string;
+      name: string;
+    };
+    pdfPath: string;
+    discount: null | number;
+    createdAt: string;
+    updatedAt: string;
+  }
+  
+  export interface OrdersResponse {
+    status: string;
+    data: Order[];
+  }

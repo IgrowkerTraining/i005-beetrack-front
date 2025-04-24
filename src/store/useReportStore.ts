@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { DailyReport, RangeReport, TopBestSellingsReport } from '@/types/statsTypes';
+import { RangeReport, TopBestSellingsReport } from '@/types/statsTypes';
 
 interface ReportState {
   topBestSellingsReport: TopBestSellingsReport;
-  dailyReport: DailyReport;
+  todayResume: RangeReport;
+  dailyReport: RangeReport;
   rangeReport: RangeReport;
   queryParams: {
     view: 'now' | 'daily' | 'top' | 'range';
@@ -13,7 +14,8 @@ interface ReportState {
     toDate: string;
   };
   fetchTopBestSellingsReport: (topBestSellingReport: TopBestSellingsReport) => Promise<void>;
-  fetchDailyReport: (dailyReport: DailyReport) => Promise<void>;
+  fetchTodayResume: (dailyReport: RangeReport) => Promise<void>;
+  fetchDailyReport: (dailyReport: RangeReport) => Promise<void>;
   fetchRangeReport: (rangeReport: RangeReport) => Promise<void>;
 }
 
@@ -21,16 +23,18 @@ const useReportStore = create<ReportState>()(
   devtools(
     (set) => ({
       topBestSellingsReport: null,
+      todayResume: null,
       dailyReport: null,
       rangeReport: null,
       queryParams: {
         view: 'top',
         date: '',
-        fromDate: '2025-04-01',
-        toDate: '2025-04-30'
+        fromDate: '2025-04-01', // poner primer día del mes actual default
+        toDate: '2025-04-30', // poner último día del mes actual default
       },
       fetchTopBestSellingsReport: (topBestSellingsReport: TopBestSellingsReport) => set({ topBestSellingsReport }),
-      fetchDailyReport: (dailyReport: DailyReport) => set({ dailyReport }),
+      fetchTodayResume: (todayResume: RangeReport) => set({ todayResume }),
+      fetchDailyReport: (dailyReport: RangeReport) => set({ dailyReport }),
       fetchRangeReport: (rangeReport: RangeReport) => set({ rangeReport }),
     })
   )

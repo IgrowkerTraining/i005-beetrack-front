@@ -1,5 +1,5 @@
 import { HStack, Icon, Text, VStack } from "@chakra-ui/react";
-import { FiChevronRight } from "react-icons/fi";
+// import { FiChevronRight } from "react-icons/fi";
 import { FiRepeat } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { FaMoneyBill,  } from "react-icons/fa";
@@ -51,7 +51,7 @@ export const TransactionItem = ({ type, method, amount, date }: TransactionItemP
             {date}
           </Text>
         </VStack>
-        <Icon as={FiChevronRight} boxSize={5} color="gray.400" />
+        {/* <Icon as={FiChevronRight} boxSize={5} color="gray.400" /> */}
       </HStack>
     </HStack>
   );

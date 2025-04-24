@@ -51,7 +51,7 @@ export const DashboardContent = () => {
               <Text fontWeight="bold" fontSize="lg" color={color}>
                 Historial reciente
               </Text>
-              <Text fontSize="sm" color="gray.500" cursor="pointer" fontWeight={"bold"}>
+              <Text fontSize="sm" color="gray.500" cursor="pointer" fontWeight={"bold"} mr={2}>
                 Ver más &gt;
               </Text>
             </Flex>
