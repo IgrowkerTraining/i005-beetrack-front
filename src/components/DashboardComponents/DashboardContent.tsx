@@ -12,12 +12,13 @@ import IncomeCard from "@/components/DashboardComponents/IncomeCard";
 import ProductList from "@/components/DashboardComponents/ProductList";
 import TransactionsList from "@/components/DashboardComponents/TransactionsList";
 import { useTopBestSellings } from "@/hooks/useReport";
+import { useNavigate } from "react-router-dom";
 
 export const DashboardContent = () => {
   useTopBestSellings();  
-  // console.log(topBestSellingsReport);
-
   const color = useColorModeValue("blue.400", "white");
+  const navigate = useNavigate();
+
   return (
     <Flex direction="column" overflow="hidden" margin="0" padding="0">
       <Box p={6}>
@@ -51,7 +52,14 @@ export const DashboardContent = () => {
               <Text fontWeight="bold" fontSize="lg" color={color}>
                 Historial reciente
               </Text>
-              <Text fontSize="sm" color="gray.500" cursor="pointer" fontWeight={"bold"} mr={2}>
+              <Text 
+                fontSize="sm" 
+                color="gray.500" 
+                cursor="pointer" 
+                fontWeight={"bold"} 
+                mr={2}
+                onClick={() => navigate('/sales')}
+              >
                 Ver más &gt;
               </Text>
             </Flex>
