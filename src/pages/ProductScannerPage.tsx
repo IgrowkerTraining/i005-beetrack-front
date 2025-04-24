@@ -39,36 +39,6 @@ function ProductScannerPage() {
   }, [barcode, navigate])
 
   return (
-<<<<<<< HEAD
-
-    <Box p={4} maxW="500px" mx="auto">
-      {/* {isMobile && ( */}
-        <HStack mb={4} align="center">
-          <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
-          <Text fontSize="lg" fontWeight="bold">
-            Código de barras
-          </Text>
-        </HStack>
-      {/* )} */}
-      <Box
-        mb={4}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        maxW={350}
-        gap={4}
-        mx="auto"
-      >
-        <ProductScanner key={scannerKey} onScanSuccess={setBarCode} />
-        <VStack gap={4} px={4} align="start">
-          <HStack>
-            <Box bg="yellow.300" p={2} borderRadius="md">
-              <CiBarcode size={22} />
-            </Box>
-            <Text fontSize="xs">
-              Acerca tu teléfono al código de barra para escanear el producto
-=======
     <Flex direction="column" minH={{ base: '100svh', md: '100%' }} p={4} maxW="500px" mx="auto" justify="space-between">
       <Box>
         {isMobile && (
@@ -76,7 +46,6 @@ function ProductScannerPage() {
             <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
             <Text fontSize="lg" fontWeight="bold">
               Código de barras
->>>>>>> origin
             </Text>
           </HStack>
         )}

@@ -5,11 +5,9 @@ import { apiRequest } from "@/utils/apiRequest";
 import { buildUrl } from "@/utils/buildUrl";
 
 export const productService = {
-  async getProducts(params: QueryParams): Promise<{ status: string, data: Product[] }> {
+  async getProducts(params: QueryParams): Promise<FetchProduct> {
     const url = buildUrl(PRODUCTS_ENDPOINT, params);
-    const res = await apiRequest<{ status: string, data: Product[] }>(url);
-
-    return res
+    return apiRequest<FetchProduct>(url);
   },
 
   async getProduct(id: string): Promise<FetchProductById> {
@@ -17,11 +15,7 @@ export const productService = {
     return apiRequest<FetchProductById>(url);
   },
 
-<<<<<<< HEAD
-  async addProduct(product: NewProduct & { file?: File }): Promise<FetchProductById> {
-=======
   async addProduct(product: NewProduct & { file?: File }): Promise<AddProductResponse> {
->>>>>>> origin
   const formData = new FormData();
 
   Object.entries(product).forEach(([key, value]) => {

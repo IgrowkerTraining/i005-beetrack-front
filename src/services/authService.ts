@@ -23,15 +23,8 @@ export const authService = {
     const url = buildUrl(AUTH_ENDPOINT, { resource: "register/check-email" });
     const { data } = await apiRequest<{ data: { isEmailRegistered: boolean }, status: string }>(url, {
       method: "POST",
-<<<<<<< HEAD
-      body: JSON.stringify({ email })
-    });
-
-    console.log(data)
-=======
       body: JSON.stringify({ email }),
     });
->>>>>>> origin
     return data.isEmailRegistered;
   },
 

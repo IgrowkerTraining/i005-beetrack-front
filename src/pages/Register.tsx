@@ -1,14 +1,18 @@
 import {
+  Card,
   Box,
   Text,
   Stack,
   Heading,
-  Image, Flex,
-  HStack
+  Image,
+  Button,
+  Link,
+  Flex,
+  HStack,
 } from "@chakra-ui/react";
+import { AiFillGoogleCircle } from "react-icons/ai";
+import { IoLogoFacebook } from "react-icons/io";
 import HexagonPattern from "@/assets/HexagonPattern.svg";
-<<<<<<< HEAD
-=======
 import { useState } from "react";
 import { useCheckEmailExists, useRegister } from "@/hooks/useAuth";
 import { useEmailCheck } from "@/hooks/useEmailCheck";
@@ -25,13 +29,9 @@ import { StoreInfoStep } from "@/components/login-registerComponents/StoreInfoSt
 import { StepTitle } from "@/components/login-registerComponents/StepTitle";
 import { StepNavigation } from "@/components/login-registerComponents/StepNavigation";
 import { NavLink, useNavigate } from "react-router-dom";
->>>>>>> origin
 import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
-import RegisterForm from "@/components/login-registerComponents/RegisterForm";
 
 const Register = () => {
-<<<<<<< HEAD
-=======
   const [step, setStep] = useState(1);
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
@@ -164,7 +164,6 @@ const Register = () => {
 
   const isLoading = isCheckingEmail || isRegistering || isSubmitting;
 
->>>>>>> origin
   return (
     <Flex
       minH="100vh"
@@ -265,9 +264,6 @@ const Register = () => {
             height="183px"
           />
         </Box>
-<<<<<<< HEAD
-        <RegisterForm />
-=======
         <Card.Root
           minH={{ base: "90vh", md: "60vh" }}
           maxW={{ base: "100%", md: "380px" }}
@@ -350,7 +346,6 @@ const Register = () => {
             )}
           </Card.Footer>
         </Card.Root>
->>>>>>> origin
       </Flex>
     </Flex>
   );

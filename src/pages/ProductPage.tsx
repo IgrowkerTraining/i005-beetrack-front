@@ -12,24 +12,14 @@ import {
   Switch,
   Text,
   Image,
-<<<<<<< HEAD
-  VStack,
-  Spinner,
-=======
   useBreakpointValue,
   useDisclosure,
->>>>>>> origin
 } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import { CiBarcode } from 'react-icons/ci'
 import { MdAdd, MdArrowBack, MdRemove } from 'react-icons/md'
 import { useFetchProduct, useAddProduct, useUpdateProduct } from '@/hooks/useProduct'
-<<<<<<< HEAD
-import { Product } from '@/types/productType'
-import { toaster } from '@/components/ui/toaster'
-=======
 import BarcodeScannerOverlay from '@/components/InventoryComponents/BarcodeScannerModal'
->>>>>>> origin
 
 const ProductPage = () => {
   const [stock, setStock] = useState(0)
@@ -46,18 +36,11 @@ const ProductPage = () => {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const { barcode, id } = useParams()
   const navigate = useNavigate()
-<<<<<<< HEAD
-  const { data: productData, isLoading } = useFetchProduct(id ?? '')
-  const { mutateAsync: addProduct, isPending: isPendingAdd } = useAddProduct()
-  const { mutateAsync: updateProduct, isPending: isPendingUpdate } = useUpdateProduct()
-
-=======
   const { data: productData } = useFetchProduct(id ?? '')
   const { mutateAsync: addProduct } = useAddProduct()
   const { mutateAsync: updateProduct } = useUpdateProduct()
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { open, onOpen, onClose } = useDisclosure()
->>>>>>> origin
 
   useEffect(() => {
     if (barcode) {
@@ -106,50 +89,11 @@ const ProductPage = () => {
 
   const handleSubmit = async () => {
 
-<<<<<<< HEAD
-    try {
-      if (id) {
-        const updatedFields: Partial<Product> & { file?: File } = {};
-        const original = productData?.data;
-
-        if (barCodeInput !== original.barcode) updatedFields.barcode = barCodeInput;
-        if (name !== original.name) updatedFields.name = name;
-        if (salesPrice !== original.salesPrice) updatedFields.salesPrice = salesPrice;
-        if (costPrice !== original.costPrice) updatedFields.costPrice = costPrice;
-        if (stock !== original.stock) updatedFields.stock = stock;
-        if (stock_min !== original.stock_min) updatedFields.stock_min = stock_min;
-        if (stock_optimus !== original.stock_optimus) updatedFields.stock_optimus = stock_optimus;
-        if (alertsEnabled !== original.alerts) updatedFields.alerts = alertsEnabled;
-        if (description !== original.description) updatedFields.description = description;
-
-        // Solo si hay una imagen nueva seleccionada
-        if (image && image.size > 0) {
-          updatedFields.file = image;
-        }
-
-        // Evitar enviar si no hay ningún cambio
-        if (Object.keys(updatedFields).length === 0) {
-          toaster.create({
-            type: 'info',
-            description: 'No hay cambios para guardar.'
-          });
-          return;
-        }
-
-        await updateProduct({
-          id: id.toString(),
-          updatedData: updatedFields,
-        });
-      } else {
-        await addProduct({
-          barcode: barCodeInput,
-=======
   try {
     if (id) {
       await updateProduct({
         id: id.toString(),
         updatedData: {
->>>>>>> origin
           name,
           salesPrice,
           costPrice,
@@ -158,14 +102,6 @@ const ProductPage = () => {
           stock_optimus,
           alerts: alertsEnabled,
           description,
-<<<<<<< HEAD
-          file: image,
-        });
-      }
-    } catch (error) {
-      console.error('Error al guardar el producto:', error);
-    }
-=======
           ...(image && { file: image }),
         },
       });
@@ -186,92 +122,47 @@ const ProductPage = () => {
     navigate('/inventory')
   } catch (error) {
     console.error('Error al guardar el producto:', error);
->>>>>>> origin
   }
-
-  if (isLoading) {
-    return (
-      <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-        <Spinner color="colorPalette.600" />
-        <Text color="colorPalette.600">Cargando producto...</Text>
-      </VStack>
-    )
-  }
+}
 
   return (
     <>
-<<<<<<< HEAD
-      <Fieldset.Root p={4} maxW="1200px" mx="auto" display="flex" flexDirection="column" minH="100vh">
-        <HStack align="center">
-=======
     <Fieldset.Root p={4} maxW="1200px" mx="auto" display="flex" flexDirection="column" minH="100vh">
       {isMobile && (
         <HStack mb={4} align="center">
->>>>>>> origin
           <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
           <Text fontSize="lg" fontWeight="bold">
             {!id ? "Agregar producto" : name}
           </Text>
         </HStack>
-<<<<<<< HEAD
-=======
       )}
->>>>>>> origin
 
-        <Flex
-          direction={{ base: 'column', md: 'row' }}
-          gap={4}
-          align="flex-start"
-          flex="1"
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        gap={4}
+        align="flex-start"
+        flex="1"
+      >
+        {/* Panel izquierdo */}
+        <Box
+          flex={1}
+          bg="white"
+          borderRadius="xl"
+          p={4}
+          border="1px solid"
+          borderColor="gray.200"
+          w="full"
+          minW="300px"
         >
-          {/* Panel izquierdo */}
+          <input
+            type="file"
+            accept="image/*"
+            ref={imageInputRef}
+            onChange={handleImageChange}
+            hidden
+          />
+
           <Box
-<<<<<<< HEAD
-            flex={1}
-            bg="white"
-            borderRadius="xl"
-            p={4}
-            border="1px solid"
-            borderColor="gray.200"
-            w="full"
-            minW="300px"
-          >
-            <input
-              type="file"
-              accept="image/*"
-              ref={imageInputRef}
-              onChange={handleImageChange}
-              hidden
-            />
-
-            <Box
-              role='button'
-              cursor="pointer"
-              w={{ base: '100%', md: '180px' }}
-              h={{ base: '200px', md: '180px' }}
-              bg="gray.700"
-              color="white"
-              borderRadius="lg"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-              mb={4}
-              overflow="hidden"
-              onClick={() => imageInputRef.current?.click()}
-            >
-              {preview ? (
-                <Image src={preview} alt="Previsualización" objectFit="cover" w="full" h="full" />
-              ) : (
-                <>
-                  <Text fontSize="3xl">+</Text>
-                  <Text w="100px">Imagen del producto</Text>
-                </>
-              )}
-            </Box>
-
-=======
             role='button'
             cursor="pointer"
             w="180px"
@@ -346,175 +237,131 @@ const ProductPage = () => {
 
           <Box mt={6}>
             <Text fontWeight="bold" mb={2}>Detalles</Text>
->>>>>>> origin
             <Stack gap={4}>
-              <Field.Root>
-                <Field.Label>Código de barras</Field.Label>
-                <HStack w="full" position="relative">
-                  <Input placeholder="0000000000000" value={barCodeInput || barcode || ''} onChange={(e) => setBarcodeInput(e.target.value)} />
-                  <IconButton
-                    position="absolute"
-                    variant="plain"
-                    right={2}
-                    onClick={() => navigate("/productscanner")}
-                    aria-label="Escanear"
-                    cursor="pointer"
-                  >
-                    <CiBarcode />
-                  </IconButton>
-                </HStack>
-              </Field.Root>
-
-              <Field.Root>
-                <Field.Label>Nombre del producto</Field.Label>
-                <Input value={name || ""} placeholder="Nombre del producto" onChange={(e) => setName(e.target.value)} />
-              </Field.Root>
-
-              <Field.Root>
-                <Field.Label>Costo</Field.Label>
-                <Input pl={5} value={salesPrice || ""} placeholder="0.00" onChange={(e) => setSalesPrice(e.target.value)} />
-                <Box position="absolute" left="2" top="70%" transform="translateY(-50%)" color="gray.500">
-                  $
-                </Box>
-              </Field.Root>
-
-              <Field.Root>
-                <Field.Label>Costo</Field.Label>
-                <Input pl={5} value={costPrice || ""} placeholder="0.00" onChange={(e) => setCostPrice(e.target.value)} />
-                <Box position="absolute" left="2" top="70%" transform="translateY(-50%)" color="gray.500">
-                  $
-                </Box>
-              </Field.Root>
+              <Input value={description || ""} onChange={(e) => setDescription(e.target.value)} placeholder="Descripción del producto" />
+              <Input placeholder="Elige el tipo de unidad" />
             </Stack>
+          </Box>
+        </Box>
 
-            <Box mt={6}>
-              <Text fontWeight="bold" mb={2}>Detalles</Text>
-              <Stack gap={4}>
-                <Input value={description || ""} onChange={(e) => setDescription(e.target.value)} placeholder="Descripción del producto" />
-                <Input placeholder="Elige el tipo de unidad" />
+        {/* Panel derecho */}
+        <Box
+          flex={1}
+          bg="white"
+          borderRadius="xl"
+          p={4}
+          border="1px solid"
+          borderColor="gray.200"
+          w="full"
+          minW="300px"
+        >
+          <Text fontWeight="bold" mb={4}>Stock</Text>
+
+          <Stack gap={4}>
+            <Field.Root display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+              <Field.Label>Stock disponible</Field.Label>
+              <HStack>
+                <IconButton
+                  aria-label="Restar"
+                  onClick={() => setStock((prev) => Math.max(prev - 1, 0))}
+                  variant="plain"
+                ><MdRemove /></IconButton>
+                <Input
+                  value={stock || 0}
+                  onChange={(e) => setStock(Number(e.target.value))}
+                  border="1px solid"
+                  borderColor="gray.400"
+                  rounded="full"
+                  px={2}
+                  maxW="80px"
+                  textAlign="center"
+                />
+                <IconButton
+                  aria-label="Sumar"
+                  onClick={() => setStock((prev) => prev + 1)}
+                  variant="plain"
+                ><MdAdd /></IconButton>
+              </HStack>
+            </Field.Root>
+
+            <Field.Root>
+              <Field.Label>Stock mínimo</Field.Label>
+              <Input value={stock_min || 0} placeholder="0" onChange={(e) => setStock_min(Number(e.target.value))} />
+            </Field.Root>
+
+            <Field.Root>
+              <Field.Label>Stock óptimo</Field.Label>
+              <Input value={stock_optimus || 0} placeholder="0" onChange={(e) => setStock_optimus(Number(e.target.value))} />
+            </Field.Root>
+
+            <Field.Root display="flex" flexDirection="row" justifyContent="space-between">
+              <Field.Label htmlFor="alerts" mb="0" fontWeight="bold">
+                Alertas de stock
+              </Field.Label>
+              <Switch.Root
+                id='alerts'
+                checked={alertsEnabled}
+                onCheckedChange={(e) => setAlertsEnabled(e.checked)}
+                mr={2}
+              >
+                <Switch.HiddenInput />
+                <Switch.Control />
+              </Switch.Root>
+            </Field.Root>
+
+            <Text fontSize="sm" color="gray.600">
+              Recibirás una notificación cuando el stock disponible disminuya por debajo del mínimo establecido.
+            </Text>
+
+            <Box>
+              <Text fontSize="sm" mb={2} fontWeight="bold">
+                En base al color podrás identificar el estado del producto:
+              </Text>
+              <Stack gap={2}>
+                <HStack>
+                  <Box w="45px" h="45px" bg="green.500" borderRadius="sm" flexShrink={0} />
+                  <Box>
+                    <Text fontSize="sm" fontWeight="bold">Verde</Text>
+                    <Text fontSize="sm" color="gray.500">Indica stock por encima del óptimo.</Text>
+                  </Box>
+                </HStack>
+                <HStack>
+                  <Box w="45px" h="45px" bg="orange.500" borderRadius="sm" flexShrink={0} />
+                  <Box>
+                    <Text fontSize="sm" fontWeight="bold">Naranja</Text>
+                    <Text fontSize="sm" color="gray.500">Stock acercándose al mínimo establecido.</Text>
+                  </Box>
+                </HStack>
+                <HStack>
+                  <Box w="45px" h="45px" bg="red.500" borderRadius="sm" flexShrink={0} />
+                  <Box>
+                    <Text fontSize="sm" fontWeight="bold">Rojo</Text>
+                    <Text fontSize="sm" color="gray.500">Stock por debajo del mínimo establecido.</Text>
+                  </Box>
+                </HStack>
               </Stack>
             </Box>
-          </Box>
+          </Stack>
+        </Box>
+      </Flex>
 
-          {/* Panel derecho */}
-          <Box
-            flex={1}
-            bg="white"
-            borderRadius="xl"
-            p={4}
-            border="1px solid"
-            borderColor="gray.200"
-            w="full"
-            minW="300px"
-          >
-            <Text fontWeight="bold" mb={4}>Stock</Text>
-
-            <Stack gap={4}>
-              <Field.Root display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
-                <Field.Label>Stock disponible</Field.Label>
-                <HStack>
-                  <IconButton
-                    aria-label="Restar"
-                    onClick={() => setStock((prev) => Math.max(prev - 1, 0))}
-                    variant="plain"
-                  ><MdRemove /></IconButton>
-                  <Input
-                    value={stock || 0}
-                    onChange={(e) => setStock(Number(e.target.value))}
-                    border="1px solid"
-                    borderColor="gray.400"
-                    rounded="full"
-                    px={2}
-                    maxW="80px"
-                    textAlign="center"
-                  />
-                  <IconButton
-                    aria-label="Sumar"
-                    onClick={() => setStock((prev) => prev + 1)}
-                    variant="plain"
-                  ><MdAdd /></IconButton>
-                </HStack>
-              </Field.Root>
-
-              <Field.Root>
-                <Field.Label>Stock mínimo</Field.Label>
-                <Input value={stock_min || 0} placeholder="0" onChange={(e) => setStock_min(Number(e.target.value))} />
-              </Field.Root>
-
-              <Field.Root>
-                <Field.Label>Stock óptimo</Field.Label>
-                <Input value={stock_optimus || 0} placeholder="0" onChange={(e) => setStock_optimus(Number(e.target.value))} />
-              </Field.Root>
-
-              <Field.Root display="flex" flexDirection="row" justifyContent="space-between">
-                <Field.Label htmlFor="alerts" mb="0" fontWeight="bold">
-                  Alertas de stock
-                </Field.Label>
-                <Switch.Root
-                  id='alerts'
-                  checked={alertsEnabled}
-                  onCheckedChange={(e) => setAlertsEnabled(e.checked)}
-                  mr={2}
-                >
-                  <Switch.HiddenInput />
-                  <Switch.Control />
-                </Switch.Root>
-              </Field.Root>
-
-              <Text fontSize="sm" color="gray.600">
-                Recibirás una notificación cuando el stock disponible disminuya por debajo del mínimo establecido.
-              </Text>
-
-              <Box>
-                <Text fontSize="sm" mb={2} fontWeight="bold">
-                  En base al color podrás identificar el estado del producto:
-                </Text>
-                <Stack gap={2}>
-                  <HStack>
-                    <Box w="45px" h="45px" bg="green.500" borderRadius="sm" flexShrink={0} />
-                    <Box>
-                      <Text fontSize="sm" fontWeight="bold">Verde</Text>
-                      <Text fontSize="sm" color="gray.500">Indica stock por encima del óptimo.</Text>
-                    </Box>
-                  </HStack>
-                  <HStack>
-                    <Box w="45px" h="45px" bg="orange.500" borderRadius="sm" flexShrink={0} />
-                    <Box>
-                      <Text fontSize="sm" fontWeight="bold">Naranja</Text>
-                      <Text fontSize="sm" color="gray.500">Stock acercándose al mínimo establecido.</Text>
-                    </Box>
-                  </HStack>
-                  <HStack>
-                    <Box w="45px" h="45px" bg="red.500" borderRadius="sm" flexShrink={0} />
-                    <Box>
-                      <Text fontSize="sm" fontWeight="bold">Rojo</Text>
-                      <Text fontSize="sm" color="gray.500">Stock por debajo del mínimo establecido.</Text>
-                    </Box>
-                  </HStack>
-                </Stack>
-              </Box>
-            </Stack>
-          </Box>
-        </Flex>
-
-        {/* Botones */}
-        <HStack mt={6} px={1} justifyContent="center" maxW="550px">
-          <Button onClick={() => navigate(-1)} variant="outline" rounded="xl" w="50%">
-            Cancelar
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            colorPalette={"navItem"}
-            color={"colorPalette.fg"}
-            w="50%"
-            rounded="xl"
-            loading={isPendingAdd || isPendingUpdate}
-            loadingText={isPendingAdd ? "Añadiendo..." : isPendingUpdate ? "Actualizando..." : "Guardando..."}
-          >
-            Guardar
-          </Button>
-        </HStack>
-      </Fieldset.Root>
+      {/* Botones */}
+     <HStack mt={6} px={1} justifyContent="center" maxW="550px">
+      <Button onClick={() => navigate(-1)} variant="outline" rounded="xl" w="50%">
+        Cancelar
+      </Button>
+      <Button
+        onClick={handleSubmit}
+        colorScheme="gray"
+        bg="gray.500"
+        w="50%"
+        color="white"
+        rounded="xl"
+      >
+        Guardar
+      </Button>
+    </HStack>
+    </Fieldset.Root>
     </>
   )
 }

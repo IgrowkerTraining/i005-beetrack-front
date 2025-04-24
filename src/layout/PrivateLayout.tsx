@@ -12,11 +12,7 @@ const PrivateLayout = () => {
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   useAutocloseSidenavbar();
-<<<<<<< HEAD
-  useToolbarTittle();
-=======
   useTopbarTitle();
->>>>>>> origin
   useFetchProfile();
   useFetchProducts();
 

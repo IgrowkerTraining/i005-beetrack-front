@@ -1,16 +1,12 @@
 import { Heading, Flex, Image, Text, HStack, Box } from "@chakra-ui/react";
 import Logo from "@/assets/logo.svg";
 
-<<<<<<< HEAD:src/components/login-registerComponents/StepProgress.tsx
-export const StepProgress = () => {
-=======
 type StepTitleProps = {
   step: number;
   title: string;
 };
 
 export const StepTitle = ({ title }: StepTitleProps) => {
->>>>>>> origin:src/components/login-registerComponents/StepTitle.tsx
   return (
     <>
       <Flex direction={"column"} align="flex-start" mb={8}>
@@ -36,6 +32,7 @@ export const StepTitle = ({ title }: StepTitleProps) => {
         <Heading w="100%" fontWeight="bold" fontSize="xl">
           Registrarse
         </Heading>
+        {title}
       </Box>
     </>
   );

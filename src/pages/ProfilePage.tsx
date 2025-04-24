@@ -15,19 +15,7 @@ const ProfilePage = () => {
   const { mutate: mutateStore, isPending: isPendingStore } = useUpdateStore();
   const { mutate: mutateUser, isPending: isPendingUser } = useUpdateUser();
 
-<<<<<<< HEAD
-
-  if (isLoading) return (
-    <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"} flexGrow={1} w={"full"}>
-      <Spinner color="colorPalette.600" />
-      <Text color="colorPalette.600">Loading...</Text>
-    </VStack>
-  );
-
-  if (isError || !profile || !profile.store) {
-=======
   if (isError) {
->>>>>>> origin
     return (
       <Center h={"full"}>
         <Text fontWeight={"bold"} color={"gray.500"}>

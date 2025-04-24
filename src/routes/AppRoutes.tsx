@@ -24,11 +24,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
       </Route>
 
-<<<<<<< HEAD
-      {/* Rutas privadas sin layout */}
-=======
       {/* rutas privadas con layout en big screen y no layout on mobile  */}
->>>>>>> origin
       <Route element={<AccessRoutes isPrivate={true} />}>
         <Route path="/products" element={<ProductPage />} />
         <Route path="/products/id/:id" element={<ProductPage />} />

@@ -1,6 +1,5 @@
 import ProductItem from '@/components/InventoryComponents/ProductItem'
 import { useColorModeValue } from '@/components/ui/color-mode'
-import { useFetchProducts } from '@/hooks/useProduct'
 import useProductStore from '@/store/useProductStore'
 import {
   Box,
@@ -11,13 +10,7 @@ import {
   Menu,
   InputGroup,
   Text,
-<<<<<<< HEAD
-  VStack,
-  Spinner,
-=======
   Wrap,
-  WrapItem,
->>>>>>> origin
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { CiBarcode } from 'react-icons/ci'
@@ -29,23 +22,12 @@ import { useNavigate } from 'react-router-dom'
 const InventoryPage = () => {
   const [isGridView, setIsGridView] = useState(true)
   const [showOnlyOutOfStock, setShowOnlyOutOfStock] = useState(false)
-  const [showOnlyOptimusStock, setShowOnlyOptimusStock] = useState(false)
   const [showOnlyLowStock, setShowOnlyLowStock] = useState(false)
-<<<<<<< HEAD
-  const [search, setSearch] = useState('')
-  const color = useColorModeValue('black', 'white')
-
-  const { products } = useProductStore();
-  const { isPending } = useFetchProducts();
-
-=======
   const [showOnlyOptStock, setShowOnlyOptStock] = useState(false)
   const [search, setSearch] = useState('')
   const color = useColorModeValue('black', 'white')
   const { products } = useProductStore()
->>>>>>> origin
   const navigate = useNavigate()
-  console.log(products);
 
   const filteredProducts = products
     .filter((product) =>
@@ -53,15 +35,9 @@ const InventoryPage = () => {
     )
     .filter((product) => {
       if (showOnlyOutOfStock && product.stock === 0) return true
-<<<<<<< HEAD
-      if (showOnlyLowStock && product.stock > 0 && product.stock < product.stock_min) return true
-      if (showOnlyOptimusStock && product.stock > product.stock_min && product.stock < product.stock_optimus) return true
-      if (!showOnlyOutOfStock && !showOnlyLowStock && !showOnlyOptimusStock) return true
-=======
       if (showOnlyLowStock && product.stock <= product.stock_min && product.stock > 0) return true
       if (showOnlyOptStock && product.stock >= product.stock_optimus) return true
       if (!showOnlyOutOfStock && !showOnlyLowStock && !showOnlyOptStock) return true
->>>>>>> origin
       return false
     })
 
@@ -117,10 +93,7 @@ const InventoryPage = () => {
         </Box>
       </HStack>
 
-<<<<<<< HEAD
-=======
       {/* Barra de búsqueda y botones */}
->>>>>>> origin
       <Flex align="center" gap={4}>
         <InputGroup flex="1" startElement={<FaSearch />}>
           <Input
@@ -158,17 +131,17 @@ const InventoryPage = () => {
                 Sin Stock
               </Menu.CheckboxItem>
               <Menu.CheckboxItem
-                value="lowStock"
+                value="StockLow"
                 checked={showOnlyLowStock}
                 onCheckedChange={(checked) => setShowOnlyLowStock(checked)}
               >
                 <Menu.ItemIndicator />
-                Stock Mínimo
+                Stock Bajo
               </Menu.CheckboxItem>
               <Menu.CheckboxItem
-                value="optimusStock"
-                checked={showOnlyOptimusStock}
-                onCheckedChange={(checked) => setShowOnlyOptimusStock(checked)}
+                value="stockOpt"
+                checked={showOnlyOptStock}
+                onCheckedChange={(checked) => setShowOnlyOptStock(checked)}
               >
                 <Menu.ItemIndicator />
                 Stock Óptimo
@@ -188,36 +161,6 @@ const InventoryPage = () => {
         </IconButton>
       </Flex>
 
-<<<<<<< HEAD
-      <Flex
-        wrap={isGridView ? 'wrap' : 'nowrap'}
-        direction={isGridView ? 'row' : 'column'}
-        gap={3}
-        maxW="1200px"
-        justify={isGridView ? 'flex-start' : 'center'}
-      >
-        {isPending ? (
-          <VStack colorPalette="gray" h={"full"} justifyContent={"center"} alignItems={"center"} mx={"auto"}>
-            <Spinner color="colorPalette.600" />
-            <Text color="colorPalette.600">Loading...</Text>
-          </VStack>
-        ) : (
-          filteredProducts.length === 0 ? (
-            <Text mx={"auto"} color={"InactiveCaptionText"} fontWeight={"bold"}>
-              No se encontraron productos
-            </Text>
-          ) : (
-            filteredProducts.map((product) => (
-              <ProductItem
-                key={product.id}
-                view={isGridView ? 'grid' : 'list'}
-                product={product}
-              />
-            ))
-          )
-        )}
-      </Flex>
-=======
       {/* Productos */}
       {filteredProducts.length === 0 ? (
         <Text
@@ -244,7 +187,6 @@ const InventoryPage = () => {
           ))}
         </Flex>
       )}
->>>>>>> origin
     </Box>
   )
 }

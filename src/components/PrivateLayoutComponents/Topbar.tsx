@@ -5,7 +5,6 @@ import {
   useBreakpointValue,
   Skeleton
 } from "@chakra-ui/react";
-import { FaSearch, FaBell } from "react-icons/fa";
 import { VscBellDot } from "react-icons/vsc";
 import { FaBell } from "react-icons/fa";
 import { useColorModeValue } from "@/components/ui/color-mode";
@@ -15,6 +14,7 @@ import { useFetchProfile } from "@/hooks/useProfile";
 import { NavLink } from "react-router-dom";
 import useProductStore from "@/store/useProductStore";
 import { useFetchProduct } from "@/hooks/useProduct";
+import { Link } from "react-router-dom";
 
 const Topbar = () => {
   const { isLoading } = useFetchProfile();

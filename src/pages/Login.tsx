@@ -18,11 +18,6 @@ import { IoLogoFacebook } from "react-icons/io";
 import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
 import HexagonPattern from "@/assets/HexagonPattern.svg";
 import { useLogin } from "@/hooks/useAuth";
-<<<<<<< HEAD
-import { useEffect } from "react";
-
-=======
->>>>>>> origin
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -30,19 +25,10 @@ import {
   LoginFormData,
 } from "@/components/login-registerComponents/loginSchema";
 import { PasswordInput } from "@/components/ui/password-input";
-<<<<<<< HEAD
-import { Credentials } from "@/types/authType";
-import { NavLink } from "react-router-dom";
-import { toaster } from "@/components/ui/toaster";
-
-const Login = () => {
-  const { isPending, error, mutate } = useLogin()
-=======
 import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const { isPending, mutate } = useLogin()
->>>>>>> origin
 
   const {
     register,
@@ -57,25 +43,6 @@ const Login = () => {
     },
   });
 
-<<<<<<< HEAD
-  const onSubmit = async (data: Credentials) => {
-    // Simulate API call
-    // await new Promise((resolve) => setTimeout(resolve, 1500));
-    mutate(data);
-  };
-
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => {
-        toaster.create({
-          type: "error",
-          description: "Credenciales inválidas",
-        });
-      }, 0);
-    }
-  }, [error])
-
-=======
   const onSubmit = async (data: LoginFormData) => {
     try {
       mutate({
@@ -88,7 +55,6 @@ const Login = () => {
     }
   };
 
->>>>>>> origin
   return (
     <Flex
       minH="100vh"
@@ -228,12 +194,6 @@ const Login = () => {
               </Heading>
               <Text my={2} textStyle={"xs"}>
                 ¿Eres nuevo?{" "}
-<<<<<<< HEAD
-                <Link asChild textDecoration="underline" fontWeight={"bold"}>
-                  <NavLink to="/register">
-                    Crear una cuenta
-                  </NavLink>
-=======
                 <Link
                   as={NavLink}
                   to='/register'
@@ -241,7 +201,6 @@ const Login = () => {
                   fontWeight={"bold"}
                 >
                   Crear una cuenta
->>>>>>> origin
                 </Link>
               </Text>
             </Box>
