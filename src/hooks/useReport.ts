@@ -1,15 +1,9 @@
 import { REPORTS_ENDPOINT } from '@/const/api';
 import { reportsService } from '@/services/reportService';
 import useReportStore from '@/store/useReportStore';
-<<<<<<< HEAD
 import { RangeReport, TopBestSellingsReport } from '@/types/statsTypes';
 import { buildUrl } from '@/utils/buildUrl';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-=======
-import { TopBestSellingsReport } from '@/types/statsTypes';
-import { buildUrl } from '@/utils/buildUrl';
-import { useQuery } from '@tanstack/react-query';
->>>>>>> origin
 import { useEffect } from 'react';
 
 export const useTopBestSellings = () => {
@@ -25,7 +19,6 @@ export const useTopBestSellings = () => {
     useEffect(() => {
         if (query.data) {
             fetchTopBestSellingsReport(query.data)
-<<<<<<< HEAD
             // console.log(query.data)
         }
     }, [query.data, fetchTopBestSellingsReport])
@@ -85,9 +78,4 @@ export const useTopBestSellingsStatus = () => {
     return {
         isPending: state?.status === 'pending'
     }
-=======
-            console.log(query.data)
-        }
-    }, [query.data, fetchTopBestSellingsReport])
->>>>>>> origin
 }
