@@ -12,52 +12,89 @@ import {
   Switch,
   Text,
   Image,
+<<<<<<< HEAD
   VStack,
   Spinner,
+=======
+  useBreakpointValue,
+  useDisclosure,
+>>>>>>> origin
 } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import { CiBarcode } from 'react-icons/ci'
 import { MdAdd, MdArrowBack, MdRemove } from 'react-icons/md'
 import { useFetchProduct, useAddProduct, useUpdateProduct } from '@/hooks/useProduct'
+<<<<<<< HEAD
 import { Product } from '@/types/productType'
 import { toaster } from '@/components/ui/toaster'
+=======
+import BarcodeScannerOverlay from '@/components/InventoryComponents/BarcodeScannerModal'
+>>>>>>> origin
 
 const ProductPage = () => {
   const [stock, setStock] = useState(0)
   const [stock_min, setStock_min] = useState(0)
   const [stock_optimus, setStock_optimus] = useState(0)
   const [alertsEnabled, setAlertsEnabled] = useState(false)
-  const [barCodeInput, setBarcodeInput] = useState("")
+  const [barcodeInput, setBarcodeInput] = useState("")
   const [name, setName] = useState("")
   const [salesPrice, setSalesPrice] = useState("")
   const [costPrice, setCostPrice] = useState("")
   const [description, setDescription] = useState("")
-  const [image, setImage] = useState<File>(new File([], ''));
+  const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const { barcode, id } = useParams()
   const navigate = useNavigate()
+<<<<<<< HEAD
   const { data: productData, isLoading } = useFetchProduct(id ?? '')
   const { mutateAsync: addProduct, isPending: isPendingAdd } = useAddProduct()
   const { mutateAsync: updateProduct, isPending: isPendingUpdate } = useUpdateProduct()
 
+=======
+  const { data: productData } = useFetchProduct(id ?? '')
+  const { mutateAsync: addProduct } = useAddProduct()
+  const { mutateAsync: updateProduct } = useUpdateProduct()
+  const isMobile = useBreakpointValue({ base: true, md: false });
+  const { open, onOpen, onClose } = useDisclosure()
+>>>>>>> origin
 
   useEffect(() => {
-    if (!productData) return;
+    if (barcode) {
+      setBarcodeInput(barcode)
+    }
+  }, [barcode]);
 
-    const { barcode, name, description, costPrice, salesPrice, stock, stock_min, stock_optimus, alerts, imagePath } = productData.data;
+  useEffect(() => {
+  if (!productData) return;
 
+  const {
+    barcode,
+    name,
+    description,
+    costPrice,
+    salesPrice,
+    stock,
+    stock_min,
+    stock_optimus,
+    alerts,
+    imagePath,
+  } = productData.data;
+
+  if (!barcodeInput) {
     setBarcodeInput(barcode);
-    setName(name);
-    setDescription(description)
-    setCostPrice(costPrice);
-    setSalesPrice(salesPrice);
-    setStock(stock);
-    setStock_min(stock_min)
-    setStock_optimus(stock_optimus)
-    setAlertsEnabled(alerts)
-    setPreview(imagePath)
-  }, [productData]);
+  }
+
+  setName(name);
+  setDescription(description);
+  setCostPrice(costPrice);
+  setSalesPrice(salesPrice);
+  setStock(stock);
+  setStock_min(stock_min);
+  setStock_optimus(stock_optimus);
+  setAlertsEnabled(alerts);
+  setPreview(imagePath);
+}, [productData]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -69,6 +106,7 @@ const ProductPage = () => {
 
   const handleSubmit = async () => {
 
+<<<<<<< HEAD
     try {
       if (id) {
         const updatedFields: Partial<Product> & { file?: File } = {};
@@ -105,6 +143,13 @@ const ProductPage = () => {
       } else {
         await addProduct({
           barcode: barCodeInput,
+=======
+  try {
+    if (id) {
+      await updateProduct({
+        id: id.toString(),
+        updatedData: {
+>>>>>>> origin
           name,
           salesPrice,
           costPrice,
@@ -113,12 +158,35 @@ const ProductPage = () => {
           stock_optimus,
           alerts: alertsEnabled,
           description,
+<<<<<<< HEAD
           file: image,
         });
       }
     } catch (error) {
       console.error('Error al guardar el producto:', error);
     }
+=======
+          ...(image && { file: image }),
+        },
+      });
+    } else {
+      await addProduct({
+        barcode: barcodeInput,
+        name,
+        salesPrice,
+        costPrice,
+        stock,
+        stock_min,
+        stock_optimus,
+        alerts: alertsEnabled,
+        description,
+        file: image,
+      });
+    }
+    navigate('/inventory')
+  } catch (error) {
+    console.error('Error al guardar el producto:', error);
+>>>>>>> origin
   }
 
   if (isLoading) {
@@ -132,13 +200,23 @@ const ProductPage = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <Fieldset.Root p={4} maxW="1200px" mx="auto" display="flex" flexDirection="column" minH="100vh">
         <HStack align="center">
+=======
+    <Fieldset.Root p={4} maxW="1200px" mx="auto" display="flex" flexDirection="column" minH="100vh">
+      {isMobile && (
+        <HStack mb={4} align="center">
+>>>>>>> origin
           <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
           <Text fontSize="lg" fontWeight="bold">
             {!id ? "Agregar producto" : name}
           </Text>
         </HStack>
+<<<<<<< HEAD
+=======
+      )}
+>>>>>>> origin
 
         <Flex
           direction={{ base: 'column', md: 'row' }}
@@ -148,6 +226,7 @@ const ProductPage = () => {
         >
           {/* Panel izquierdo */}
           <Box
+<<<<<<< HEAD
             flex={1}
             bg="white"
             borderRadius="xl"
@@ -192,6 +271,82 @@ const ProductPage = () => {
               )}
             </Box>
 
+=======
+            role='button'
+            cursor="pointer"
+            w="180px"
+            h="180px"
+            bg="gray.700"
+            color="white"
+            borderRadius="lg"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            mb={4}
+            overflow="hidden"
+            onClick={() => imageInputRef.current?.click()}
+          >
+            {preview ? (
+              <Image src={preview} alt="Previsualización" objectFit="cover" h="full" />
+            ) : (
+              <>
+                <Text fontSize="3xl">+</Text>
+                <Text w="100px">Imagen del producto</Text>
+              </>
+            )}
+          </Box>
+
+          <Stack gap={4}>
+            <Field.Root>
+              <Field.Label>Código de barras</Field.Label>
+              <HStack w="full" position="relative">
+                <Input disabled={id ? true : false} placeholder="0000000000000" value={barcodeInput || ''} onChange={(e) => setBarcodeInput(e.target.value)} />
+                <IconButton
+                  disabled={id ? true : false}
+                  position="absolute"
+                  variant="plain"
+                  right={2}
+                  onClick={onOpen}
+                  aria-label="Escanear"
+                  cursor={!!id ? "default" : "pointer"}
+                >
+                  <CiBarcode />
+                </IconButton>
+                <BarcodeScannerOverlay
+                  isOpen={open}
+                  onClose={onClose}
+                  onResult={(code) => setBarcodeInput(code)}
+                />
+              </HStack>
+            </Field.Root>
+
+            <Field.Root>
+              <Field.Label>Nombre del producto</Field.Label>
+              <Input value={name || ""} placeholder="Nombre del producto" onChange={(e) => setName(e.target.value)} />
+            </Field.Root>
+
+            <Field.Root>
+              <Field.Label>Precio</Field.Label>
+              <Input pl={5} value={salesPrice || ""} placeholder="0.00" onChange={(e) => setSalesPrice(e.target.value)} />
+              <Box position="absolute" left="2" top="70%" transform="translateY(-50%)" color="gray.500">
+                $
+              </Box>
+            </Field.Root>
+
+            <Field.Root>
+              <Field.Label>Costo</Field.Label>
+              <Input pl={5} value={costPrice || ""} placeholder="0.00" onChange={(e) => setCostPrice(e.target.value)} />
+              <Box position="absolute" left="2" top="70%" transform="translateY(-50%)" color="gray.500">
+                $
+              </Box>
+            </Field.Root>
+          </Stack>
+
+          <Box mt={6}>
+            <Text fontWeight="bold" mb={2}>Detalles</Text>
+>>>>>>> origin
             <Stack gap={4}>
               <Field.Root>
                 <Field.Label>Código de barras</Field.Label>

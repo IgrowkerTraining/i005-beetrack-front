@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import type { IconButtonProps, SpanProps } from '@chakra-ui/react'
-import { ClientOnly, IconButton, Skeleton, Span } from '@chakra-ui/react'
-import { ThemeProvider, useTheme } from 'next-themes'
-import type { ThemeProviderProps } from 'next-themes'
-import * as React from 'react'
-import { LuMoon, LuSun } from 'react-icons/lu'
+import type { IconButtonProps, SpanProps } from "@chakra-ui/react"
+import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react"
+import { ThemeProvider, useTheme } from "next-themes"
+import type { ThemeProviderProps } from "next-themes"
+import * as React from "react"
+import { LuMoon, LuSun } from "react-icons/lu"
 
 export interface ColorModeProviderProps extends ThemeProviderProps {}
 
@@ -20,7 +20,7 @@ export function ColorModeProvider(props: ColorModeProviderProps) {
   )
 }
 
-export type ColorMode = 'light' | 'dark'
+export type ColorMode = "light" | "dark"
 
 export interface UseColorModeReturn {
   colorMode: ColorMode
@@ -31,7 +31,7 @@ export interface UseColorModeReturn {
 export function useColorMode(): UseColorModeReturn {
   const { resolvedTheme, setTheme } = useTheme()
   const toggleColorMode = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+    setTheme(resolvedTheme === "dark" ? "light" : "dark")
   }
   return {
     colorMode: resolvedTheme as ColorMode,
@@ -42,15 +42,15 @@ export function useColorMode(): UseColorModeReturn {
 
 export function useColorModeValue<T>(light: T, dark: T) {
   const { colorMode } = useColorMode()
-  return colorMode === 'dark' ? dark : light
+  return colorMode === "dark" ? dark : light
 }
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode()
-  return colorMode === 'dark' ? <LuMoon /> : <LuSun />
+  return colorMode === "dark" ? <LuMoon /> : <LuSun />
 }
 
-interface ColorModeButtonProps extends Omit<IconButtonProps, 'aria-label'> {}
+interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
 
 export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
@@ -68,8 +68,8 @@ export const ColorModeButton = React.forwardRef<
         {...props}
         css={{
           _icon: {
-            width: '5',
-            height: '5',
+            width: "5",
+            height: "5",
           },
         }}
       >

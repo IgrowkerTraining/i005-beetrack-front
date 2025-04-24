@@ -21,6 +21,7 @@ import { Product } from "@/types/productType";
 import { useFetchProducts } from "@/hooks/useProduct";
 
 
+<<<<<<< HEAD
 // const products = [
 //   {
 //     id: 1,
@@ -112,16 +113,26 @@ const Notifications = (/* {
   stockMin = 10, //El usuario configura este valor de Stock Mínimo
   stockOpt = 30, //El usuario configura este valor de Stock Óptimo
 } : ProductItemProps */) => {
+=======
+const Notifications = () => {
+>>>>>>> origin
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { products } = useProductStore();
   useFetchProducts()
 
   const getStockColor = (item: Product) => {
     switch (true) {
+<<<<<<< HEAD
       case item.stock < item.stock_min:
         return "stock.ltStockMin";
       case item.stock < item.stock_optimus:
         return "stock.ltStockOptimus";
+=======
+      case item.stock <= item.stock_min:
+        return "red.500";
+      case item.stock > item.stock_optimus:
+        return "green.500";
+>>>>>>> origin
       default:
         return "green.500";
     }
@@ -132,7 +143,11 @@ const Notifications = (/* {
       case item.stock === 0:
         return "Sin stock";
       case item.stock === 1:
+<<<<<<< HEAD
         return `1 Unidad`;
+=======
+        return "1 Unidad";
+>>>>>>> origin
       case item.stock > 1:
         return `${item.stock} Unidades`;
       default:
@@ -151,6 +166,7 @@ const Notifications = (/* {
       position="relative"
       pb={{ base: "80px", md: 0 }}
     >
+<<<<<<< HEAD
       {/* {isMobile && ( */}
       <HStack mb={6} align="center">
         <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
@@ -160,6 +176,17 @@ const Notifications = (/* {
       </HStack>
       {/* )} */}
       <Heading size={'md'}>Faltante de stock</Heading>
+=======
+      {isMobile && (
+        <HStack mb={6} align="center">
+          <MdArrowBack size={22} onClick={() => navigate(-1)} cursor="pointer" />
+          <Heading fontSize="xl" fontWeight="bold">
+            Notificaciones
+          </Heading>
+        </HStack>
+      )}
+      <Heading mb={2} size={'md'}>Faltante de stock</Heading>
+>>>>>>> origin
       <Box
         bg="white"
         rounded="xl"
@@ -224,7 +251,8 @@ const Notifications = (/* {
 
       {isMobile && (
         <Link
-          href="/inventory"
+          as={NavLink}
+          to="/inventory"
           w="full"
           position="fixed"
           bottom={0}

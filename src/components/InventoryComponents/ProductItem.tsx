@@ -1,32 +1,42 @@
-import { Product } from '@/types/productType'
 import {
   Box,
   Flex,
   Image,
-  Text, Stack
+  Text,
+  Stack,
 } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
 import StockLabel from './StockLabel'
+import { useNavigate } from 'react-router-dom'
+import noImg from '@/assets/noimg.jpg'
 
 export type ProductItemProps = {
-  image: string
+  id: string
+  imagePath: string
   name: string
-  price: string
+  salesPrice: string
   stock: number
   view: 'grid' | 'list'
-  stockMin?: number
-  stockOpt?: number
+  stock_min: number
+  stock_optimus: number
 }
 
-const ProductItem = ({ product, view }: { product: Product, view: string }) => {
-const navigate = useNavigate()
+const ProductItem = ({
+  id,
+  imagePath,
+  name,
+  salesPrice,
+  stock,
+  view,
+  stock_min,
+  stock_optimus,
+}: ProductItemProps) => {
+  const navigate = useNavigate()
 
   if (view === 'list') {
     return (
       <Flex
-        onClick={() => navigate(`/products/id/${product.id}`)}
+        onClick={() => navigate(`/products/id/${id}`)}
         w="100%"
-        mx="auto"
         bg="white"
         py={3}
         px={4}
@@ -36,56 +46,64 @@ const navigate = useNavigate()
         justify="space-between"
         position="relative"
         cursor="pointer"
+        _hover={{ bg: "gray.50" }}
       >
-        <Image
-          src={product.imagePath}
-          alt={product.name}
-          boxSize="50px"
-          objectFit="cover"
-          borderRadius="md"
-        />
-
-        <Flex justify="space-between" align="center" flex="1">
+        <Flex align="center" gap={4}>
+          <Image
+            src={imagePath || noImg}
+            alt={name}
+            boxSize="50px"
+            objectFit="cover"
+            borderRadius="md"
+            flexShrink={0}
+          />
           <Stack gap={0}>
-            <Text fontWeight="medium" fontSize="sm">{product.name}</Text>
-            <Text fontSize="sm" color="gray.600">{product.salesPrice}</Text>
+            <Text fontSize="sm" fontWeight="medium">
+              {name}
+            </Text>
+            <Text fontSize="sm" color="gray.600">
+              $ {salesPrice}
+            </Text>
           </Stack>
         </Flex>
 
-        <StockLabel stock={product.stock} stockMin={product.stock_min} stockOpt={product.stock_optimus} isList />
+        <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} isList />
       </Flex>
     )
   }
 
+  // Vista grid
   return (
     <Box
-      onClick={() => navigate(`/products/id/${product.id}`)}
-      w={170}
+      onClick={() => navigate(`/products/id/${id}`)}
+      w="100%"
+      maxW="160px"
       borderRadius="xl"
       overflow="hidden"
       bg="white"
       position="relative"
       borderWidth="1px"
       borderColor="gray.300"
+      cursor="pointer"
+      _hover={{ boxShadow: 'md' }}
     >
-      <StockLabel stock={product.stock} stockMin={product.stock_min} stockOpt={product.stock_optimus} />
+      <StockLabel stock={stock} stockMin={stock_min} stockOpt={stock_optimus} />
 
       <Image
-        src={product.imagePath}
-        alt={product.name}
-        w="80%"
+        src={imagePath || noImg}
+        alt={name}
+        mx="auto"
         h="130px"
         objectFit="cover"
-        mx="auto"
-        mt="4"
+        w={!imagePath ? "100%" : ""}
       />
 
       <Stack p={3} gap={0}>
         <Text fontSize="sm" color="black" fontWeight="medium">
-          {product.name}
+          {name}
         </Text>
         <Text fontSize="sm" color="gray.700">
-          {product.salesPrice}
+          $ {salesPrice}
         </Text>
       </Stack>
     </Box>

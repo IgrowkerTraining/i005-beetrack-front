@@ -24,7 +24,11 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
       </Route>
 
+<<<<<<< HEAD
       {/* Rutas privadas sin layout */}
+=======
+      {/* rutas privadas con layout en big screen y no layout on mobile  */}
+>>>>>>> origin
       <Route element={<AccessRoutes isPrivate={true} />}>
         <Route path="/products" element={<ProductPage />} />
         <Route path="/products/id/:id" element={<ProductPage />} />
@@ -43,6 +47,9 @@ const AppRoutes = () => {
           <Route element={<PrivateLayout />}>
             // TODO: revisar el tema de las props
             <Route path="notifications" element={<Notifications />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/products/barcode/:barcode" element={<ProductPage />} />
+            <Route path="/products/id/:id" element={<ProductPage />} />
           </Route>
         )}
       </Route> */}

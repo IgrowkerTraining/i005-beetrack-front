@@ -25,30 +25,37 @@ const UserProfileCard = ({ setIsEditingUser, isPending }: UserProfileCardProps) 
             <DataList.Root size="lg">
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Nombre</DataList.ItemLabel>
-                    <DataList.ItemValue>{profile!.name}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{profile?.name}</DataList.ItemValue>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Apellidos</DataList.ItemLabel>
-                    <DataList.ItemValue>{profile!.last_name}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{profile?.last_name}</DataList.ItemValue>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Fecha de nacimiento</DataList.ItemLabel>
-                    <DataList.ItemValue>{dateFormatter(profile!.birthdate)}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{dateFormatter(profile?.birthdate)}</DataList.ItemValue>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Email</DataList.ItemLabel>
-                    <DataList.ItemValue>{profile!.email}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{profile?.email}</DataList.ItemValue>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Fecha de creación</DataList.ItemLabel>
-                    <DataList.ItemValue>{dateFormatter(profile!.createdAt)}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{dateFormatter(profile?.createdAt)}</DataList.ItemValue>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.ItemLabel fontWeight={"bold"}>Última actualización del usuario</DataList.ItemLabel>
-                    <DataList.ItemValue>{dateFormatter(profile!.updatedAt)}</DataList.ItemValue>
+                    <DataList.ItemValue wordBreak={"break-word"} whiteSpace={"normal"}>{dateFormatter(profile?.updatedAt)}</DataList.ItemValue>
                 </DataList.Item>
             </DataList.Root>
-            <Button colorPalette="yellow" variant="solid" mt={"auto"} rounded={"16px"} onClick={() => setIsEditingUser(true)}>
+            <Button
+                mt={"auto"}
+                colorPalette="navItem"
+                color={"colorPalette.fg"}
+                fontWeight={"bold"}
+                variant="solid"
+                rounded={"16px"}
+                onClick={() => setIsEditingUser(true)}>
                 <MdOutlineEdit /> Editar
             </Button>
         </>

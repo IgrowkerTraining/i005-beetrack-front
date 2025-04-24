@@ -1,5 +1,5 @@
-const getRoutesMetadata = (storeName: string = "Welcome"): Record<string, { title: string }> => ({
-	"/": { title: storeName },
+const getRoutesMetadata = (): Record<string, { title: string }> => ({
+	"/": { title: "" }, // lo llenaremos en el hook
 	"/home": { title: "Dashboard" },
 	"/inventory": { title: "Inventario" },
 	"/sales": { title: "Ventas" },
@@ -7,8 +7,6 @@ const getRoutesMetadata = (storeName: string = "Welcome"): Record<string, { titl
 	"/profile": { title: "Perfil" },
 	"/notifications": { title: "Notificaciones" },
 	"/404": { title: "Página no encontrada" },
-	// "/login": { title: "Iniciar sesión" },
-	// "/register": { title: "Registro" },
-})
-
-export default getRoutesMetadata
+  });
+  
+  export default getRoutesMetadata;

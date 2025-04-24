@@ -1,29 +1,27 @@
 import { PROFILE_ENDPOINT } from '@/const/api';
 import { profileService } from '@/services/profileService';
-import useProfileStore from '@/store/useProfileStore'
-import useSidenavbarStore from '@/store/useSidenavbarStore';
+import useProfileStore from '@/store/useProfileStore';
 import { Profile, Store } from '@/types/profileTypes';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 export const useFetchProfile = () => {
-    const { fetchProfile, profile } = useProfileStore();
-    const { setTitleToTopBar } = useSidenavbarStore();
+    const { fetchProfile } = useProfileStore();
 
     const query = useQuery<Profile, Error>({
         queryKey: [PROFILE_ENDPOINT],
         queryFn: () => profileService.getProfile(),
-        enabled: !profile,
         staleTime: 5 * 60 * 1000,
+        retry: false,
+        refetchOnWindowFocus: false,
     });
 
     // Necesario para no entrar en bucle
     useEffect(() => {
-        if (query.data && !profile) {
+        if (query.data) {
             fetchProfile(query.data)
-            setTitleToTopBar(query.data.store.name)
         }
-    }, [query.data, fetchProfile, profile])
+    }, [query.data, fetchProfile])
 
     return query;
 }

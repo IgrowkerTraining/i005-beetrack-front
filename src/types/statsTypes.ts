@@ -40,19 +40,6 @@ export interface RangeReport {
         digital: number;
     }
 }
-
-export interface DashboardNowReport {
-    totalSales: number;
-    totalCost: number;
-    totalProfit: number;
-    totalOrders: number;
-    totalProductsSold: number;
-    byPaymentMethod: {
-      cash: number;
-      card: number;
-      digital: number;
-    }
-  }
   export interface Order {
     id: string;
     status: string;

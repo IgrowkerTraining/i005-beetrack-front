@@ -12,13 +12,11 @@ export const useEmailCheck = (emailCheckMutation: any) => {
     if (!email) return false;
     
     setIsCheckingEmail(true);
+   
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const existingEmails = ['test@example.com', 'admin@example.com'];
-      const exists = existingEmails.includes(email);
-      
+      const exists = await emailCheckMutation.mutateAsync(email);
       if (exists) {
-        setError('email', {type: 'manual', message: 'Email already exists'});
+        setError('email', {type: 'manual', message: 'Este email ya ha sido utilizado'});
         setIsCheckingEmail(false);
         return false;
       }
@@ -29,22 +27,6 @@ export const useEmailCheck = (emailCheckMutation: any) => {
       setIsCheckingEmail(false);
       return false;
     }
-
-    // TODO: DESCOMENTAR UNA VEZ TENGAMOS EL BACKEND
-    // try {
-    //   const exists = await emailCheckMutation.mutateAsync(email);
-    //   if (exists) {
-    //     setErrorMessage("Email already exists");
-    //     setIsCheckingEmail(false);
-    //     return false;
-    //   }
-    //   setIsCheckingEmail(false);
-    //   return true;
-    // } catch (error) {
-    //   setErrorMessage("Error comprobando el email. Por favor intentolo de nuevo");
-    //   setIsCheckingEmail(false);
-    //   return false;
-    // }
   };
 
   return { isCheckingEmail, checkEmailExists };

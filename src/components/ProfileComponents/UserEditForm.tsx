@@ -10,7 +10,7 @@ type UserEditFormProps = {
     mutateUser: (variables: { updatedUser: Partial<UserData> }) => void;
 }
 
-const UserEditForm = ({ setIsEditingUser, mutateUser } : UserEditFormProps) => {
+const UserEditForm = ({ setIsEditingUser, mutateUser }: UserEditFormProps) => {
     const { profile } = useProfileStore();
 
     const { register, handleSubmit, formState: { errors } } =
@@ -29,8 +29,8 @@ const UserEditForm = ({ setIsEditingUser, mutateUser } : UserEditFormProps) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onUserSubmit)} style={{ width: "100%" }}>
-            <VStack gap={4} align="stretch">
+        <form onSubmit={handleSubmit(onUserSubmit)} style={{ width: "100%", height: "100%" }}>
+            <VStack gap={4} align="stretch" height={"full"}>
                 <Field.Root invalid={!!errors.name} required>
                     <Field.Label>
                         Nombre
@@ -59,9 +59,16 @@ const UserEditForm = ({ setIsEditingUser, mutateUser } : UserEditFormProps) => {
                     <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="end">
+                <HStack justify="end" mt={"auto"}>
                     <Button variant="ghost" onClick={() => setIsEditingUser(false)}>Cancelar</Button>
-                    <Button type="submit" colorPalette="navItem" variant="solid">Guardar</Button>
+                    <Button
+                        type="submit"
+                        colorPalette="navItem"
+                        color={"colorPalette.fg"}
+                        fontWeight={"bold"}
+                        variant="solid"
+                        rounded={"16px"}>
+                        Guardar</Button>
                 </HStack>
             </VStack>
         </form>

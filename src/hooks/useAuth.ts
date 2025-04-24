@@ -5,6 +5,7 @@ import { authService } from "@/services/authService";
 import useAuthStore from "@/store/useAuthStore";
 import { Credentials, User } from "@/types/authType";
 import { buildUrl } from "@/utils/buildUrl";
+<<<<<<< HEAD
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,16 @@ export interface AppError {
 }
 
 // De momento no se usa en ningún lado, por eso comento la lína 25, que está dando problemas con la nueva versión de ReactQuery
+=======
+import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toaster } from "@/components/ui/toaster";
+
+interface AppError {
+  message: string;
+  details: string;
+}
+>>>>>>> origin
 export const useCheckAuthStatus = () => {
   const { setUser, setIsAuthenticated, queryParams } = useAuthStore();
   const url = buildUrl(AUTH_ENDPOINT, {
@@ -25,6 +36,7 @@ export const useCheckAuthStatus = () => {
   const query = useQuery<User, AppError>({
     queryKey: [url],
     queryFn: () => authService.checkAuthStatus(),
+<<<<<<< HEAD
     // onSuccess: (user: User) => {
     //   setUser(user);
     //   setIsAuthenticated(true);
@@ -32,6 +44,10 @@ export const useCheckAuthStatus = () => {
     staleTime: 5 * 60 * 1000, // lo puse porque esta en products tmb ^^'
   });
 
+=======
+    staleTime: 5 * 60 * 1000, // lo puse porque esta en products tmb ^^'
+  });
+>>>>>>> origin
   useEffect(() => {
     if (query.data) {
         setUser(query.data);
@@ -51,6 +67,17 @@ export const useLogin = () => {
       setUser(data);
       setIsAuthenticated(true);
       queryClient.invalidateQueries({ queryKey: [url] });
+      toaster.create({
+        type: "success",
+        description: "Bienvenido a tu cuenta",
+      })
+    },
+    onError: (error) => {
+      toaster.create({
+        type: "error",
+        description: error.message,
+      })
+      console.error(error);
     },
     onError: (error) => {
       console.log(error)
@@ -68,10 +95,17 @@ export const useLogout = () => {
     onSuccess: () => {
       resetState();
       localStorage.clear();
+<<<<<<< HEAD
       queryClient.clear();
       // localStorage.removeItem("profile")
       // localStorage.removeItem("auth")
+=======
+>>>>>>> origin
       queryClient.invalidateQueries({ queryKey: [url] });
+      toaster.create({
+        type: "success",
+        description: "Espero verto pronto ♥",
+      })
     },
   });
 };
@@ -91,12 +125,21 @@ export const useRegister = () => {
       });
       navigate("/login");
       queryClient.invalidateQueries({ queryKey: [url] });
+      toaster.create({
+        type: "success",
+        description: "Registro exitoso. ¡Bienvenido!",
+      })
     },
     onError: (error) => {
       toaster.create({
         type: "error",
+<<<<<<< HEAD
         description: error.message,
       });
+=======
+        description: error.message || "Error al registrarse",
+      })
+>>>>>>> origin
     }
   });
 };

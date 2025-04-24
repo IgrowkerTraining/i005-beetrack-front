@@ -11,7 +11,7 @@ type StoreEditFormProps = {
     mutateStore: (variables: { updatedStore: Partial<Store> }) => void;
 }
 
-const StoreEditForm = ({ setIsEditingStore, mutateStore } : StoreEditFormProps) => {
+const StoreEditForm = ({ setIsEditingStore, mutateStore }: StoreEditFormProps) => {
     const { profile } = useProfileStore();
 
 
@@ -30,8 +30,8 @@ const StoreEditForm = ({ setIsEditingStore, mutateStore } : StoreEditFormProps) 
     }
 
     return (
-        <form onSubmit={handleSubmit(onStoreSubmit)} style={{ width: "100%" }}>
-            <VStack gap={4} align="stretch">
+        <form onSubmit={handleSubmit(onStoreSubmit)} style={{ width: "100%", height: "100%" }}>
+            <VStack gap={4} align="stretch" h={"full"}>
                 <Field.Root invalid={!!errors.name} required>
                     <Field.Label>
                         Nombre
@@ -57,9 +57,16 @@ const StoreEditForm = ({ setIsEditingStore, mutateStore } : StoreEditFormProps) 
                     <Field.ErrorText>{errors.tel?.message}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="end">
+                <HStack justify="end" mt={"auto"}>
                     <Button variant="ghost" onClick={() => setIsEditingStore(false)}>Cancelar</Button>
-                    <Button type="submit" colorPalette="navItem" variant="solid">Guardar</Button>
+                    <Button
+                        type="submit"
+                        colorPalette="navItem"
+                        color={"colorPalette.fg"}
+                        fontWeight={"bold"}
+                        variant="solid"
+                        rounded={"16px"}>
+                        Guardar</Button>
                 </HStack>
             </VStack>
         </form>

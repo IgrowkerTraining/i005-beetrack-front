@@ -7,10 +7,164 @@ import {
   HStack
 } from "@chakra-ui/react";
 import HexagonPattern from "@/assets/HexagonPattern.svg";
+<<<<<<< HEAD
+=======
+import { useState } from "react";
+import { useCheckEmailExists, useRegister } from "@/hooks/useAuth";
+import { useEmailCheck } from "@/hooks/useEmailCheck";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  registerSchema,
+  RegisterFormData,
+} from "@/components/login-registerComponents/registerSchema";
+import { EmailStep } from "@/components/login-registerComponents/EmailStep";
+import { PasswordStep } from "@/components/login-registerComponents/PasswordStep";
+import { PersonalInfoStep } from "@/components/login-registerComponents/PersonalInfoStep";
+import { StoreInfoStep } from "@/components/login-registerComponents/StoreInfoStep";
+import { StepTitle } from "@/components/login-registerComponents/StepTitle";
+import { StepNavigation } from "@/components/login-registerComponents/StepNavigation";
+import { NavLink, useNavigate } from "react-router-dom";
+>>>>>>> origin
 import { MdInventory, MdPointOfSale, MdShoppingCart } from 'react-icons/md';
 import RegisterForm from "@/components/login-registerComponents/RegisterForm";
 
 const Register = () => {
+<<<<<<< HEAD
+=======
+  const [step, setStep] = useState(1);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate();
+
+  const registerMutation = useRegister();
+  const emailCheckMutation = useCheckEmailExists();
+
+  const { isCheckingEmail, checkEmailExists } =
+    useEmailCheck(emailCheckMutation);
+
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    getValues,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      name: "",
+      lastName: "",
+      dateOfBirth: "",
+      storeName: "",
+      storePhone: "",
+      storeAddress: "",
+    },
+  });
+
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      setIsRegistering(true);
+      const formattedData = {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        last_name: data.lastName,
+        birthdate: data.dateOfBirth,
+        storeName: data.storeName, 
+        storePhone: data.storePhone, 
+        storeAddress: data.storeAddress || "", 
+      }
+      await registerMutation.mutateAsync(formattedData as any);
+      setIsRegistering(false);
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration error:", error);
+      setIsRegistering(false);
+    }
+  };
+
+  const validateCurrentStep = async () => {
+    let isValid = false;
+
+    switch (step) {
+      case 1:
+        isValid = await trigger("email");
+        if (isValid) {
+          isValid = await checkEmailExists(getValues("email"), setError);
+        }
+        break;
+      case 2:
+        isValid = await trigger(["password", "confirmPassword"]);
+        break;
+      case 3:
+        isValid = await trigger(["name", "lastName", "dateOfBirth"]);
+        break;
+      case 4:
+        isValid = await trigger(["storeName", "storePhone", "storeAddress"]);
+        break;
+    }
+
+    return isValid;
+  };
+
+  const handleNextStep = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    const isValid = await validateCurrentStep();
+
+    if (isValid) {
+      if (step < 4) {
+        setStep(step + 1);
+      } else {
+        handleSubmit(onSubmit)(); //keep an eye on this
+      }
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const getStepTitle = (): any => {
+    switch (step) {
+      case 1:
+        return (
+          <Text fontSize="xs" color="gray.500">
+            Elige cómo registrarte
+          </Text>
+        );
+      case 2:
+        return (
+          <Text fontSize="xs" color="gray.500">
+            Crear contraseña
+          </Text>
+        );
+      case 3:
+        return (
+          <Text fontSize="xs" color="gray.500">
+            Datos personales
+          </Text>
+        );
+      case 4:
+        return (
+          <Text fontSize="xs" color="gray.500">
+            Datos del comercio
+          </Text>
+        );
+      default:
+        return "Registro";
+    }
+  };
+
+  const isLoading = isCheckingEmail || isRegistering || isSubmitting;
+
+>>>>>>> origin
   return (
     <Flex
       minH="100vh"
@@ -111,7 +265,92 @@ const Register = () => {
             height="183px"
           />
         </Box>
+<<<<<<< HEAD
         <RegisterForm />
+=======
+        <Card.Root
+          minH={{ base: "90vh", md: "60vh" }}
+          maxW={{ base: "100%", md: "380px" }}
+          variant={"subtle"}
+          bg={"transparent"}
+          as="form"
+          w="full"
+          onSubmit={handleNextStep}
+        >
+          <Card.Header>
+            <StepTitle step={step} title={getStepTitle()} />
+          </Card.Header>
+          <Card.Body>
+            {step === 1 && (
+              <Stack
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                w={"full"}
+              >
+                <Button
+                  border={"1px solid"}
+                  variant="outline"
+                  mb={4}
+                  w="full"
+                  fontWeight={"bold"}
+                  borderRadius="xl"
+                  size={"lg"}
+                >
+                  <AiFillGoogleCircle /> Registrate con Google
+                </Button>
+                <Button
+                  border={"1px solid"}
+                  variant="outline"
+                  w="full"
+                  fontWeight={"bold"}
+                  borderRadius="xl"
+                  size={"lg"}
+                >
+                  <IoLogoFacebook /> Registrate con Facebook
+                </Button>
+                <Flex align="center" width="100%" my={4}>
+                  <Box flex="1" height="1px" bg="gray.300" />
+                  <Text mx={4} fontWeight="bold" color="gray.600" fontSize="md">
+                    0
+                  </Text>
+                  <Box flex="1" height="1px" bg="gray.300" />
+                </Flex>
+              </Stack>
+            )}
+            {step === 1 && <EmailStep register={register} errors={errors} />}
+
+            {step === 2 && <PasswordStep register={register} errors={errors} />}
+
+            {step === 3 && (
+              <PersonalInfoStep register={register} errors={errors} />
+            )}
+            {step === 4 && <StoreInfoStep register={register} errors={errors} />}
+          </Card.Body>
+          <Card.Footer flexWrap={{ base: "wrap" }}>
+            <StepNavigation
+              step={step}
+              isLoading={isLoading}
+              isCheckingEmail={isCheckingEmail}
+              isRegistering={isRegistering}
+              handlePrevStep={handlePrevStep}
+            />
+            {step === 1 && (
+              <Text mt={1} textStyle={"xs"}>
+                ¿Ya tienes una cuenta?{" "}
+                <Link
+                  as={NavLink}
+                  to="/login"
+                  textDecoration="underline"
+                  fontWeight={"bold"}
+                >
+                  Iniciar sesión
+                </Link>
+              </Text>
+            )}
+          </Card.Footer>
+        </Card.Root>
+>>>>>>> origin
       </Flex>
     </Flex>
   );

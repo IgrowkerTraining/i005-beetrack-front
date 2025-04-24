@@ -11,8 +11,13 @@ import {
   Menu,
   InputGroup,
   Text,
+<<<<<<< HEAD
   VStack,
   Spinner,
+=======
+  Wrap,
+  WrapItem,
+>>>>>>> origin
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { CiBarcode } from 'react-icons/ci'
@@ -26,12 +31,19 @@ const InventoryPage = () => {
   const [showOnlyOutOfStock, setShowOnlyOutOfStock] = useState(false)
   const [showOnlyOptimusStock, setShowOnlyOptimusStock] = useState(false)
   const [showOnlyLowStock, setShowOnlyLowStock] = useState(false)
+<<<<<<< HEAD
   const [search, setSearch] = useState('')
   const color = useColorModeValue('black', 'white')
 
   const { products } = useProductStore();
   const { isPending } = useFetchProducts();
 
+=======
+  const [showOnlyOptStock, setShowOnlyOptStock] = useState(false)
+  const [search, setSearch] = useState('')
+  const color = useColorModeValue('black', 'white')
+  const { products } = useProductStore()
+>>>>>>> origin
   const navigate = useNavigate()
   console.log(products);
 
@@ -41,14 +53,20 @@ const InventoryPage = () => {
     )
     .filter((product) => {
       if (showOnlyOutOfStock && product.stock === 0) return true
+<<<<<<< HEAD
       if (showOnlyLowStock && product.stock > 0 && product.stock < product.stock_min) return true
       if (showOnlyOptimusStock && product.stock > product.stock_min && product.stock < product.stock_optimus) return true
       if (!showOnlyOutOfStock && !showOnlyLowStock && !showOnlyOptimusStock) return true
+=======
+      if (showOnlyLowStock && product.stock <= product.stock_min && product.stock > 0) return true
+      if (showOnlyOptStock && product.stock >= product.stock_optimus) return true
+      if (!showOnlyOutOfStock && !showOnlyLowStock && !showOnlyOptStock) return true
+>>>>>>> origin
       return false
     })
 
   return (
-    <Box display="flex" flexDirection="column" gap={5}>
+    <Box display="flex" flexDirection="column" gap={4}>
       <HStack gap={6} justify="center">
         <Box
           role="button"
@@ -99,6 +117,10 @@ const InventoryPage = () => {
         </Box>
       </HStack>
 
+<<<<<<< HEAD
+=======
+      {/* Barra de búsqueda y botones */}
+>>>>>>> origin
       <Flex align="center" gap={4}>
         <InputGroup flex="1" startElement={<FaSearch />}>
           <Input
@@ -113,13 +135,16 @@ const InventoryPage = () => {
           />
         </InputGroup>
 
+        {/* Filtros */}
         <Menu.Root>
           <Menu.Trigger asChild>
             <IconButton
               aria-label="Filtros"
               variant="plain"
-              color={showOnlyOutOfStock || showOnlyLowStock ? "red.500" : color}
-            ><VscSettings /></IconButton>
+              color={showOnlyOutOfStock || showOnlyLowStock || showOnlyOptStock ? "red.500" : color}
+            >
+              <VscSettings />
+            </IconButton>
           </Menu.Trigger>
 
           <Menu.Positioner>
@@ -152,14 +177,18 @@ const InventoryPage = () => {
           </Menu.Positioner>
         </Menu.Root>
 
+        {/* Botón de cambio de vista */}
         <IconButton
           onClick={() => setIsGridView((prev) => !prev)}
           aria-label="Cambiar vista"
           variant="plain"
           color={color}
-        >{isGridView ? <IoList /> : <IoGrid />}</IconButton>
+        >
+          {isGridView ? <IoList /> : <IoGrid />}
+        </IconButton>
       </Flex>
 
+<<<<<<< HEAD
       <Flex
         wrap={isGridView ? 'wrap' : 'nowrap'}
         direction={isGridView ? 'row' : 'column'}
@@ -188,9 +217,36 @@ const InventoryPage = () => {
           )
         )}
       </Flex>
+=======
+      {/* Productos */}
+      {filteredProducts.length === 0 ? (
+        <Text
+          fontSize="lg"
+          fontWeight="bold"
+          color="gray.500"
+          textAlign="center"
+          mt={10}
+        >
+          No hay productos para mostrar
+        </Text>
+      ) : isGridView ? (
+        <Wrap gap={4} mx="auto" justify={{ base: 'center', md: 'flex-start' }} >
+          {filteredProducts.map((product) => (
+              <ProductItem view="grid" {...product} />
+          ))}
+        </Wrap>
+      ) : (
+        <Flex direction="column" gap={2} maxW="100%" mx="auto" w="100%">
+          {filteredProducts.map((product) => (
+            <Box key={product.id} w="100%">
+              <ProductItem view="list" {...product} />
+            </Box>
+          ))}
+        </Flex>
+      )}
+>>>>>>> origin
     </Box>
   )
 }
-
 
 export default InventoryPage
