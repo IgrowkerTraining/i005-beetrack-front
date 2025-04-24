@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box, Flex, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Flex, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
 import { color } from '@chakra-ui/system';
 import ActionsButton from '@/components/SalesComponents/ActionsButton';
 import SalesList from '@/components/SalesComponents/SalesList';
 
 const SalesPage: React.FC = () => {
   return (
-    <Box p={4}>
+    <Box >
       <Flex direction="column" overflow="hidden" margin="0" padding="0">
-            <Box p={6}>
+            <Box >
               <SimpleGrid columns={12} gap={6}>
                 <GridItem colSpan={12}>
                   <ActionsButton title="Caja"/>

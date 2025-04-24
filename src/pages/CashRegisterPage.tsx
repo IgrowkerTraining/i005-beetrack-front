@@ -43,9 +43,10 @@ function CashRegisterPage() {
             addItem({
                 id: newProduct.id,
                 name: newProduct.name,
-                unitPrice: newProduct.price,
+                price: Number(newProduct.salesPrice), 
+                unitPrice: Number(newProduct.salesPrice),
                 quantity: 1,
-                totalPrice: newProduct.price,
+                totalPrice: Number(newProduct.salesPrice),
             } as SaleItem) 
             setBarCode(null);  
             return        
@@ -68,7 +69,7 @@ function CashRegisterPage() {
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
-                justifyContent="center" 
+                justifyContent={isMobile ? "center" : "start"} 
                 backgroundColor="white"               
                 gap={4}
                 mx="auto"
@@ -128,33 +129,37 @@ function CashRegisterPage() {
                     )
                 }
             </Box>
-            <VStack>
-                <HStack 
-                    w="full" 
-                    justify="space-between"                      
-                    borderRadius="2xl"
-                    bg={"white"} 
-                    py={3} 
-                    px={4}
-                    mt={4} 
-                    border="1px solid"
-                    borderColor="gray.200"
-                >
-                    <Text fontSize={{ base: "xs", md: "sm" }} fontWeight="bold">Subtotal</Text>
-                    <Text fontSize={{ base: "xs", md: "sm" }} fontWeight="bold" color="green.500">
-                        ${subTotal?.toFixed(3) ?? '0.000'}
-                    </Text>
-                </HStack>   
-                <HStack 
-                    w="full" 
-                    justify="space-between" 
-                     
-                >
-                    <BaseButton title='Agregar manualmente' onClick={onOpen} isPrimary={false} />     
-                    <BaseButton title='Continuar' onClick={() => navigate("/sale-summary")} isPrimary={true} />     
-                </HStack>
+            {
+                isMobile ?? (
+                    <VStack>
+                        <HStack 
+                            w="full" 
+                            justify="space-between"                      
+                            borderRadius="2xl"
+                            bg={"white"} 
+                            py={3} 
+                            px={4}
+                            mt={4} 
+                            border="1px solid"
+                            borderColor="gray.200"
+                        >
+                            <Text fontSize={{ base: "xs", md: "sm" }} fontWeight="bold">Subtotal</Text>
+                            <Text fontSize={{ base: "xs", md: "sm" }} fontWeight="bold" color="green.500">
+                                ${subTotal?.toFixed(3) ?? '0.000'}
+                            </Text>
+                        </HStack>   
+                        <HStack 
+                            w="full" 
+                            justify="space-between" 
+                            
+                        >
+                            <BaseButton title='Agregar manualmente' onClick={onOpen} isPrimary={false} />     
+                            <BaseButton title='Continuar' onClick={() => navigate("/sale-summary")} isPrimary={true} />     
+                        </HStack>
 
-            </VStack>
+                    </VStack>
+                )
+            }
             <AddProductModal
                 isOpen={open}
                 onClose={onClose}

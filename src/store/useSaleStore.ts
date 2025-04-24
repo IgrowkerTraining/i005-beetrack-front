@@ -3,63 +3,7 @@ import { SaleStatus } from "@/enums/saleStatus.enum";
 import { Sale, SaleItem } from "@/types/salesTypes";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-const saleItems: SaleItem[] = [
-  {
-    id: 1,
-    name: "Manteca 70 g",
-    price: 2.1, 
-    unitPrice: 2.1,
-    quantity: 2,
-    totalPrice: 4.2,
-    imagePath: "https://www.compraonline.alcampo.es/images-v3/37ea0506-72ec-4543-93c8-a77bb916ec12/90c942f5-ecf2-4ab7-a331-5a51d0e8c7fa/1280x1280.webp"
-  },
-  {
-    id: 2,
-    name: "Leche entera x1L",
-    price: 1.3,
-    unitPrice: 1.3,
-    quantity: 1,
-    totalPrice: 1.3,
-    imagePath: "https://www.pngmart.com/files/22/Milk-PNG-Transparent-Image.png"
-  },
-  {
-    id: 3,
-    name: "Pan de molde",
-    price: 1.8,
-    unitPrice: 1.8,
-    quantity: 3,
-    totalPrice: 5.4,
-    imagePath: "https://www.pngmart.com/files/22/Bread-PNG-Isolated-HD.png"
-  },
-  {
-    id: 3,
-    name: "Pan de molde",
-    price: 1.8,
-    unitPrice: 1.8,
-    quantity: 3,
-    totalPrice: 5.4,
-    imagePath: "https://www.pngmart.com/files/22/Bread-PNG-Isolated-HD.png"
-  },
-  {
-    id: 3,
-    name: "Pan de molde",
-    price: 1.8,
-    unitPrice: 1.8,
-    quantity: 3,
-    totalPrice: 5.4,
-    imagePath: "https://www.pngmart.com/files/22/Bread-PNG-Isolated-HD.png"
-  }
-  ,
-  {
-    id: 3,
-    name: "Pan de molde",
-    price: 1.8,
-    unitPrice: 1.8,
-    quantity: 3,
-    totalPrice: 5.4,
-    imagePath: "https://www.pngmart.com/files/22/Bread-PNG-Isolated-HD.png"
-  }
-];
+
 
 interface SaleState {
   currentSale: Sale;
@@ -77,7 +21,7 @@ const useSaleStore = create<SaleState>()(
   devtools((set) => ({
     currentSale: {
       status: SaleStatus.InProgress,
-      items: saleItems,
+      items: [],
       paymentMethod: PaymentMethod.Transfer,
       createdAt:"",
       discount: 0,
@@ -121,7 +65,7 @@ const useSaleStore = create<SaleState>()(
     updateItem: (id: number, quantity: number) =>
       set((state: SaleState) => {
         const updatedItems = (state.currentSale.items || []).map((item) =>
-          item.id === id
+          item.id === id.toString()
             ? {
               ...item,
               quantity,
@@ -148,7 +92,7 @@ const useSaleStore = create<SaleState>()(
     removeItem: (id: number) =>
       set((state: SaleState) => {
         const updatedItems = (state.currentSale.items || []).filter(
-          (item) => item.id !== id
+          (item) => Number(item.id) !== id
         );
         const subTotal = updatedItems.reduce(
           (acc, item) => acc + item.totalPrice,0
@@ -166,7 +110,7 @@ const useSaleStore = create<SaleState>()(
       set((state: SaleState) => {
         const updatedItems = (state.currentSale.items || []).map(
           (item) =>
-            item.id === id && item.quantity > 1
+            item.id === id.toString() && item.quantity > 1
               ? {
                 ...item,
                 quantity: item.quantity - 1,

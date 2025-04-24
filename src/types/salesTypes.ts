@@ -2,7 +2,7 @@ import { PaymentMethod } from "@/enums/paymentMethod.enum";
 import { SaleStatus } from "@/enums/saleStatus.enum";
 
 export interface SaleItem {
-    id: number;
+    id: string;
     name: string;
     price: number;
     quantity: number;

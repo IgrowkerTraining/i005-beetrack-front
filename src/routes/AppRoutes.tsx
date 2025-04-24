@@ -10,10 +10,11 @@ import ProfilePage from '@/pages/ProfilePage'
 import PrivateLayout from '@/layout/PrivateLayout'
 import SalesPage from '@/pages/SalesPage'
 import StatsPage from '@/pages/StatsPage'
-'
+
 import { useBreakpointValue } from '@chakra-ui/react'
 import ProductPage from '@/pages/ProductPage'
 import Notifications from '@/pages/NotificationPage'
+import CashRegisterPage from '@/pages/CashRegisterPage'
 
 const AppRoutes = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -34,6 +35,7 @@ const AppRoutes = () => {
             <Route path="/products" element={<ProductPage />} />
             <Route path="/products/barcode/:barcode" element={<ProductPage />} />
             <Route path="/products/id/:id" element={<ProductPage />} />
+            <Route path="cash" element={<CashRegisterPage />} />
           </Route>
         ) : (
           <Route element={<PrivateLayout />}>
@@ -52,7 +54,7 @@ const AppRoutes = () => {
           <Route index element={<DashboardPage />} />
           <Route path="home" element={<DashboardPage />} />
           <Route path="inventory" element={<InventoryPage />} />
-          <Route path="sales" element={<SalesPage />} />
+          <Route path="sales" element={<SalesPage />} />          
           <Route path="stats" element={<StatsPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>

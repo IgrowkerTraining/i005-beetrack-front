@@ -41,7 +41,7 @@ export default function ActionsButton({ title = "Acceso rápido"} : ActionsButto
           isMobile ? (
             <GridItem key={idx} colSpan={2}>
                 <Button
-                  onClick={() => navigate("/sales")}
+                  onClick={() => navigate("/cash")}
                   bg="yellow.400"
                   _hover={{ bg: "yellow.500" }}
                   borderRadius="xl"

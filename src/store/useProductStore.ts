@@ -12,13 +12,14 @@ interface ProductState {
   fetchProducts: (products: Product[]) => void;
   addProduct: (product: Product) => void;
   updateProduct: (id: string, updatedData: Partial<Product>) => void;
+  getProductByBarcode: (barcode: string) => Product | false;
   removeProduct: (id: string) => void;
 }
 
 const useProductStore = create<ProductState>()(
   devtools(
     persist(
-      (set) => ({
+      (set, get) => ({
         products: [],
         queryParams: {
           page: 1,
@@ -38,6 +39,10 @@ const useProductStore = create<ProductState>()(
             return { products: updatedProducts };
           });
         },
+        getProductByBarcode: (barcode: string) => {
+          const product = (get().products || []).find((product) => product.barcode === barcode);
+          return product || false;
+        },  
         removeProduct: (id) => {
           set((state) => ({
             products: (state.products || []).filter((product) => product.id !== id),

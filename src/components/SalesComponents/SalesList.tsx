@@ -10,9 +10,7 @@ export default function SalesList() {
   const [selectedDate, setSelectedDate] = useState("Hoy 06/04");
   const [selectedType, setSelectedType] = useState<PaymentMethod | "all">("all");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
-  const { orders } = useOrderStore((state) => ({
-    orders: state.orders
-  }));
+  const { orders } = useOrderStore((state) => state);
 
   const filteredTransactions = useMemo(() => {
     let data = [...orders];

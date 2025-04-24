@@ -7,14 +7,13 @@ import {
 } from "@chakra-ui/react";
 import { FaSearch, FaBell } from "react-icons/fa";
 import { VscBellDot } from "react-icons/vsc";
-import { FaBell } from "react-icons/fa";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdMenu } from "react-icons/md";
 import useSidenavbarStore from "@/store/useSidenavbarStore";
 import { useFetchProfile } from "@/hooks/useProfile";
 import { NavLink } from "react-router-dom";
 import useProductStore from "@/store/useProductStore";
-import { useFetchProduct } from "@/hooks/useProduct";
+import { useFetchProduct, useFetchProducts } from "@/hooks/useProduct";
 
 const Topbar = () => {
   const { isLoading } = useFetchProfile();
@@ -22,7 +21,7 @@ const Topbar = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const { products } = useProductStore();
-  useFetchProduct();
+  useFetchProducts();
 
   const lowStockProducts = products.filter(product => product.stock <= product.stock_min);
   const hasNotifications = lowStockProducts.length > 0;
@@ -83,7 +82,7 @@ const Topbar = () => {
         </InputGroup> */}
 
         <Box position="relative">
-          <Link as={NavLink} to="/notifications">
+          <NavLink  to="/notifications">
             <IconButton
               aria-label="Notificaciones"
               variant="plain"
@@ -92,7 +91,7 @@ const Topbar = () => {
               {" "}
               {hasNotifications ?  <VscBellDot /> : <FaBell />}{" "}
             </IconButton>
-          </Link>
+          </NavLink>
           {/* <Box
             position="absolute"
             top="0"
